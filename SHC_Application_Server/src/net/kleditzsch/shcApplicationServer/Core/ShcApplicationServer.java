@@ -1,6 +1,11 @@
 package net.kleditzsch.shcApplicationServer.Core;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
+import net.kleditzsch.shcApplicationServer.Json.Deserializer.UserDeserializer;
+import net.kleditzsch.shcApplicationServer.Json.Serializer.UserSerializer;
+import net.kleditzsch.shcCore.User.User;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -23,6 +28,11 @@ public class ShcApplicationServer {
     private Jedis redis;
 
     /**
+     * Gson Builder
+     */
+    private GsonBuilder builder;
+
+    /**
      * Eintrittspunkt in die Anwendung
      *
      * @param args
@@ -38,8 +48,33 @@ public class ShcApplicationServer {
      */
     private ShcApplicationServer() {
 
+        //Gson initalisieren
+        initGson();
+
         //Datenbank Verbindung
         initDatabase();
+    }
+
+    /**
+     * initialisiert die Gson Json API
+     */
+    private void initGson() {
+
+        builder = new GsonBuilder();
+
+        //Serialisierer und Deserialisierer anmelden
+        builder.registerTypeAdapter(User.class, new UserSerializer());
+        builder.registerTypeAdapter(User.class, new UserDeserializer());
+    }
+
+    /**
+     * erzeugt ein Gson Objekt aus dem Builder heraus
+     *
+     * @return
+     */
+    public Gson getGson() {
+
+        return builder.create();
     }
 
     /**
