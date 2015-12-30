@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "de.rpi_controlcenter.shc_andoid_client"
+        applicationId "net.kleditzsch.shcAndroidClient"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1

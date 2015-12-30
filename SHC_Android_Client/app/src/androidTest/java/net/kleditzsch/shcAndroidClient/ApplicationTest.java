@@ -1,4 +1,4 @@
-package de.rpi_controlcenter.shc_andoid_client;
+package net.kleditzsch.shcAndroidClient;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
