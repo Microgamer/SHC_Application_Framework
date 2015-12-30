@@ -13,4 +13,7 @@ hs_err_pid*
 
 # IDEA Dateien
 .idea/*
+out/*
+/db.config.json
 *.iml
+/SHC_Application_Server/src/net/kleditzsch/shcApplicationServer/Test/Test.java
