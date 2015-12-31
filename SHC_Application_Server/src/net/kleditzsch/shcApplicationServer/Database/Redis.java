@@ -51,7 +51,7 @@ public class Redis {
             db = jsonObject.get("db").getAsInt();
 
             //DB Verbinden
-            jedis = new Jedis(host, port, timeout * 1000);
+            jedis = new Jedis(host, port, timeout);
             if(pass.length() > 0) {
 
                 jedis.auth(pass);

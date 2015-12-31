@@ -6,8 +6,17 @@ import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.Json.Deserializer.UserDeserializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.UserSerializer;
 import net.kleditzsch.shcApplicationServer.User.UserEditor;
+import net.kleditzsch.shcApplicationServer.Util.DatabaseConfigEditor;
 import net.kleditzsch.shcCore.User.User;
 import redis.clients.jedis.Jedis;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Basisklasse
@@ -19,9 +28,19 @@ import redis.clients.jedis.Jedis;
 public class ShcApplicationServer {
 
     /**
+     * Server Version
+     */
+    public static final String VERSION = "0.1.0";
+
+    /**
      * Singleton Instanz
      */
     private static ShcApplicationServer instance;
+
+    /**
+     * Debug Modus Aktiv?
+     */
+    private static boolean debug = false;
 
     /**
      * Datenbankverbindung
@@ -45,6 +64,33 @@ public class ShcApplicationServer {
      */
     public static void main(String[] args) {
 
+        //Kommandozeilen Parameter in ein SET übernehmen
+        Set<String> arguments = new HashSet<>();
+        Collections.addAll(arguments, args);
+
+        //Version anzeigen
+        if(arguments.contains("-v") || arguments.contains("--version")) {
+
+            System.out.println("Version: " + VERSION);
+            return;
+        }
+
+        //Debug Modus
+        if(arguments.contains("-d") || arguments.contains("--Debug")) {
+
+            debug = true;
+            return;
+        }
+
+        //Datenbank Konfiguration
+        Path dbConfigFile = Paths.get("db.config.json");
+        if(arguments.contains("-cdb") || arguments.contains("--config-Database") || !Files.exists(dbConfigFile)) {
+
+            DatabaseConfigEditor.startDatabaseConfig();
+            return;
+        }
+
+        //Anwendung initalisieren
         instance = new ShcApplicationServer();
         instance.initAppliaction();
     }
@@ -133,5 +179,14 @@ public class ShcApplicationServer {
      */
     public static ShcApplicationServer getInstance() {
         return instance;
+    }
+
+    /**
+     * gibt an ob der Debug Modus aktiv ist
+     *
+     * @return true wenn aktiv
+     */
+    public static boolean isDebug() {
+        return debug;
     }
 }
