@@ -5,12 +5,12 @@ import com.google.gson.GsonBuilder;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.Json.Deserializer.UserDeserializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.UserSerializer;
+import net.kleditzsch.shcApplicationServer.Settings.Settings;
 import net.kleditzsch.shcApplicationServer.User.UserEditor;
-import net.kleditzsch.shcApplicationServer.Util.DatabaseConfigEditor;
+import net.kleditzsch.shcApplicationServer.Util.CliConfigEditor;
 import net.kleditzsch.shcCore.User.User;
 import redis.clients.jedis.Jedis;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -53,6 +53,11 @@ public class ShcApplicationServer {
     private GsonBuilder builder;
 
     /**
+     * EInstellungen
+     */
+    private Settings settings;
+
+    /**
      * Benutzer verwaltung
      */
     private UserEditor userEditor;
@@ -84,15 +89,22 @@ public class ShcApplicationServer {
 
         //Datenbank Konfiguration
         Path dbConfigFile = Paths.get("db.config.json");
-        if(arguments.contains("-cdb") || arguments.contains("--config-Database") || !Files.exists(dbConfigFile)) {
+        if(arguments.contains("-db") || arguments.contains("--Database") || !Files.exists(dbConfigFile)) {
 
-            DatabaseConfigEditor.startDatabaseConfig();
+            CliConfigEditor.startDatabaseConfig();
             return;
         }
 
         //Anwendung initalisieren
         instance = new ShcApplicationServer();
         instance.initAppliaction();
+
+        //Datenbank Konfiguration
+        if(arguments.contains("-c") || arguments.contains("--config")) {
+
+            CliConfigEditor.startApplicationConfig();
+            return;
+        }
     }
 
     /**
@@ -156,6 +168,8 @@ public class ShcApplicationServer {
     private void initData() {
 
         //Einstellungen laden
+        settings = new Settings();
+        settings.loadData();
 
         //Benutzer laden
         userEditor = new UserEditor();
@@ -163,7 +177,16 @@ public class ShcApplicationServer {
     }
 
     /**
-     * gibt die Benutzerverwaltung zurück
+     * gibt die Einstellungs Verwaltung zurück
+     *
+     * @return
+     */
+    public Settings getSettings() {
+        return settings;
+    }
+
+    /**
+     * gibt die Benutzer Verwaltung zurück
      *
      * @return
      */

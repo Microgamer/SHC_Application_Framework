@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.kleditzsch.Util.CliUtil;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
+import net.kleditzsch.shcApplicationServer.Settings.Settings;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.util.Optional;
  * @copyright Copyright (c) 2015, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public abstract class DatabaseConfigEditor {
+public abstract class CliConfigEditor {
 
     /**
      * bearbeitet die Datenbank Konfiguration
@@ -106,6 +107,45 @@ public abstract class DatabaseConfigEditor {
                 e.printStackTrace();
             }
         }
+    }
 
+    /**
+     * bearbeitet die Anwendungseinstellungen
+     */
+    public static void startApplicationConfig() {
+
+        Settings settings = ShcApplicationServer.getInstance().getSettings();
+
+        try {
+
+            //Server Port
+            Settings.Setting<Double> serverPort = settings.getSetting(Settings.SETTING_SERVER_PORT);
+            Optional<Integer> port = CliUtil.inputIntegerOption("Server Port", serverPort.getValue().intValue(), 0, 65535, 5);
+            if(port.isPresent()) {
+
+                serverPort.setValue((double) port.get());
+            }
+
+            Settings.Setting<Double> serverStateLed = settings.getSetting(Settings.SETTING_SERVER_STATELED_PIN);
+            Optional<Integer> pin = CliUtil.inputIntegerOption("Pin Nummer [wiringpi] für die Status LED", serverStateLed.getValue().intValue(), 0, 35, 5);
+            if(pin.isPresent()) {
+
+                serverStateLed.setValue((double) pin.get());
+            }
+
+            //EInstellungen speichern
+            settings.saveData();
+
+            System.out.println("Die Einstellungen wurden erfolgreich gespeichert!");
+        } catch (IOException e) {
+
+            System.err.println("Es ist ein Fehler bei den Einstellungen aufgetreten!");
+
+            //Debug Ausgabe
+            if(ShcApplicationServer.isDebug()) {
+
+                e.printStackTrace();
+            }
+        }
     }
 }

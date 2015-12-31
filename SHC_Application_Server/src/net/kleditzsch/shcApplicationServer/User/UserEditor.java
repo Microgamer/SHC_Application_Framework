@@ -2,6 +2,7 @@ package net.kleditzsch.shcApplicationServer.User;
 
 import com.google.gson.Gson;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
+import net.kleditzsch.shcApplicationServer.Database.DatabaseEditor;
 import net.kleditzsch.shcCore.User.User;
 import net.kleditzsch.shcCore.User.UserGroup;
 import org.mindrot.jbcrypt.BCrypt;
@@ -13,11 +14,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Benutzer Verwaltung
+ *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2015, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class UserEditor {
+public class UserEditor implements DatabaseEditor {
 
     /**
      * Redis Keys für die Datenhaltung
