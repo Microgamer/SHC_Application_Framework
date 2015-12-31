@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import net.kleditzsch.Util.CliUtil;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
+import net.kleditzsch.shcCore.Settings.Setting;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -119,14 +120,14 @@ public abstract class CliConfigEditor {
         try {
 
             //Server Port
-            Settings.Setting<Double> serverPort = settings.getSetting(Settings.SETTING_SERVER_PORT);
+            Setting<Double> serverPort = settings.getSetting(Settings.SETTING_SERVER_PORT);
             Optional<Integer> port = CliUtil.inputIntegerOption("Server Port", serverPort.getValue().intValue(), 0, 65535, 5);
             if(port.isPresent()) {
 
                 serverPort.setValue((double) port.get());
             }
 
-            Settings.Setting<Double> serverStateLed = settings.getSetting(Settings.SETTING_SERVER_STATELED_PIN);
+            Setting<Double> serverStateLed = settings.getSetting(Settings.SETTING_SERVER_STATELED_PIN);
             Optional<Integer> pin = CliUtil.inputIntegerOption("Pin Nummer [wiringpi] für die Status LED", serverStateLed.getValue().intValue(), 0, 35, 5);
             if(pin.isPresent()) {
 
