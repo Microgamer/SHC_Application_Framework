@@ -30,6 +30,16 @@ public class User extends BasicElement {
      */
     private Set<UserGroup> userGroups = new HashSet<>();
 
+    public User() {}
+
+    /**
+     * @param originator Gründer
+     */
+    public User(boolean originator) {
+
+        this.originator = originator;
+    }
+
     /**
      * gibt an ob der Benutzer ein Gründer ist
      *
@@ -37,15 +47,6 @@ public class User extends BasicElement {
      */
     public boolean isOriginator() {
         return originator;
-    }
-
-    /**
-     * setzt den Benutzer als Gründer
-     *
-     * @param originator Gründer
-     */
-    public void setOriginator(boolean originator) {
-        this.originator = originator;
     }
 
     /**

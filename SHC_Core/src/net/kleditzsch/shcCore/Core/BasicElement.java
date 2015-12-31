@@ -46,9 +46,8 @@ public abstract class BasicElement {
      *
      * @return neue eindeutige Identifizierung
      */
-    public static Optional<String> createHash() {
+    public static String createHash() {
 
-        Optional<String> response = Optional.empty();
         long nanoTime = System.nanoTime();
 
         MessageDigest md = null;
@@ -65,10 +64,10 @@ public abstract class BasicElement {
             for (int i = 0; i < digest.length; i++) {
                 hexStr +=  Integer.toString( ( digest[i] & 0xff ) + 0x100, 16).substring( 1 );
             }
-            response = Optional.of(hexStr);
+            return hexStr;
         } catch (NoSuchAlgorithmException e) {}
 
-        return response;
+        return null;
     }
 
     /**

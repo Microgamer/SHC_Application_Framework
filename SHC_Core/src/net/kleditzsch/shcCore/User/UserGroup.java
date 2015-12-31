@@ -29,6 +29,16 @@ public class UserGroup extends BasicElement {
      */
     private Set<String> permissions = new HashSet<>();
 
+    public UserGroup() {}
+
+    /**
+     * @param systemGroup Systemgruppe
+     */
+    public UserGroup(boolean systemGroup) {
+
+        this.systemGroup = systemGroup;
+    }
+
     /**
      * gibt die Gruppenbeschreibung zurück
      *
@@ -54,15 +64,6 @@ public class UserGroup extends BasicElement {
      */
     public boolean isSystemGroup() {
         return systemGroup;
-    }
-
-    /**
-     * markiert die Gruppe als Systemgruppe
-     *
-     * @param systemGroup
-     */
-    public void setSystemGroup(boolean systemGroup) {
-        this.systemGroup = systemGroup;
     }
 
     /**

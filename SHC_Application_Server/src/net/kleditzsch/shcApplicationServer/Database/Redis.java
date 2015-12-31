@@ -30,7 +30,7 @@ public class Redis {
      *
      * @return
      */
-    public Jedis connect() {
+    public Jedis connect() throws JedisConnectionException {
 
         //Redis Verbindung aufbauen
         String host;
@@ -41,7 +41,6 @@ public class Redis {
 
         //DB Config Lesen
         Path dbConfigFile = Paths.get("db.config.json");
-        System.out.println(dbConfigFile.toAbsolutePath());
         try(BufferedReader in = Files.newBufferedReader(dbConfigFile)) {
 
             JsonObject jsonObject = new JsonParser().parse(in).getAsJsonObject();
@@ -52,18 +51,12 @@ public class Redis {
             db = jsonObject.get("db").getAsInt();
 
             //DB Verbinden
-            try {
+            jedis = new Jedis(host, port, timeout * 1000);
+            if(pass.length() > 0) {
 
-                jedis = new Jedis(host, port, timeout * 1000);
-                if(pass.length() > 0) {
-
-                    jedis.auth(pass);
-                }
-                jedis.select(db);
-            } catch (JedisConnectionException ex) {
-
-                ex.printStackTrace();
+                jedis.auth(pass);
             }
+            jedis.select(db);
 
         } catch (IOException e) {
 

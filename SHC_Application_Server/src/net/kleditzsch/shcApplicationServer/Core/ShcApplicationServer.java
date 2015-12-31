@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.Json.Deserializer.UserDeserializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.UserSerializer;
+import net.kleditzsch.shcApplicationServer.User.UserEditor;
 import net.kleditzsch.shcCore.User.User;
 import redis.clients.jedis.Jedis;
 
@@ -33,6 +34,11 @@ public class ShcApplicationServer {
     private GsonBuilder builder;
 
     /**
+     * Benutzer verwaltung
+     */
+    private UserEditor userEditor;
+
+    /**
      * Eintrittspunkt in die Anwendung
      *
      * @param args
@@ -40,19 +46,22 @@ public class ShcApplicationServer {
     public static void main(String[] args) {
 
         instance = new ShcApplicationServer();
-
+        instance.initAppliaction();
     }
 
     /**
      * initalisiert die Anwendung
      */
-    private ShcApplicationServer() {
+    private void initAppliaction() {
 
         //Gson initalisieren
         initGson();
 
         //Datenbank Verbindung
         initDatabase();
+
+        //Daten laden
+        initData();
     }
 
     /**
@@ -93,6 +102,28 @@ public class ShcApplicationServer {
      */
     public Jedis getRedis() {
         return redis;
+    }
+
+    /**
+     * läd alle SHC Daten aus der Datenbank
+     */
+    private void initData() {
+
+        //Einstellungen laden
+
+        //Benutzer laden
+        userEditor = new UserEditor();
+        userEditor.loadData();
+    }
+
+    /**
+     * gibt die Benutzerverwaltung zurück
+     *
+     * @return
+     */
+    public UserEditor getUserEditor() {
+
+        return userEditor;
     }
 
     /**
