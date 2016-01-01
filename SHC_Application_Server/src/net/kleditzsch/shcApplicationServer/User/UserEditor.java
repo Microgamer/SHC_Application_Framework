@@ -48,6 +48,8 @@ public class UserEditor implements DatabaseEditor {
         Map<String, String> usersList = db.hgetAll(KEY_USERS);
 
         Gson gson = ShcApplicationServer.getInstance().getGson();
+        userGroups.clear();
+        users.clear();
 
         //Benutzergruppen laden
         for (String hash : userGroupsList.keySet()) {

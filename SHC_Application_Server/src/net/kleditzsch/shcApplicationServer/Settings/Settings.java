@@ -118,6 +118,8 @@ public class Settings implements DatabaseEditor {
 
         Gson gson = ShcApplicationServer.getInstance().getGson();
 
+        this.settings.clear();
+
         //Einstellungen laden
         for(String key : settings.keySet()) {
 
