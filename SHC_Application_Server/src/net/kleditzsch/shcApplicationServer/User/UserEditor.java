@@ -10,6 +10,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -77,13 +78,15 @@ public class UserEditor implements DatabaseEditor {
     }
 
     /**
-     * gibt die Liste mit allen Benutzer Hashes zurück
+     * gibt die Liste mit allen Benutzern zurück
      *
      * @return Benutzer Hashes Liste
      */
-    public Set<String> getUsersHashes() {
+    public Set<User> getUsers() {
 
-        return users.keySet();
+        Set<User> userSet = new HashSet<>();
+        userSet.addAll(users.values());
+        return userSet;
     }
 
     /**
@@ -149,13 +152,15 @@ public class UserEditor implements DatabaseEditor {
     }
 
     /**
-     * gibt eine Liste mit allen Benutzergruppen Hashes zurück
+     * gibt eine Liste mit allen Benutzergruppen zurück
      *
-     * @return Benutzergruppen Hashes Liste
+     * @return Benutzergruppen
      */
-    public Set<String> getUserGroups() {
+    public Set<UserGroup> getUserGroups() {
 
-        return userGroups.keySet();
+        Set<UserGroup> userGroupSet = new HashSet<>();
+        userGroupSet.addAll(userGroups.values());
+        return userGroupSet;
     }
 
     /**
