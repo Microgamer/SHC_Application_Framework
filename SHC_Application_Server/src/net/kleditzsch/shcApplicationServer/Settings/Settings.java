@@ -128,7 +128,7 @@ public class Settings implements DatabaseEditor {
             this.settings.put(setting.getName(), setting);
         }
 
-        //mit bekannten EInstellungen falls nötig auffüllen
+        //mit bekannten Einstellungen falls nötig auffüllen
         for(String name : knownSettings.keySet()) {
 
             if(!settings.containsKey(name)) {
