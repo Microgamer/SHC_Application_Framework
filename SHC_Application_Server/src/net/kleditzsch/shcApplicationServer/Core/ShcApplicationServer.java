@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.Json.Deserializer.UserDeserializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.UserSerializer;
+import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
 import net.kleditzsch.shcApplicationServer.User.UserEditor;
 import net.kleditzsch.shcApplicationServer.Util.CliConfigEditor;
@@ -61,6 +62,11 @@ public class ShcApplicationServer {
      * Benutzer verwaltung
      */
     private UserEditor userEditor;
+
+    /**
+     * Sessionverwaltung
+     */
+    private SessionEditor sessionEditor;
 
     /**
      * Eintrittspunkt in die Anwendung
@@ -174,6 +180,10 @@ public class ShcApplicationServer {
         //Benutzer laden
         userEditor = new UserEditor();
         userEditor.loadData();
+
+        //Sessions laden
+        sessionEditor = new SessionEditor();
+        sessionEditor.loadData();
     }
 
     /**
