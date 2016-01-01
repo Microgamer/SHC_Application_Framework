@@ -206,12 +206,6 @@ public class UserEditor implements DatabaseEditor {
      */
     private void addSystemUsersAndGroups() {
 
-        UserGroup guests = new UserGroup(true);
-        guests.setHash(UserGroup.createHash());
-        guests.setName("Gäste");
-        guests.setDescripion("Diese Gruppe wird für alle nicht angemeldeten Benutzer verwendet");
-        addUserGroup(guests);
-
         UserGroup users = new UserGroup(true);
         users.setHash(UserGroup.createHash());
         users.setName("Benutzer");
