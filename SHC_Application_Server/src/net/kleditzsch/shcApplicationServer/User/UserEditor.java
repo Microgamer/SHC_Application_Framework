@@ -98,6 +98,25 @@ public class UserEditor implements DatabaseEditor {
     }
 
     /**
+     * gibt sofern vorhanden das Benutzerobjekt zum Benutzernamen zurück
+     *
+     * @param username Benutzername
+     * @return Benutzer
+     */
+    public User getUserByName(String username) {
+
+        for (String hash : users.keySet()) {
+
+            User user = users.get(hash);
+            if(user.getName().equals(username)) {
+
+                return user;
+            }
+        }
+        return null;
+    }
+
+    /**
      * regestriert einen neuen Benutzer
      *
      * @param user Benutzer
