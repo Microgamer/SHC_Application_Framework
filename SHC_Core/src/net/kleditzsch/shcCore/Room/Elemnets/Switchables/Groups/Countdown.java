@@ -172,6 +172,8 @@ public class Countdown extends AbstractSwitchableGroup {
                         }
                     }
                     state = HIGH;
+                    switchBackCommand = 0;
+                    switchBackTime = null;
                     break;
                 case SWITCH_OFF:
 
@@ -193,6 +195,8 @@ public class Countdown extends AbstractSwitchableGroup {
                         }
                     }
                     state = LOW;
+                    switchBackCommand = 0;
+                    switchBackTime = null;
                     break;
             }
         }
