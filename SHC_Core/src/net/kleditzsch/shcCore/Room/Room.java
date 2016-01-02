@@ -1,11 +1,11 @@
 package net.kleditzsch.shcCore.Room;
 
-import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractRoomElement;
 import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractViewElement;
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.RoomElement;
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.RoomElementGroup;
 import net.kleditzsch.shcCore.Util.Comparator.RoomElementsNameComparator;
 import net.kleditzsch.shcCore.Util.Comparator.RoomElementsOrderComparator;
+import net.kleditzsch.shcCore.Util.Constant;
 
 import java.util.*;
 
@@ -27,6 +27,11 @@ public class Room extends AbstractViewElement implements net.kleditzsch.shcCore.
      * Elemente des Raumes
      */
     private Map<Integer, RoomElement> roomElements = new HashMap<>();
+
+    /**
+     * Typ
+     */
+    protected int type = ViewElements.ROOM;
 
     /**
      * gibt die Sortierungs ID zurück

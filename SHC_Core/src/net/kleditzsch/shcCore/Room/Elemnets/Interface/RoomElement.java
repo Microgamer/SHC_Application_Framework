@@ -36,11 +36,4 @@ public interface RoomElement extends ViewElement {
      * @param icon Icon
      */
     void setIcon(String icon);
-
-    /**
-     * gibt den Typ des Elementes zurück
-     *
-     * @return Typ ID
-     */
-    int getType();
 }

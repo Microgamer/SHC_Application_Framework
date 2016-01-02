@@ -63,4 +63,11 @@ public interface ViewElement extends Element {
      * @param enabled aktiviert/deaktiviert
      */
     void setEnabled(boolean enabled);
+
+    /**
+     * gibt den Typ des Elementes zurück
+     *
+     * @return Typ ID
+     */
+    int getType();
 }

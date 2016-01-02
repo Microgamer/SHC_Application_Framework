@@ -31,6 +31,11 @@ public class Box extends AbstractRoomElement implements net.kleditzsch.shcCore.R
     private Map<Integer, RoomElement> roomElements = new HashMap<>();
 
     /**
+     * Typ
+     */
+    protected int type = ViewElements.BOX;
+
+    /**
      * gibt die Sortierungs ID zurück
      *
      * @return Sortierungs ID

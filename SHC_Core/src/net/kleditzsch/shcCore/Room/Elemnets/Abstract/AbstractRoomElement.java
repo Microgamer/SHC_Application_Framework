@@ -25,11 +25,6 @@ public abstract class AbstractRoomElement extends AbstractViewElement implements
     protected String icon;
 
     /**
-     * Typ
-     */
-    protected int type;
-
-    /**
      * Elementdaten
      */
     protected Map<String, Object> data = new HashMap<>();
@@ -79,14 +74,5 @@ public abstract class AbstractRoomElement extends AbstractViewElement implements
      */
     public void setIcon(String icon) {
         this.icon = icon;
-    }
-
-    /**
-     * gibt den Typ des Elementes zurück
-     *
-     * @return Typ ID
-     */
-    public int getType() {
-        return type;
     }
 }
