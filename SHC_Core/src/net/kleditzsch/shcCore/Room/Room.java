@@ -29,11 +29,6 @@ public class Room extends AbstractViewElement implements net.kleditzsch.shcCore.
     private Map<Integer, RoomElement> roomElements = new HashMap<>();
 
     /**
-     * Typ
-     */
-    protected int type = ViewElements.ROOM;
-
-    /**
      * gibt die Sortierungs ID zurück
      *
      * @return Sortierungs ID
@@ -206,6 +201,6 @@ public class Room extends AbstractViewElement implements net.kleditzsch.shcCore.
      * @return Typ ID
      */
     public int getType() {
-        return type;
+        return ViewElements.ROOM;
     }
 }

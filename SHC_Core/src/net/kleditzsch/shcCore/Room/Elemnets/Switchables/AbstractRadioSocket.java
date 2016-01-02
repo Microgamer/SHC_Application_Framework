@@ -33,11 +33,6 @@ public abstract class AbstractRadioSocket extends AbstractSwitchable {
     protected int continues;
 
     /**
-     * Typ
-     */
-    protected int type = ViewElements.RADIO_SOCKET;
-
-    /**
      * gibt das 433MHz Protokoll zurück
      *
      * @return 433MHz Potokoll
@@ -115,6 +110,6 @@ public abstract class AbstractRadioSocket extends AbstractSwitchable {
      * @return Typ ID
      */
     public int getType() {
-        return type;
+        return ViewElements.RADIO_SOCKET;
     }
 }

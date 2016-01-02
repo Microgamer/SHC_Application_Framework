@@ -23,11 +23,6 @@ public abstract class AbstractInput extends AbstractReadable {
      */
     protected int pin;
 
-    /**
-     * Typ
-     */
-    protected int type = ViewElements.INPUT;
-
     public AbstractInput() {}
 
     /**
@@ -73,5 +68,15 @@ public abstract class AbstractInput extends AbstractReadable {
      */
     public void setPin(int pin) {
         this.pin = pin;
+    }
+
+    /**
+     * gibt den Typ des Elementes zurück
+     *
+     * @return Typ ID
+     */
+    @Override
+    public int getType() {
+        return ViewElements.INPUT;
     }
 }

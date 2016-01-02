@@ -21,6 +21,11 @@ public interface ViewElements {
     int RADIO_SOCKET = 4;
 
     /**
+     * schaltbare Gruppenelemente
+     */
+    int ACTIVITY = 5;
+
+    /**
      * lesbare Elemente
      */
     int INPUT = 3;
