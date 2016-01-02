@@ -2,51 +2,36 @@ package net.kleditzsch.shcCore.Core;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Optional;
 
 /**
  * Basiselement aller SHC Datenobjekte
  *
  * @author Oliver Kleditzsch
- * @copyright Copyright (c) 2015, Oliver Kleditzsch
+ * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public abstract class BasicElement implements Element {
-
-    /**
-     * Eindeutige Identifizierung
-     */
-    protected String hash = "";
-
-    /**
-     * Name des Elements
-     */
-    protected String name = "";
+public interface Element {
 
     /**
      * gibt die eindeutige Identifizierung des Elements zurück
      *
      * @return Hash
      */
-    public String getHash() {
-        return hash;
-    }
+    String getHash();
 
     /**
      * setzt die die eindeutige Identifizierung des Elements
      *
      * @param hash eindeutige Identifizierung
      */
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
+    void setHash(String hash);
 
     /**
      * erzeugt einen neuen Hash zur eindeutigen Identifizierung
      *
      * @return neue eindeutige Identifizierung
      */
-    public static String createHash() {
+    static String createHash() {
 
         long nanoTime = System.nanoTime();
 
@@ -75,16 +60,12 @@ public abstract class BasicElement implements Element {
      *
      * @return Name
      */
-    public String getName() {
-        return name;
-    }
+    String getName();
 
     /**
      * setzt den Namen des Elements
      *
      * @param name Name
      */
-    public void setName(String name) {
-        this.name = name;
-    }
+    void setName(String name);
 }
