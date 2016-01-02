@@ -203,6 +203,6 @@ public class Box extends AbstractRoomElement implements net.kleditzsch.shcCore.R
      * @return Typ ID
      */
     public int getType() {
-        return ViewElements.BOX;
+        return BOX;
     }
 }

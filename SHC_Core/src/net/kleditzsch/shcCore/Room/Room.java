@@ -201,6 +201,6 @@ public class Room extends AbstractViewElement implements net.kleditzsch.shcCore.
      * @return Typ ID
      */
     public int getType() {
-        return ViewElements.ROOM;
+        return ROOM;
     }
 }

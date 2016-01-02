@@ -1,4 +1,4 @@
-package net.kleditzsch.shcCore.Room;
+package net.kleditzsch.shcCore.Room.Elemnets.Interface;
 
 /**
  * Liste aller Raum Elemente
@@ -24,6 +24,7 @@ public interface ViewElements {
      * schaltbare Gruppenelemente
      */
     int ACTIVITY = 5;
+    int COUNTDOWN = 6;
 
     /**
      * lesbare Elemente

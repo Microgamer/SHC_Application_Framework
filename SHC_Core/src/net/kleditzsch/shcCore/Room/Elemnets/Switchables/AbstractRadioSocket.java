@@ -1,7 +1,6 @@
 package net.kleditzsch.shcCore.Room.Elemnets.Switchables;
 
 import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractSwitchable;
-import net.kleditzsch.shcCore.Room.ViewElements;
 
 /**
  * 433MHz Funksteckdose
@@ -110,6 +109,6 @@ public abstract class AbstractRadioSocket extends AbstractSwitchable {
      * @return Typ ID
      */
     public int getType() {
-        return ViewElements.RADIO_SOCKET;
+        return RADIO_SOCKET;
     }
 }
