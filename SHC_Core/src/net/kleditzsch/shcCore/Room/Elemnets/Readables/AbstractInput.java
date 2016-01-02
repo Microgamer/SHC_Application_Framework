@@ -1,6 +1,7 @@
 package net.kleditzsch.shcCore.Room.Elemnets.Readables;
 
 import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractReadable;
+import net.kleditzsch.shcCore.Room.ViewElements;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
 
 /**
@@ -21,6 +22,11 @@ public abstract class AbstractInput extends AbstractReadable {
      * Pin
      */
     protected int pin;
+
+    /**
+     * Typ
+     */
+    protected int type = ViewElements.INPUT;
 
     public AbstractInput() {}
 

@@ -13,6 +13,12 @@ import net.kleditzsch.shcCore.Util.Constant;
 public abstract class AbstractSwitchable extends AbstractStateElement implements Switchable {
 
     /**
+     * Button Text
+     */
+    protected String buttonTextOn;
+    protected String buttonTextOff;
+
+    /**
      * setzt den Text der Buttons des schaltbaren Elements
      *
      * @param buttonOn  Text Button "an"
@@ -20,8 +26,8 @@ public abstract class AbstractSwitchable extends AbstractStateElement implements
      */
     public void setButtonText(String buttonOn, String buttonOff) {
 
-        this.data.put("button.on.text", buttonOn);
-        this.data.put("button.off.text", buttonOff);
+        buttonTextOn = buttonOn;
+        buttonTextOff = buttonOff;
     }
 
     /**
@@ -31,7 +37,7 @@ public abstract class AbstractSwitchable extends AbstractStateElement implements
      */
     public String getOnButtonText() {
 
-        return (String) data.get("button.on.text");
+        return buttonTextOn;
     }
 
     /**
@@ -41,7 +47,7 @@ public abstract class AbstractSwitchable extends AbstractStateElement implements
      */
     public String getOffButtonText() {
 
-        return (String) data.get("button.off.text");
+        return buttonTextOff;
     }
 
     /**
@@ -57,14 +63,4 @@ public abstract class AbstractSwitchable extends AbstractStateElement implements
             triggerOn();
         }
     }
-
-    /**
-     * Aktion die bei Betätigung des "an" Buttons ausgeführt wird
-     */
-    public abstract void triggerOn();
-
-    /**
-     * Aktion die bei Betätigung des "aus" Buttons ausgeführt wird
-     */
-    public abstract void triggerOff();
 }

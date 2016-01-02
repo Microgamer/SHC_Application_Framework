@@ -199,4 +199,13 @@ public class Room extends AbstractViewElement implements net.kleditzsch.shcCore.
         }
         return output;
     }
+
+    /**
+     * gibt den Typ des Elementes zurück
+     *
+     * @return Typ ID
+     */
+    public int getType() {
+        return type;
+    }
 }

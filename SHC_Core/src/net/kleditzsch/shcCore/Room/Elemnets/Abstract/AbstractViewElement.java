@@ -29,11 +29,6 @@ public abstract class AbstractViewElement extends BasicElement implements ViewEl
     protected boolean enabled = true;
 
     /**
-     * Typ
-     */
-    protected int type;
-
-    /**
      * fügt eine Benutzergruppe als erlaubte Benutzergruppe hinzu
      *
      * @param userGroup Benutzergruppe
@@ -115,14 +110,5 @@ public abstract class AbstractViewElement extends BasicElement implements ViewEl
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-    }
-
-    /**
-     * gibt den Typ des Elementes zurück
-     *
-     * @return Typ ID
-     */
-    public int getType() {
-        return type;
     }
 }

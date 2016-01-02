@@ -25,22 +25,6 @@ public abstract class AbstractRoomElement extends AbstractViewElement implements
     protected String icon;
 
     /**
-     * Elementdaten
-     */
-    protected Map<String, Object> data = new HashMap<>();
-
-    public AbstractRoomElement() {}
-
-    /**
-     * @param type Typ ID
-     * @param data Daten
-     */
-    public AbstractRoomElement(int type, Map<String, Object> data) {
-        this.type = type;
-        this.data = data;
-    }
-
-    /**
      * gibt an ob das Element sichtbar ist
      *
      * @return Sichtbarkeit

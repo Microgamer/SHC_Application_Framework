@@ -18,10 +18,12 @@ public interface ViewElements {
     /**
      * schaltbare Elemente
      */
+    int RADIO_SOCKET = 4;
 
     /**
      * lesbare Elemente
      */
+    int INPUT = 3;
 
     /**
      * Sensoren

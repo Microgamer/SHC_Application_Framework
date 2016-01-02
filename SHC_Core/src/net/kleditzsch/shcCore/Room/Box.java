@@ -201,4 +201,13 @@ public class Box extends AbstractRoomElement implements net.kleditzsch.shcCore.R
         }
         return output;
     }
+
+    /**
+     * gibt den Typ des Elementes zurück
+     *
+     * @return Typ ID
+     */
+    public int getType() {
+        return type;
+    }
 }
