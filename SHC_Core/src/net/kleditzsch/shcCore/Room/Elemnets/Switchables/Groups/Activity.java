@@ -4,6 +4,8 @@ import net.kleditzsch.shcCore.Command.Commands.SwitchCommand;
 import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractSwitchableGroup;
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.Switchable;
 
+import java.time.LocalDateTime;
+
 /**
  * Aktivität
  *
@@ -77,6 +79,7 @@ public class Activity extends AbstractSwitchableGroup {
                     break;
             }
         }
+        super.triggerOn();
     }
 
     /**
@@ -102,6 +105,7 @@ public class Activity extends AbstractSwitchableGroup {
                     break;
             }
         }
+        super.triggerOff();
     }
 
     /**

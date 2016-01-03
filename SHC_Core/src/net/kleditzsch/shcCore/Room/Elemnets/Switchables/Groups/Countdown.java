@@ -109,9 +109,9 @@ public class Countdown extends AbstractSwitchableGroup {
                     break;
             }
         }
-        state = HIGH;
         switchBackTime = LocalDateTime.now().plusNanos(intervall * 1000 * 1000);
         switchBackCommand = SWITCH_OFF;
+        super.triggerOn();
     }
 
     /**
@@ -137,9 +137,9 @@ public class Countdown extends AbstractSwitchableGroup {
                     break;
             }
         }
-        state = LOW;
         switchBackTime = LocalDateTime.now().plusNanos(intervall * 1000 * 1000);
         switchBackCommand = SWITCH_ON;
+        super.triggerOff();
     }
 
     /**
@@ -154,7 +154,7 @@ public class Countdown extends AbstractSwitchableGroup {
 
                 case SWITCH_ON:
 
-                    for(SwitchCommand switchCommand : commands) {
+                    for (SwitchCommand switchCommand : commands) {
 
                         Switchable switchable = switchCommand.getSwitchable();
                         int command = switchCommand.getCommand();
@@ -171,13 +171,13 @@ public class Countdown extends AbstractSwitchableGroup {
                                 break;
                         }
                     }
-                    state = HIGH;
                     switchBackCommand = 0;
                     switchBackTime = null;
+                    super.triggerOn();
                     break;
                 case SWITCH_OFF:
 
-                    for(SwitchCommand switchCommand : commands) {
+                    for (SwitchCommand switchCommand : commands) {
 
                         Switchable switchable = switchCommand.getSwitchable();
                         int command = switchCommand.getCommand();
@@ -194,9 +194,9 @@ public class Countdown extends AbstractSwitchableGroup {
                                 break;
                         }
                     }
-                    state = LOW;
                     switchBackCommand = 0;
                     switchBackTime = null;
+                    super.triggerOff();
                     break;
             }
         }

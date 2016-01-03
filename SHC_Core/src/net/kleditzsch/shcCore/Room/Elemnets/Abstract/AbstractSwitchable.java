@@ -1,7 +1,9 @@
 package net.kleditzsch.shcCore.Room.Elemnets.Abstract;
 
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.Switchable;
-import net.kleditzsch.shcCore.Util.Constant;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 /**
  * schaltbares Element
@@ -13,10 +15,145 @@ import net.kleditzsch.shcCore.Util.Constant;
 public abstract class AbstractSwitchable extends AbstractStateElement implements Switchable {
 
     /**
+     * gibt an ob der Status angezeigt werden soll
+     */
+    protected boolean showStateEnabled = true;
+
+    /**
+     * gibt den Zeitpunkt des letzen Schaltens zurück
+     */
+    protected LocalDateTime lastToggleTime;
+
+    /**
+     * Betriebsstunden in Sekunden
+     */
+    protected long operatingSeconds = 0;
+
+    /**
+     * Energieverbrauch in Wh
+     */
+    protected double energy;
+
+    /**
+     * aktueller Energieverbrauch in W
+     */
+    protected double actualPower = 0;
+
+    /**
      * Button Text
      */
     protected String buttonTextOn;
     protected String buttonTextOff;
+
+    /**
+     * gibt an ob die Anzeige des Status der schaltbaren Elemente aktiviert/deaktiviert ist
+     *
+     * @return aktiviert/deaktiviert
+     */
+    public boolean isShowStateEnabled() {
+        return showStateEnabled;
+    }
+
+    /**
+     * aktiviert/deaktiviert die Anzeige des Status der schaltbaren Elemente
+     *
+     * @param showStateEnabled aktiviert/deaktiviert
+     */
+    public void setShowStateEnabled(boolean showStateEnabled) {
+        this.showStateEnabled = showStateEnabled;
+    }
+
+    /**
+     * gibt die Zeit des letzten Schaltvorgans zurück
+     *
+     * @return Zeit
+     */
+    public LocalDateTime getLastToggleTime() {
+        return lastToggleTime;
+    }
+
+    /**
+     * setzt die Zeit des letzen Schaltvorganges
+     *
+     * @param lastToggleTime Zeit
+     */
+    public void setLastToggleTime(LocalDateTime lastToggleTime) {
+        this.lastToggleTime = lastToggleTime;
+    }
+
+    /**
+     * gibt die Betriebszeit in Sekunden zurück
+     *
+     * @return Betriebszeit
+     */
+    public long getOperatingSeconds() {
+        return operatingSeconds;
+    }
+
+    /**
+     * setzt die Betriebszeit in Sekunden
+     *
+     * @param operatingSeconds Betriebszeit
+     */
+    public void setOperatingSeconds(long operatingSeconds) {
+        this.operatingSeconds = operatingSeconds;
+    }
+
+    /**
+     * gibt den aktuellen Energieverbrauch zurück
+     *
+     * @return Energieverbrauch in W
+     */
+    public double getActualPower() {
+        return actualPower;
+    }
+
+    /**
+     * setzt den aktuellen Energieverbrauch
+     *
+     * @param actualPower Energieverbrauch in W
+     */
+    public void setActualPower(double actualPower) {
+        this.actualPower = actualPower;
+    }
+
+    /**
+     * gibt den Energieverbrauch zurück
+     *
+     * @return Energieverbrauch Wh
+     */
+    public double getEnergy() {
+        return energy;
+    }
+
+    /**
+     * setzt den Energieverbrauch
+     *
+     * @param energy Energieverbrauch in Wh
+     */
+    public void setEnergy(double energy) {
+        this.energy = energy;
+    }
+
+    /**
+     * berechnet beim ausschalten die Betriebszeit und den Energieverbrauch
+     */
+    protected void computeOperatingTime() {
+
+        if(lastToggleTime != null) {
+
+            //Betriebszeit ermitteln
+            Duration duration = Duration.between(lastToggleTime, LocalDateTime.now());
+            long operatingSeconds = duration.toMillis() / 1000;
+
+            //gesampte Betriebszeit aktualisieren
+            this.operatingSeconds += operatingSeconds;
+
+            //Energieverbrauch errechnen
+            double energy = actualPower * (((double) operatingSeconds) / 3600d);
+            this.energy += energy;
+        }
+    }
 
     /**
      * setzt den Text der Buttons des schaltbaren Elements
@@ -55,12 +192,33 @@ public abstract class AbstractSwitchable extends AbstractStateElement implements
      */
     public void triggerToggle() {
 
-        if(state == Constant.ON) {
+        if(state == ON) {
 
             triggerOff();
         } else {
 
             triggerOn();
         }
+    }
+
+    /**
+     * Aktion die bei Betätigung des "an" Buttons ausgeführt wird
+     */
+    @Override
+    public void triggerOn() {
+
+        lastToggleTime = LocalDateTime.now();
+        state = ON;
+    }
+
+    /**
+     * Aktion die bei Betätigung des "aus" Buttons ausgeführt wird
+     */
+    @Override
+    public void triggerOff() {
+
+        computeOperatingTime();
+        lastToggleTime = LocalDateTime.now();
+        state = OFF;
     }
 }
