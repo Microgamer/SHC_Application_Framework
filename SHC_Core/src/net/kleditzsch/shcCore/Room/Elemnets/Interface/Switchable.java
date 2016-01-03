@@ -1,5 +1,8 @@
 package net.kleditzsch.shcCore.Room.Elemnets.Interface;
 
+import net.kleditzsch.shcCore.Room.Elemnets.Interface.Model.ActualPower;
+import net.kleditzsch.shcCore.Room.Elemnets.Interface.Model.Energy;
+
 import java.time.LocalDateTime;
 
 /**
@@ -9,7 +12,7 @@ import java.time.LocalDateTime;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public interface Switchable extends StateElement {
+public interface Switchable extends StateElement, Sensor, ActualPower, Energy {
 
     /**
      * gibt an ob die Anzeige des Status der schaltbaren Elemente aktiviert/deaktiviert ist
@@ -54,25 +57,11 @@ public interface Switchable extends StateElement {
     void setOperatingSeconds(long operatingSeconds);
 
     /**
-     * gibt den aktuellen Energieverbrauch zurück
-     *
-     * @return Energieverbrauch in W
-     */
-    double getActualPower();
-
-    /**
      * setzt den aktuellen Energieverbrauch
      *
      * @param actualPower Energieverbrauch in W
      */
     void setActualPower(double actualPower);
-
-    /**
-     * gibt den Energieverbrauch zurück
-     *
-     * @return Energieverbrauch in Wh
-     */
-    double getEnergy();
 
     /**
      * setzt den Energieverbrauch

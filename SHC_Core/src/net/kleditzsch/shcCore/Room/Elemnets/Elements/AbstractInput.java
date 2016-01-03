@@ -1,4 +1,4 @@
-package net.kleditzsch.shcCore.Room.Elemnets.Readables;
+package net.kleditzsch.shcCore.Room.Elemnets.Elements;
 
 import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractReadable;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;

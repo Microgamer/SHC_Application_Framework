@@ -1,4 +1,4 @@
-package net.kleditzsch.shcCore.Room.Elemnets.Switchables;
+package net.kleditzsch.shcCore.Room.Elemnets.Elements;
 
 import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractSwitchable;
 

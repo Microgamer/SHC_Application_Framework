@@ -1,10 +1,8 @@
-package net.kleditzsch.shcCore.Room.Elemnets.Switchables.Groups;
+package net.kleditzsch.shcCore.Room.Elemnets.Elements.Groups;
 
 import net.kleditzsch.shcCore.Command.Commands.SwitchCommand;
 import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractSwitchableGroup;
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.Switchable;
-
-import java.time.LocalDateTime;
 
 /**
  * Aktivität
