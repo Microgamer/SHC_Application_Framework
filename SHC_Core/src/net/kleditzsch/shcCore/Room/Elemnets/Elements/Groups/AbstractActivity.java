@@ -11,7 +11,7 @@ import net.kleditzsch.shcCore.Room.Elemnets.Interface.Switchable;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class Activity extends AbstractSwitchableGroup {
+public abstract class AbstractActivity extends AbstractSwitchableGroup {
 
     /**
      * gibt den aktuellen Status zurück
@@ -47,7 +47,7 @@ public class Activity extends AbstractSwitchableGroup {
     public boolean addSwitchable(Switchable switchable, int command) {
 
         //
-        if(switchable instanceof Activity) {
+        if(switchable instanceof AbstractActivity) {
 
             return false;
         }
