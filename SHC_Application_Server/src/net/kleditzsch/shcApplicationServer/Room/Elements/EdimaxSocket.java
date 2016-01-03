@@ -17,6 +17,8 @@ public class EdimaxSocket extends AbstractEdimaxSocket {
     @Override
     public void triggerOn() {
         super.triggerOn();
+
+        //TODO implementieren
     }
 
     /**
@@ -25,6 +27,8 @@ public class EdimaxSocket extends AbstractEdimaxSocket {
     @Override
     public void triggerOff() {
         super.triggerOff();
+
+        //TODO implementieren
     }
 
     /**
@@ -32,6 +36,6 @@ public class EdimaxSocket extends AbstractEdimaxSocket {
      */
     public void readData() {
 
-
+        //TODO implementieren
     }
 }

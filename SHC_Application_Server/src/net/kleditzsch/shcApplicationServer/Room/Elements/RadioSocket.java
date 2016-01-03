@@ -18,7 +18,7 @@ public class RadioSocket extends AbstractRadioSocket {
     public void triggerOn() {
 
         super.triggerOn();
-        System.out.println("Test an");
+        //TODO implementieren
     }
 
     /**
@@ -28,6 +28,6 @@ public class RadioSocket extends AbstractRadioSocket {
     public void triggerOff() {
 
         super.triggerOff();
-        System.out.println("Test aus");
+        //TODO implementieren
     }
 }
