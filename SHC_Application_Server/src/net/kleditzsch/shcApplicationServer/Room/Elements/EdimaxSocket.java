@@ -3,7 +3,7 @@ package net.kleditzsch.shcApplicationServer.Room.Elements;
 import net.kleditzsch.shcCore.Room.Elemnets.Elements.AbstractEdimaxSocket;
 
 /**
- * Kommentar
+ * Edimax WLan Steckdose
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
