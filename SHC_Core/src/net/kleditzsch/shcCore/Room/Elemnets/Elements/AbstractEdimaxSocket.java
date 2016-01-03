@@ -2,6 +2,9 @@ package net.kleditzsch.shcCore.Room.Elemnets.Elements;
 
 import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractSwitchable;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 /**
  * Kommentar
  *
@@ -107,6 +110,51 @@ public class AbstractEdimaxSocket extends AbstractSwitchable {
      */
     public void setSocketType(int socketType) {
         this.socketType = socketType;
+    }
+
+    /**
+     * Aktion die bei Betätigung des "an" Buttons ausgeführt wird
+     */
+    @Override
+    public void triggerOn() {
+
+        lastToggleTime = LocalDateTime.now();
+        state = ON;
+    }
+
+    /**
+     * Aktion die bei Betätigung des "aus" Buttons ausgeführt wird
+     */
+    @Override
+    public void triggerOff() {
+
+        computeOperatingTime();
+        lastToggleTime = LocalDateTime.now();
+        state = OFF;
+    }
+
+    /**
+     * berechnet beim ausschalten die Betriebszeit und den Energieverbrauch
+     */
+    @Override
+    protected void computeOperatingTime() {
+
+        if(lastToggleTime != null) {
+
+            //Betriebszeit ermitteln
+            Duration duration = Duration.between(lastToggleTime, LocalDateTime.now());
+            long operatingSeconds = duration.toMillis() / 1000;
+
+            //gesampte Betriebszeit aktualisieren
+            this.operatingSeconds += operatingSeconds;
+
+            if(socketType == TYPE_SP_1101W) {
+
+                //Energieverbrauch errechnen
+                double energy = actualPower * (((double) operatingSeconds) / 3600d);
+                this.energy += energy;
+            }
+        }
     }
 
     /**
