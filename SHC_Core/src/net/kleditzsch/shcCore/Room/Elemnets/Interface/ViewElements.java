@@ -23,7 +23,9 @@ public interface ViewElements {
     int FRITZ_BOX = 10;
     int RADIO_SOCKET = 4;
     int REBOOT = 11;
-    int REMOTE_REBOOT = 11;
+    int REMOTE_REBOOT = 12;
+    int SHUTDOWN = 13;
+    int REMOTE_SHUTDOWN = 14;
 
     /**
      * schaltbare Gruppenelemente

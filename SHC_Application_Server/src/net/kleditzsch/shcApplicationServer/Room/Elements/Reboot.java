@@ -20,10 +20,4 @@ public class Reboot extends AbstractReboot {
         super.triggerOn();
         //TODO implementieren
     }
-
-    /**
-     * Aktion die bei Betätigung des "aus" Buttons ausgeführt wird
-     */
-    @Override
-    public void triggerOff() {}
 }

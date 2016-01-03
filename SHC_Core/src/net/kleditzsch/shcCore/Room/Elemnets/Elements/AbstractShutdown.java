@@ -3,15 +3,13 @@ package net.kleditzsch.shcCore.Room.Elemnets.Elements;
 import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractSwitchable;
 
 /**
- * Neustart
+ * Herunterfahren
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public abstract class AbstractReboot extends AbstractSwitchable {
-
-
+public abstract class AbstractShutdown extends AbstractSwitchable {
 
     /**
      * Aktion die bei Betätigung des "aus" Buttons ausgeführt wird
@@ -26,6 +24,6 @@ public abstract class AbstractReboot extends AbstractSwitchable {
      */
     @Override
     public int getType() {
-        return REBOOT;
+        return SHUTDOWN;
     }
 }
