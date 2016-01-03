@@ -28,6 +28,7 @@ public interface ViewElements {
     int REMOTE_SHUTDOWN = 14;
     int OUTPUT = 15;
     int SCRIPT = 16;
+    int VIRTUAL_SOCKET = 17;
 
     /**
      * schaltbare Gruppenelemente
