@@ -30,6 +30,7 @@ public interface ViewElements {
      * lesbare Elemente
      */
     int INPUT = 3;
+    int USER_AT_HOME = 7;
 
     /**
      * Sensoren

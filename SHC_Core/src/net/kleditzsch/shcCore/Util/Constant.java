@@ -22,6 +22,12 @@ public interface Constant {
     int ON = 1;
 
     /**
+     * Online/Offline
+     */
+    int ONLINE = 0;
+    int OFFLINE = 1;
+
+    /**
      * Befehle
      */
     int SWITCH_ON = 1;

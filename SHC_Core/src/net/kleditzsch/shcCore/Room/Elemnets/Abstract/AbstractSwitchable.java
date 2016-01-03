@@ -1,7 +1,6 @@
 package net.kleditzsch.shcCore.Room.Elemnets.Abstract;
 
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.Switchable;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -38,6 +37,16 @@ public abstract class AbstractSwitchable extends AbstractStateElement implements
      * aktueller Energieverbrauch in W
      */
     protected double actualPower = 0;
+
+    /**
+     * Datenaufzeichnung aktiviert?
+     */
+    protected boolean dataRecording;
+
+    /**
+     * Zeitpunkt letzter Kontakt zum Sensor
+     */
+    protected LocalDateTime lastContactTime;
 
     /**
      * Button Text
@@ -136,23 +145,47 @@ public abstract class AbstractSwitchable extends AbstractStateElement implements
     }
 
     /**
-     * berechnet beim ausschalten die Betriebszeit und den Energieverbrauch
+     * gibt an ob die Datenaufzeichnung aktiviert/deaktiviert ist
+     *
+     * @return true wenn aktiv
      */
-    protected void computeOperatingTime() {
+    public boolean isDataRecordingEnabled() {
+        return dataRecording;
+    }
 
-        if(lastToggleTime != null) {
+    /**
+     * aktiviert/deaktiviert die Datenaufzeichnung
+     *
+     * @param enabled aktiviert/deaktiviert
+     */
+    public void setDateRecordingEnabled(boolean enabled) {
+        dataRecording = enabled;
+    }
 
-            //Betriebszeit ermitteln
-            Duration duration = Duration.between(lastToggleTime, LocalDateTime.now());
-            long operatingSeconds = duration.toMillis() / 1000;
+    /**
+     * gibt die Zeit des Letzten Kontaktes zum Sensor zurück
+     *
+     * @return Zeit
+     */
+    public LocalDateTime getLastContactTime() {
+        return lastContactTime;
+    }
 
-            //gesampte Betriebszeit aktualisieren
-            this.operatingSeconds += operatingSeconds;
+    /**
+     * setzt die Zeit des letzten Kontaktes zum Sensor auf die übergebene Zeit
+     *
+     * @param ldt Zeit
+     */
+    public void setLastContactTime(LocalDateTime ldt) {
+        lastContactTime = ldt;
+    }
 
-            //Energieverbrauch errechnen
-            double energy = actualPower * (((double) operatingSeconds) / 3600d);
-            this.energy += energy;
-        }
+    /**
+     * setzt die Zeit des letzten Kontaktes zum Sensor auf die aktuelle Zeit
+     */
+    public void setLastContactTimeNow() {
+
+        lastContactTime = LocalDateTime.now();
     }
 
     /**
@@ -220,5 +253,25 @@ public abstract class AbstractSwitchable extends AbstractStateElement implements
         computeOperatingTime();
         lastToggleTime = LocalDateTime.now();
         state = OFF;
+    }
+
+    /**
+     * berechnet beim ausschalten die Betriebszeit und den Energieverbrauch
+     */
+    protected void computeOperatingTime() {
+
+        if(lastToggleTime != null) {
+
+            //Betriebszeit ermitteln
+            Duration duration = Duration.between(lastToggleTime, LocalDateTime.now());
+            long operatingSeconds = duration.toMillis() / 1000;
+
+            //gesampte Betriebszeit aktualisieren
+            this.operatingSeconds += operatingSeconds;
+
+            //Energieverbrauch errechnen
+            double energy = actualPower * (((double) operatingSeconds) / 3600d);
+            this.energy += energy;
+        }
     }
 }
