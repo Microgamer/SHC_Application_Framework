@@ -20,6 +20,7 @@ public interface ViewElements {
      */
     int AVM_SOCKET = 8;
     int EDIMAX_SOCKET = 9;
+    int FRITZ_BOX = 10;
     int RADIO_SOCKET = 4;
 
     /**
