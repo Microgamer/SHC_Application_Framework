@@ -23,6 +23,11 @@ public abstract class AbstractInput extends AbstractReadable {
     protected int pin;
 
     /**
+     * Invertierung
+     */
+    protected boolean invert = false;
+
+    /**
      * gibt den Schaltserver zurück
      *
      * @return Schaltserver
@@ -56,6 +61,24 @@ public abstract class AbstractInput extends AbstractReadable {
      */
     public void setPin(int pin) {
         this.pin = pin;
+    }
+
+    /**
+     * gibt an ob die Invertierung aktiviert/deaktiviert ist
+     *
+     * @return aktiviert/deaktiviert
+     */
+    public boolean isInvert() {
+        return invert;
+    }
+
+    /**
+     * aktiviert/deaktiviert die Invertierung
+     *
+     * @param invert aktiviert/deaktiviert
+     */
+    public void setInvert(boolean invert) {
+        this.invert = invert;
     }
 
     /**

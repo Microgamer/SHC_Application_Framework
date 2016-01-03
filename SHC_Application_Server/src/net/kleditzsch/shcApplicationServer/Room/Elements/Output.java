@@ -18,7 +18,7 @@ public class Output extends AbstractOutput {
     public void triggerOn() {
         super.triggerOn();
 
-        //TODO implementieren
+        //TODO implementieren (Invertierung beachten)
     }
 
     /**
@@ -28,6 +28,6 @@ public class Output extends AbstractOutput {
     public void triggerOff() {
         super.triggerOff();
 
-        //TODO implementieren
+        //TODO implementieren (Invertierung beachten)
     }
 }

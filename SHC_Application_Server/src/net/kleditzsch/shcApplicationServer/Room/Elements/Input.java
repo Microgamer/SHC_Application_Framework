@@ -19,7 +19,7 @@ public class Input extends AbstractInput {
     @Override
     public int readState() {
 
-        //TODO implementieren
+        //TODO implementieren (Invertierung beachten)
         return 0;
     }
 }

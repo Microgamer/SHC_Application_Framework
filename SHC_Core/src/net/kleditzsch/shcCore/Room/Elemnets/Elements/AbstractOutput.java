@@ -23,6 +23,11 @@ public abstract class AbstractOutput extends AbstractSwitchable {
     protected int pin;
 
     /**
+     * Invertierung
+     */
+    protected boolean invert = false;
+
+    /**
      * gibt den Schaltserver zurück
      *
      * @return Schaltserver
