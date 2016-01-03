@@ -4,19 +4,24 @@ import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractSwitchable;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
 
 /**
- * Script
+ * Script auf einem Schaltserver
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public abstract class AbstractScript extends AbstractSwitchable{
+public abstract class AbstractRemoteScript extends AbstractSwitchable {
 
     /**
      * Befehle
      */
     protected String onCommand;
     protected String offCommand;
+
+    /**
+     * Schaltserver
+     */
+    protected SwitchServer switchServer;
 
     /**
      * gibt den Ausschaltbefehl zurück
@@ -39,9 +44,9 @@ public abstract class AbstractScript extends AbstractSwitchable{
     /**
      * gibt den Einschaltbefehl zurück
      *
-     * @return Einschaltbefehl
+     * @return Ausschaltbefehl
      */
-    public String getOnCommand() {
+    public String Einschaltbefehl() {
         return onCommand;
     }
 
@@ -55,12 +60,30 @@ public abstract class AbstractScript extends AbstractSwitchable{
     }
 
     /**
+     * gibt den Schaltserver zurück
+     *
+     * @return Schaltserver
+     */
+    public SwitchServer getSwitchServer() {
+        return switchServer;
+    }
+
+    /**
+     * setzt den Schaltserver
+     *
+     * @param switchServer Schaltserver
+     */
+    public void setSwitchServer(SwitchServer switchServer) {
+        this.switchServer = switchServer;
+    }
+
+    /**
      * gibt den Typ des Elementes zurück
      *
      * @return Typ ID
      */
     @Override
     public int getType() {
-        return SCRIPT;
+        return REMOTE_SCRIPT;
     }
 }
