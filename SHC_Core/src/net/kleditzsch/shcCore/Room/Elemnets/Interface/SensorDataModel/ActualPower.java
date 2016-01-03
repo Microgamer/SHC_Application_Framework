@@ -1,4 +1,4 @@
-package net.kleditzsch.shcCore.Room.Elemnets.Interface.Model;
+package net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel;
 
 /**
  * Schnittstelle Sensorwert Momentanverbrauch
