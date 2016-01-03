@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class AbstractEdimaxSocket extends AbstractSwitchable {
+public abstract class AbstractEdimaxSocket extends AbstractSwitchable {
 
     /**
      * Typen

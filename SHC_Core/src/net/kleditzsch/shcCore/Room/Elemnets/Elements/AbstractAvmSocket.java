@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class AbstractAvmSocket extends AbstractSwitchable implements Temperature {
+public abstract class AbstractAvmSocket extends AbstractSwitchable implements Temperature {
 
     /**
      * Identifizierung der Steckdose (AIN oder MAC)
