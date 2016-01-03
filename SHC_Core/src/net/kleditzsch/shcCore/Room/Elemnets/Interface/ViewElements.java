@@ -26,6 +26,7 @@ public interface ViewElements {
     int REMOTE_REBOOT = 12;
     int SHUTDOWN = 13;
     int REMOTE_SHUTDOWN = 14;
+    int OUTPUT = 15;
 
     /**
      * schaltbare Gruppenelemente
