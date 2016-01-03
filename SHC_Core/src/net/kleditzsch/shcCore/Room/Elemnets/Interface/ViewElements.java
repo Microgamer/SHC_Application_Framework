@@ -22,6 +22,8 @@ public interface ViewElements {
     int EDIMAX_SOCKET = 9;
     int FRITZ_BOX = 10;
     int RADIO_SOCKET = 4;
+    int REBOOT = 11;
+    int REMOTE_REBOOT = 11;
 
     /**
      * schaltbare Gruppenelemente
