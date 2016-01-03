@@ -1,7 +1,7 @@
 package net.kleditzsch.shcCore.Room.Elemnets.Interface;
 
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.Model.ActualPower;
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.Model.Energy;
+import net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel.ActualPower;
+import net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel.Energy;
 
 import java.time.LocalDateTime;
 
