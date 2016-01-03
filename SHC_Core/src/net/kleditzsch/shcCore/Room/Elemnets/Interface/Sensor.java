@@ -16,31 +16,45 @@ public interface Sensor {
      *
      * @return true wenn aktiv
      */
-    public boolean isDataRecordingEnabled();
+    boolean isDataRecordingEnabled();
 
     /**
      * aktiviert/deaktiviert die Datenaufzeichnung
      *
      * @param enabled aktiviert/deaktiviert
      */
-    public void setDateRecordingEnabled(boolean enabled);
+    void setDateRecordingEnabled(boolean enabled);
 
     /**
      * gibt die Zeit des Letzten Kontaktes zum Sensor zurück
      *
      * @return Zeit
      */
-    public LocalDateTime getLastContactTime();
+    LocalDateTime getLastContactTime();
 
     /**
      * setzt die Zeit des letzten Kontaktes zum Sensor auf die übergebene Zeit
      *
      * @param ldt Zeit
      */
-    public void setLastContactTime(LocalDateTime ldt);
+    void setLastContactTime(LocalDateTime ldt);
 
     /**
      * setzt die Zeit des letzten Kontaktes zum Sensor auf die aktuelle Zeit
      */
-    public void setLastContactTimeNow();
+    void setLastContactTimeNow();
+
+    /**
+     * gibt die Identifizierung zurück
+     *
+     * @return Identifizierung
+     */
+    String getIdentifier();
+
+    /**
+     * setzt die Identifizierung
+     *
+     * @param identifier Identifizierung
+     */
+    void setIdentifier(String identifier);
 }

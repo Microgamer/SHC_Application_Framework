@@ -16,7 +16,7 @@ public abstract class AbstractSensor extends AbstractRoomElement implements Sens
     /**
      * Datenaufzeichnung aktiviert?
      */
-    protected boolean dataRecording;
+    protected boolean dataRecordingEnabled;
 
     /**
      * Zeitpunkt letzter Kontakt zum Sensor
@@ -24,12 +24,17 @@ public abstract class AbstractSensor extends AbstractRoomElement implements Sens
     protected LocalDateTime lastContactTime;
 
     /**
+     * Identifizierung für das Puschen von Sensorwerten
+     */
+    protected String identifier;
+
+    /**
      * gibt an ob die Datenaufzeichnung aktiviert/deaktiviert ist
      *
      * @return true wenn aktiv
      */
     public boolean isDataRecordingEnabled() {
-        return dataRecording;
+        return dataRecordingEnabled;
     }
 
     /**
@@ -37,8 +42,8 @@ public abstract class AbstractSensor extends AbstractRoomElement implements Sens
      *
      * @param enabled aktiviert/deaktiviert
      */
-    public void setDateRecordingEnabled(boolean enabled) {
-        dataRecording = enabled;
+    public void setDataRecordingEnabled(boolean enabled) {
+        dataRecordingEnabled = enabled;
     }
 
     /**
@@ -65,5 +70,23 @@ public abstract class AbstractSensor extends AbstractRoomElement implements Sens
     public void setLastContactTimeNow() {
 
         lastContactTime = LocalDateTime.now();
+    }
+
+    /**
+     * gibt die Identifizierung zurück
+     *
+     * @return Identifizierung
+     */
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    /**
+     * setzt die Identifizierung
+     *
+     * @param identifier Identifizierung
+     */
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 }
