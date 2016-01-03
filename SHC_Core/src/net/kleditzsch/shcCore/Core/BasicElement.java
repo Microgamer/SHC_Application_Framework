@@ -56,7 +56,7 @@ public abstract class BasicElement implements Element {
             md = MessageDigest.getInstance("SHA1");
 
             md.reset();
-            byte[] buffer = Long.toString(nanoTime).getBytes();
+            byte[] buffer = (Long.toString(nanoTime) + "-" + Integer.toString((int) Math.random() * 100_000)).getBytes();
             md.update(buffer);
             byte[] digest = md.digest();
 
