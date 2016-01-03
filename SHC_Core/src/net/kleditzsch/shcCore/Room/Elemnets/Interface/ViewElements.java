@@ -29,6 +29,7 @@ public interface ViewElements {
     int OUTPUT = 15;
     int SCRIPT = 16;
     int VIRTUAL_SOCKET = 17;
+    int WAKE_ON_LAN = 18;
 
     /**
      * schaltbare Gruppenelemente
