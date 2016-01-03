@@ -18,6 +18,7 @@ public interface ViewElements {
     /**
      * schaltbare Elemente
      */
+    int AVM_SOCKET = 8;
     int RADIO_SOCKET = 4;
 
     /**
