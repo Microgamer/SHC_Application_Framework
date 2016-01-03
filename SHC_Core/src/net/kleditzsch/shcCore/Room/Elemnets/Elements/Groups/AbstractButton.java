@@ -186,6 +186,6 @@ public abstract class AbstractButton extends AbstractSwitchableGroup {
      */
     @Override
     public int getType() {
-        return COUNTDOWN;
+        return BUTTON;
     }
 }
