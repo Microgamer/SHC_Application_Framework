@@ -1,24 +1,23 @@
 package net.kleditzsch.shcCore.Room;
 
-import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractRoomElement;
+import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractViewElement;
+import net.kleditzsch.shcCore.Room.Elemnets.Interface.Room;
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.RoomElement;
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.RoomElementGroup;
 import net.kleditzsch.shcCore.Util.Comparator.RoomElementsNameComparator;
 import net.kleditzsch.shcCore.Util.Comparator.RoomElementsOrderComparator;
+import net.kleditzsch.shcCore.Util.Constant;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
- * Box
+ * Raum
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class Box extends AbstractRoomElement implements net.kleditzsch.shcCore.Room.Elemnets.Interface.Box, RoomElementGroup {
+public abstract class AbstractRoom extends AbstractViewElement implements Room, RoomElementGroup {
 
     /**
      * Sortierung
@@ -203,6 +202,6 @@ public class Box extends AbstractRoomElement implements net.kleditzsch.shcCore.R
      * @return Typ ID
      */
     public int getType() {
-        return BOX;
+        return ROOM;
     }
 }
