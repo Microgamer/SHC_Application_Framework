@@ -17,6 +17,13 @@ public interface Temperature {
     double getTemperature();
 
     /**
+     * setzt die Temperatur
+     *
+     * @param temerature Termeratur
+     */
+    void setTemerature(double temerature);
+
+    /**
      * gibt das Offset zurück
      *
      * @return Offset

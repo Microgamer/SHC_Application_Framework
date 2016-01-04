@@ -15,4 +15,11 @@ public interface Amount {
      * @return Menge
      */
     double getAmount();
+
+    /**
+     * setzt die Mange
+     *
+     * @param amount Menge
+     */
+    void setAmount(double amount);
 }

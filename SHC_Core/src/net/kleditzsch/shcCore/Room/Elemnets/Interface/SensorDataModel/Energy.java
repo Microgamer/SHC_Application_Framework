@@ -15,4 +15,11 @@ public interface Energy {
      * @return Energieverbrauch Wh
      */
     double getEnergy();
+
+    /**
+     * setzt den Energieverbrauch
+     *
+     * @param energy Energieverbrauch
+     */
+    void setEnergy(double energy);
 }

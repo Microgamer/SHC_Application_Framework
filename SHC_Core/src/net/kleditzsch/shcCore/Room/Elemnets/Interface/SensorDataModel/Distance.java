@@ -17,6 +17,13 @@ public interface Distance {
     double getDistance();
 
     /**
+     * setzt die Entfernung
+     *
+     * @param distance Entfernung
+     */
+    void setDistance(double distance);
+
+    /**
      * gibt das Offset zurück
      *
      * @return Offset

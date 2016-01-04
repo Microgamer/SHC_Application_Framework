@@ -15,4 +15,11 @@ public interface Altitude {
      * @return Standorthöhe
      */
     double getAltitude();
+
+    /**
+     * setzt die Standorthöhe
+     *
+     * @param altitude Standorthöhe
+     */
+    void setAltitude(double altitude);
 }

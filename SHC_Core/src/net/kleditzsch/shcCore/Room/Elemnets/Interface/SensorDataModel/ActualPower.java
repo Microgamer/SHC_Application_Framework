@@ -15,4 +15,11 @@ public interface ActualPower {
      * @return Energieverbrauch in W
      */
     double getActualPower();
+
+    /**
+     * setzt den den aktuellen Energieverbrauch
+     *
+     * @param actualPower Energieverbrauch in W
+     */
+    void setActualPower(double actualPower);
 }

@@ -15,4 +15,11 @@ public interface Moisture {
      * @return Feuchtigkeit
      */
     double getMoisture();
+
+    /**
+     * setzt die Feuchtigkeit
+     *
+     * @param moisture Feuchtigkeit
+     */
+    void  setMoisture(double moisture);
 }

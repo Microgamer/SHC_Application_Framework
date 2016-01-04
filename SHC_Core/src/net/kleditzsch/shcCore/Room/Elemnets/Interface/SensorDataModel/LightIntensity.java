@@ -15,4 +15,11 @@ public interface LightIntensity {
      * @return Lichtstärke
      */
     double getLightIntensity();
+
+    /**
+     * setzt die Lichtstärke
+     *
+     * @param lightIntenisty Lichtstärke
+     */
+    void setLightIntenisty(double lightIntenisty);
 }

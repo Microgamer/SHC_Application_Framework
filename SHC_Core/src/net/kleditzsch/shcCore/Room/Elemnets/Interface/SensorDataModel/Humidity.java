@@ -15,4 +15,11 @@ public interface Humidity {
      * @return Luftfeuchtigkeit
      */
     double getHumidity();
+
+    /**
+     * setzt die Luftfeuchtigkeit
+     *
+     * @param humidity Luftfeuchtigkeit
+     */
+    void setHumidity(double humidity);
 }

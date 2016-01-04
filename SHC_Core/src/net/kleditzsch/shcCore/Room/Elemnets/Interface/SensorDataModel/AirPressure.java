@@ -15,4 +15,11 @@ public interface AirPressure {
      * @return Luftdruck
      */
     double getAirPressure();
+
+    /**
+     * setzt den Luftdruck
+     *
+     * @param airPressure Luftdruck
+     */
+    void setAirPressure(double airPressure);
 }
