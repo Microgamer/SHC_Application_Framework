@@ -23,7 +23,7 @@ public interface Sensor {
      *
      * @param enabled aktiviert/deaktiviert
      */
-    void setDateRecordingEnabled(boolean enabled);
+    void setDataRecordingEnabled(boolean enabled);
 
     /**
      * gibt die Zeit des Letzten Kontaktes zum Sensor zurück

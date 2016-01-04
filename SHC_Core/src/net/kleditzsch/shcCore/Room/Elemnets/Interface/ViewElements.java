@@ -18,34 +18,46 @@ public interface ViewElements {
     /**
      * schaltbare Elemente
      */
-    int AVM_SOCKET = 8;
-    int EDIMAX_SOCKET = 9;
-    int FRITZ_BOX = 10;
-    int RADIO_SOCKET = 4;
-    int REBOOT = 11;
-    int REMOTE_REBOOT = 12;
-    int SHUTDOWN = 13;
-    int REMOTE_SHUTDOWN = 14;
-    int OUTPUT = 15;
-    int SCRIPT = 16;
-    int REMOTE_SCRIPT = 17;
-    int VIRTUAL_SOCKET = 18;
-    int WAKE_ON_LAN = 19;
-    int BUTTON = 20;
+    int AVM_SOCKET = 50;
+    int EDIMAX_SOCKET = 51;
+    int FRITZ_BOX = 52;
+    int RADIO_SOCKET = 53;
+    int REBOOT = 54;
+    int REMOTE_REBOOT = 55;
+    int SHUTDOWN = 56;
+    int REMOTE_SHUTDOWN = 57;
+    int OUTPUT = 58;
+    int SCRIPT = 59;
+    int REMOTE_SCRIPT = 60;
+    int VIRTUAL_SOCKET = 61;
+    int WAKE_ON_LAN = 62;
+    int BUTTON = 63;
 
     /**
      * schaltbare Gruppenelemente
      */
-    int ACTIVITY = 5;
-    int COUNTDOWN = 6;
+    int ACTIVITY = 100;
+    int COUNTDOWN = 101;
 
     /**
      * lesbare Elemente
      */
-    int INPUT = 3;
-    int USER_AT_HOME = 7;
+    int INPUT = 150;
+    int USER_AT_HOME = 151;
 
     /**
      * Sensoren
      */
+    int BMP = 200;
+    int COMET_THERMOSTAT = 201;
+    int DHT = 202;
+    int DS18X20 = 203;
+    int GAS_METER = 204;
+    int WATER_METER = 205;
+    int ELECTRICMETER = 206;
+    int HC_SR04 = 207;
+    int HYGROMETER = 208;
+    int LDR = 209;
+    int RAIN = 210;
+    int SCT_013 = 211;
 }
