@@ -5,6 +5,8 @@ import net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel.AirPressur
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel.Altitude;
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel.Temperature;
 
+import java.time.LocalDateTime;
+
 /**
  * BMP Sensor
  *
@@ -12,7 +14,7 @@ import net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel.Temperatur
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class AbstractBmp extends AbstractSensor implements Temperature, AirPressure, Altitude {
+public abstract class AbstractBmp extends AbstractSensor implements Temperature, AirPressure, Altitude {
 
     /**
      * Sensorwerte
@@ -20,6 +22,11 @@ public class AbstractBmp extends AbstractSensor implements Temperature, AirPress
     protected double airPressure;
     protected double altitude;
     protected double temerature;
+
+    /**
+     * Temperatur Offset
+     */
+    protected double temparatureOffset = 0.0;
 
     /**
      * gibt den Luftdruck zurück
@@ -79,6 +86,24 @@ public class AbstractBmp extends AbstractSensor implements Temperature, AirPress
     }
 
     /**
+     * gibt das Offset zurück
+     *
+     * @return Offset
+     */
+    public double getTemperatureOffset() {
+        return this.temparatureOffset;
+    }
+
+    /**
+     * setzt das Offset
+     *
+     * @param offset Offset
+     */
+    public void setTemperatureOffset(double offset) {
+        this.temparatureOffset = offset;
+    }
+
+    /**
      * setzt die Sensorwerte
      *
      * @param airPressure Luftdruck
@@ -90,6 +115,7 @@ public class AbstractBmp extends AbstractSensor implements Temperature, AirPress
         this.airPressure = airPressure;
         this.altitude = altitude;
         this.temerature = temerature;
+        this.lastContactTime = LocalDateTime.now();
     }
 
     /**

@@ -15,4 +15,18 @@ public interface Temperature {
      * @return Temperatur
      */
     double getTemperature();
+
+    /**
+     * gibt das Offset zurück
+     *
+     * @return Offset
+     */
+    double getTemperatureOffset();
+
+    /**
+     * setzt das Offset
+     *
+     * @param offset Offset
+     */
+    void setTemperatureOffset(double offset);
 }
