@@ -1,7 +1,5 @@
 package net.kleditzsch.shcCore.SwitchServer;
 
-import net.kleditzsch.shcCore.Core.BasicElement;
-
 /**
  * Kommentar
  *
@@ -9,7 +7,7 @@ import net.kleditzsch.shcCore.Core.BasicElement;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class SwitchServer extends BasicElement implements net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer {
+public class MicroControllerSwitchServer {
 
     /**
      * IP Adresse
@@ -50,6 +48,21 @@ public class SwitchServer extends BasicElement implements net.kleditzsch.shcCore
      * lesen von GPIOs aktiv
      */
     protected boolean readGpioEnabled = true;
+
+    /**
+     * Scripte aktiv?
+     */
+    protected boolean scriptEnabled = true;
+
+    /**
+     * Reboot aktiv?
+     */
+    protected boolean rebootEnabled = true;
+
+    /**
+     * Shutdown Aktiv?
+     */
+    protected boolean shutdownEnabled = true;
 
     /**
      * gibt die IP Adresse zurück
@@ -110,7 +123,7 @@ public class SwitchServer extends BasicElement implements net.kleditzsch.shcCore
      *
      * @return Geräte ID
      */
-    public int getDevice() {
+    public int getDeviceId() {
         return deviceId;
     }
 
@@ -193,5 +206,59 @@ public class SwitchServer extends BasicElement implements net.kleditzsch.shcCore
      */
     public void setReadGpioEnabled(boolean readGpioEnabled) {
         this.readGpioEnabled = readGpioEnabled;
+    }
+
+    /**
+     * gibt an ob der Schaltserver Scripte ausführen kann
+     *
+     * @return aktiviert/deaktiviert
+     */
+    public boolean isScriptEnabled() {
+        return scriptEnabled;
+    }
+
+    /**
+     * aktiviert/deaktiviert das Ausführen von Scripten
+     *
+     * @param scriptEnabled aktiviert/deaktiviert
+     */
+    public void setScriptEnabled(boolean scriptEnabled) {
+        this.scriptEnabled = scriptEnabled;
+    }
+
+    /**
+     * gibt an ob der Schaltserver neu gestartet werden kann
+     *
+     * @return aktiviert/deaktiviert
+     */
+    public boolean isRebootEnabled() {
+        return rebootEnabled;
+    }
+
+    /**
+     * aktiviert/deaktiviert das Neustarten des Schaltservers
+     *
+     * @param rebootEnabled aktiviert/deaktiviert
+     */
+    public void setRebootEnabled(boolean rebootEnabled) {
+        this.rebootEnabled = rebootEnabled;
+    }
+
+    /**
+     * gibt an ob der Schaltserver Heruntergefahren werden kann
+     *
+     * @return aktiviert/deaktiviert
+     */
+    public boolean isShutdownEnabled() {
+        return shutdownEnabled;
+    }
+
+    /**
+     * aktiviert/deaktiviert das Herunterfahren des Schaltservers
+     *
+     * @param shutdownEnabled aktiviert/deaktiviert
+     */
+    public void setShutdownEnabled(boolean shutdownEnabled) {
+        this.shutdownEnabled = shutdownEnabled;
     }
 }

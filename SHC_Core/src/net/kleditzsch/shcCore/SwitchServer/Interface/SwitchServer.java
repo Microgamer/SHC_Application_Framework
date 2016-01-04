@@ -58,7 +58,7 @@ public interface SwitchServer extends Element {
      *
      * @return Geräte ID
      */
-    int getDevice();
+    int getDeviceId();
 
     /**
      * setzt die Geräte ID
@@ -122,4 +122,46 @@ public interface SwitchServer extends Element {
      * @param readGpioEnabled aktiviert/deaktiviert
      */
     void setReadGpioEnabled(boolean readGpioEnabled);
+
+    /**
+     * gibt an ob der Schaltserver Scripte ausführen kann
+     *
+     * @return aktiviert/deaktiviert
+     */
+    boolean isScriptEnabled();
+
+    /**
+     * aktiviert/deaktiviert das Ausführen von Scripten
+     *
+     * @param scriptEnabled aktiviert/deaktiviert
+     */
+    void setScriptEnabled(boolean scriptEnabled);
+
+    /**
+     * gibt an ob der Schaltserver neu gestartet werden kann
+     *
+     * @return aktiviert/deaktiviert
+     */
+    boolean isRebootEnabled();
+
+    /**
+     * aktiviert/deaktiviert das Neustarten des Schaltservers
+     *
+     * @param rebootEnabled aktiviert/deaktiviert
+     */
+    void setRebootEnabled(boolean rebootEnabled);
+
+    /**
+     * gibt an ob der Schaltserver Heruntergefahren werden kann
+     *
+     * @return aktiviert/deaktiviert
+     */
+    boolean isShutdownEnabled();
+
+    /**
+     * aktiviert/deaktiviert das Herunterfahren des Schaltservers
+     *
+     * @param shutdownEnabled aktiviert/deaktiviert
+     */
+    void setShutdownEnabled(boolean shutdownEnabled);
 }
