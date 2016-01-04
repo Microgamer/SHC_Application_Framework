@@ -49,7 +49,7 @@ public interface ViewElements {
      * Sensoren
      */
     int BMP = 200;
-    int COMET_THERMOSTAT = 201;
+    //int COMET_THERMOSTAT = 201;
     int DHT = 202;
     int DS18X20 = 203;
     int GAS_METER = 204;

@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
- * Kommentar
+ * Edimax Steckdose
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
@@ -110,6 +110,19 @@ public abstract class AbstractEdimaxSocket extends AbstractSwitchable {
      */
     public void setSocketType(int socketType) {
         this.socketType = socketType;
+    }
+
+    /**
+     * setzt die Sensorwerte
+     *
+     * @param actualPower Momentanverbrauch
+     * @param energy Energieverbrauch
+     */
+    public void pushValues(double actualPower, double energy) {
+
+        this.actualPower = actualPower;
+        this.energy = energy;
+        this.lastContactTime = LocalDateTime.now();
     }
 
     /**

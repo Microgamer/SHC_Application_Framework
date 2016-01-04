@@ -28,7 +28,7 @@ public abstract class AbstractAvmSocket extends AbstractSwitchable implements Te
     /**
      * Temperatur Offset
      */
-    protected double temparatureOffset = 0.0;
+    protected double temperatureOffset = 0.0;
 
     /**
      * gibt die Identifizierung der Steckdose zurück
@@ -73,7 +73,7 @@ public abstract class AbstractAvmSocket extends AbstractSwitchable implements Te
      * @return Offset
      */
     public double getTemperatureOffset() {
-        return this.temparatureOffset;
+        return this.temperatureOffset;
     }
 
     /**
@@ -82,7 +82,22 @@ public abstract class AbstractAvmSocket extends AbstractSwitchable implements Te
      * @param offset Offset
      */
     public void setTemperatureOffset(double offset) {
-        this.temparatureOffset = offset;
+        this.temperatureOffset = offset;
+    }
+
+    /**
+     * setzt die Sensorwerte
+     *
+     * @param temperature Temperatur
+     * @param actualPower Momentanverbrauch
+     * @param energy Energieverbrauch
+     */
+    public void pushValues(double temperature, double actualPower, double energy) {
+
+        this.temperature = temperature;
+        this.actualPower = actualPower;
+        this.energy = energy;
+        this.lastContactTime = LocalDateTime.now();
     }
 
     /**

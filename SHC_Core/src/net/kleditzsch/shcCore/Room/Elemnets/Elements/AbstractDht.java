@@ -1,70 +1,30 @@
 package net.kleditzsch.shcCore.Room.Elemnets.Elements;
 
 import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractSensor;
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel.AirPressure;
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel.Altitude;
+import net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel.Humidity;
 import net.kleditzsch.shcCore.Room.Elemnets.Interface.SensorDataModel.Temperature;
 
 import java.time.LocalDateTime;
 
 /**
- * BMP Sensor
+ * DHT
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public abstract class AbstractBmp extends AbstractSensor implements Temperature, AirPressure, Altitude {
+public abstract class AbstractDht extends AbstractSensor implements Temperature, Humidity {
 
     /**
      * Sensorwerte
      */
-    protected double airPressure;
-    protected double altitude;
     protected double temerature;
+    protected double humidity;
 
     /**
      * Temperatur Offset
      */
     protected double temperatureOffset = 0.0;
-
-    /**
-     * gibt den Luftdruck zurück
-     *
-     * @return Luftdruck
-     */
-    @Override
-    public double getAirPressure() {
-        return airPressure;
-    }
-
-    /**
-     * setzt den Luftdruck
-     *
-     * @param airPressure Luftdruck
-     */
-    public void setAirPressure(double airPressure) {
-        this.airPressure = airPressure;
-    }
-
-    /**
-     * gibt die Standorthöhe zurück
-     *
-     * @return Standorthöhe
-     */
-    @Override
-    public double getAltitude() {
-        return altitude;
-    }
-
-    /**
-     * setzt die Standorthöhe
-     *
-     * @param altitude Standorthöhe
-     */
-    public void setAltitude(double altitude) {
-        this.altitude = altitude;
-    }
 
     /**
      * gibt die Temperatur zurück
@@ -104,17 +64,34 @@ public abstract class AbstractBmp extends AbstractSensor implements Temperature,
     }
 
     /**
+     * gibt die Luftfeuchtigkeit zurück
+     *
+     * @return Luftfeuchtigkeit
+     */
+    @Override
+    public double getHumidity() {
+        return this.humidity;
+    }
+
+    /**
+     * setzt die Luftfeuchtigkeit
+     *
+     * @param humidity Luftfeuchtigkeit
+     */
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
+    }
+
+    /**
      * setzt die Sensorwerte
      *
-     * @param airPressure Luftdruck
-     * @param altitude Standorthöhe
      * @param temerature Temperatur
+     * @param humidity Luftfeuchtigkeit
      */
-    public void pushValues(double airPressure, double altitude, double temerature) {
+    public void pushValues(double temerature, double humidity) {
 
-        this.airPressure = airPressure;
-        this.altitude = altitude;
         this.temerature = temerature;
+        this.humidity = humidity;
         this.lastContactTime = LocalDateTime.now();
     }
 
@@ -125,6 +102,6 @@ public abstract class AbstractBmp extends AbstractSensor implements Temperature,
      */
     @Override
     public int getType() {
-        return BMP;
+        return DHT;
     }
 }
