@@ -37,24 +37,6 @@ public abstract class AbstractActivity extends AbstractSwitchableGroup {
     }
 
     /**
-     * fügt ein schaltbares Element hinzu
-     *
-     * @param switchable schaltbares Element
-     * @param command    Kommando
-     * @return true bei erfolg
-     */
-    @Override
-    public boolean addSwitchable(Switchable switchable, int command) {
-
-        //
-        if(switchable instanceof AbstractActivity) {
-
-            return false;
-        }
-        return super.addSwitchable(switchable, command);
-    }
-
-    /**
      * Aktion die bei Betätigung des "an" Buttons ausgeführt wird
      */
     @Override

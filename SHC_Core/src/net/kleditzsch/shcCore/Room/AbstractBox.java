@@ -2,6 +2,7 @@ package net.kleditzsch.shcCore.Room;
 
 import net.kleditzsch.shcCore.Room.Elements.Abstract.AbstractRoomElement;
 import net.kleditzsch.shcCore.Room.Elements.Interface.Box;
+import net.kleditzsch.shcCore.Room.Elements.Interface.Room;
 import net.kleditzsch.shcCore.Room.Elements.Interface.RoomElement;
 import net.kleditzsch.shcCore.Room.Elements.Interface.RoomElementGroup;
 import net.kleditzsch.shcCore.Util.Comparator.RoomElementsNameComparator;
@@ -57,7 +58,7 @@ public abstract class AbstractBox extends AbstractRoomElement implements Box, Ro
      */
     public boolean addRoomElement(RoomElement roomElement) {
 
-        if(!roomElements.containsValue(roomElement)) {
+        if(!roomElements.containsValue(roomElement) && !(roomElement instanceof Room) && !(roomElement instanceof Box)) {
 
             //höchste Sortingungs ID ermitteln
             int max = 0;
