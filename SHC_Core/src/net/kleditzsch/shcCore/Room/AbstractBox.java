@@ -1,9 +1,9 @@
 package net.kleditzsch.shcCore.Room;
 
-import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractRoomElement;
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.Box;
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.RoomElement;
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.RoomElementGroup;
+import net.kleditzsch.shcCore.Room.Elements.Abstract.AbstractRoomElement;
+import net.kleditzsch.shcCore.Room.Elements.Interface.Box;
+import net.kleditzsch.shcCore.Room.Elements.Interface.RoomElement;
+import net.kleditzsch.shcCore.Room.Elements.Interface.RoomElementGroup;
 import net.kleditzsch.shcCore.Util.Comparator.RoomElementsNameComparator;
 import net.kleditzsch.shcCore.Util.Comparator.RoomElementsOrderComparator;
 

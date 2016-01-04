@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Room.Elements;
 
-import net.kleditzsch.shcCore.Room.Elemnets.Elements.AbstractAvmSocket;
+import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractAvmSocket;
 
 /**
  * AVM STeckdose

@@ -1,7 +1,7 @@
 package net.kleditzsch.shcApplicationServer.Room.Elements.Groups;
 
 
-import net.kleditzsch.shcCore.Room.Elemnets.Elements.Groups.AbstractButton;
+import net.kleditzsch.shcCore.Room.Elements.Elements.Groups.AbstractButton;
 
 /**
  * Taster

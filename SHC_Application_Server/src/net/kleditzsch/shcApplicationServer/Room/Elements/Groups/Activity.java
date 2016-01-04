@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Room.Elements.Groups;
 
-import net.kleditzsch.shcCore.Room.Elemnets.Elements.Groups.AbstractActivity;
+import net.kleditzsch.shcCore.Room.Elements.Elements.Groups.AbstractActivity;
 
 /**
  * Aktivität

@@ -1,6 +1,6 @@
 package net.kleditzsch.shcCore.Util.Comparator;
 
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.RoomElement;
+import net.kleditzsch.shcCore.Room.Elements.Interface.RoomElement;
 
 import java.util.Comparator;
 import java.util.Map;

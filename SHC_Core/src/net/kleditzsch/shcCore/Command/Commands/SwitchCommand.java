@@ -1,6 +1,6 @@
 package net.kleditzsch.shcCore.Command.Commands;
 
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.Switchable;
+import net.kleditzsch.shcCore.Room.Elements.Interface.Switchable;
 import net.kleditzsch.shcCore.Util.Constant;
 
 /**

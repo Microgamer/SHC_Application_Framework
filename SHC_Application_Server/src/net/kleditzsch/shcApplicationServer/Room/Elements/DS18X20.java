@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Room.Elements;
 
-import net.kleditzsch.shcCore.Room.Elemnets.Elements.AbstractDS18X20;
+import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractDS18X20;
 
 /**
  * DS18X20

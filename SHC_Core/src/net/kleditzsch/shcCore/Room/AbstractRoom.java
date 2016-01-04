@@ -1,12 +1,11 @@
 package net.kleditzsch.shcCore.Room;
 
-import net.kleditzsch.shcCore.Room.Elemnets.Abstract.AbstractViewElement;
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.Room;
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.RoomElement;
-import net.kleditzsch.shcCore.Room.Elemnets.Interface.RoomElementGroup;
+import net.kleditzsch.shcCore.Room.Elements.Abstract.AbstractViewElement;
+import net.kleditzsch.shcCore.Room.Elements.Interface.Room;
+import net.kleditzsch.shcCore.Room.Elements.Interface.RoomElement;
+import net.kleditzsch.shcCore.Room.Elements.Interface.RoomElementGroup;
 import net.kleditzsch.shcCore.Util.Comparator.RoomElementsNameComparator;
 import net.kleditzsch.shcCore.Util.Comparator.RoomElementsOrderComparator;
-import net.kleditzsch.shcCore.Util.Constant;
 
 import java.util.*;
 
