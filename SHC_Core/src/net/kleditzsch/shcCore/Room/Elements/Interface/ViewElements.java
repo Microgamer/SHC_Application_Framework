@@ -54,7 +54,7 @@ public interface ViewElements {
     int DS18X20 = 203;
     int GAS_METER = 204;
     int WATER_METER = 205;
-    int ELECTRICMETER = 206;
+    int ELECTRIC_METER = 206;
     int HC_SR04 = 207;
     int HYGROMETER = 208;
     int LDR = 209;
