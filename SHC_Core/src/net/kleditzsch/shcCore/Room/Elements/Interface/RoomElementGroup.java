@@ -17,7 +17,7 @@ public interface RoomElementGroup extends ViewElement {
      * @param roomElement Raum Element
      * @return true bei Erfolg
      */
-    public boolean addRoomElement(RoomElement roomElement);
+    boolean addRoomElement(RoomElement roomElement);
 
     /**
      * fügt dem Raum ein neues Element hinzu
@@ -26,7 +26,7 @@ public interface RoomElementGroup extends ViewElement {
      * @param orderId Sortierungs ID
      * @return true bei Erfolg
      */
-    public boolean addRoomElement(RoomElement roomElement, int orderId);
+    boolean addRoomElement(RoomElement roomElement, int orderId);
 
     /**
      * entfernt ein Raum Element
@@ -34,7 +34,7 @@ public interface RoomElementGroup extends ViewElement {
      * @param roomElement Raum Element
      * @return true bei Erfolg
      */
-    public boolean removeRoomElement(RoomElement roomElement);
+    boolean removeRoomElement(RoomElement roomElement);
 
     /**
      * setzt für ein Raum Element eine neue Sortierungs ID
@@ -43,7 +43,7 @@ public interface RoomElementGroup extends ViewElement {
      * @param orderId Sortierungs ID
      * @return true bei Erfolg
      */
-    public boolean updateOrderId(RoomElement roomElement, int orderId);
+    boolean updateOrderId(RoomElement roomElement, int orderId);
 
     /**
      * prüft ob ein Raum Element im Raum vorhanden ist
@@ -51,26 +51,26 @@ public interface RoomElementGroup extends ViewElement {
      * @param roomElement Raum Element
      * @return true wenn vorhanden
      */
-    public boolean containsRoomElement(RoomElement roomElement);
+    boolean containsRoomElement(RoomElement roomElement);
 
     /**
      * gibt eine Liste mit allen Raum Elementen und deren Sortierungen zurück
      *
      * @return Raum Elemente
      */
-    public Map<Integer, RoomElement> getRoomElements();
+    Map<Integer, RoomElement> getRoomElements();
 
     /**
      * gibt eine nach Namen sortierte Liste der Raum Elemente und deren Sortierungen zurück
      *
      * @return Raum Elemente
      */
-    public Map<Integer, RoomElement> getRoomElementsOrderedByName();
+    Map<Integer, RoomElement> getRoomElementsOrderedByName();
 
     /**
      * gibt eine nach Sortierungs ID sortierte Liste der Raum Elemente und deren Sortierungen zurück
      *
      * @return Raum Elemente
      */
-    public Map<Integer, RoomElement> getRoomElementsOrderedByOrderId();
+    Map<Integer, RoomElement> getRoomElementsOrderedByOrderId();
 }
