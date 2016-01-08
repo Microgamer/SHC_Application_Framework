@@ -60,4 +60,15 @@ public interface ViewElements {
     int LDR = 209;
     int RAIN = 210;
     int SCT_013 = 211;
+
+    /**
+     * virtuelle Sensoren
+     */
+    int VIRTUAL_ENERGY = 250;
+    int VIRTUAL_AMOUNT = 251;
+    int VIRTUAL_HUMIDITY = 252;
+    int VIRTUAL_LIGHT_INTENSITY = 253;
+    int VIRTUAL_MOISTURE = 254;
+    int VIRTUAL_ACTUEL_POWER = 255;
+    int VIRTUAL_TEMPERATURE = 256;
 }
