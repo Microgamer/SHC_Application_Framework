@@ -53,7 +53,7 @@ public abstract class AbstractVirtualAmount extends AbstractVirtualSensor {
     }
 
     /**
-     * gibt den gesamten Energieverbrauch an
+     * gibt die Summer zurück
      *
      * @return Summe
      */

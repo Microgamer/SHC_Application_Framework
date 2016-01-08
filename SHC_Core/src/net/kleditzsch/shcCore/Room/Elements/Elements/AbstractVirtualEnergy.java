@@ -75,7 +75,7 @@ public abstract class AbstractVirtualEnergy extends AbstractVirtualSensor {
     }
 
     /**
-     * gibt den minimalen Energieverbrauch an
+     * gibt den Minimalwert
      *
      * @return Minimalwert
      */
@@ -84,7 +84,7 @@ public abstract class AbstractVirtualEnergy extends AbstractVirtualSensor {
     }
 
     /**
-     * gibt den mittleren Energieverbrauch an
+     * gibt den Mittelwert zurück
      *
      * @return Mittelwert
      */
@@ -93,7 +93,7 @@ public abstract class AbstractVirtualEnergy extends AbstractVirtualSensor {
     }
 
     /**
-     * gibt den maximalen Energieverbrauch an
+     * gibt den Maximalwert zurück
      *
      * @return Maximalwert
      */
@@ -102,7 +102,7 @@ public abstract class AbstractVirtualEnergy extends AbstractVirtualSensor {
     }
 
     /**
-     * gibt den gesamten Energieverbrauch an
+     * gibt die Summer zurück
      *
      * @return Summe
      */
