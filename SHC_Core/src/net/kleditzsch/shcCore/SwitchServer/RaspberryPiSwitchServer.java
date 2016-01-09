@@ -264,4 +264,14 @@ public class RaspberryPiSwitchServer extends BasicElement implements SwitchServe
     public void setShutdownEnabled(boolean shutdownEnabled) {
         this.shutdownEnabled = shutdownEnabled;
     }
+
+    /**
+     * gibt den Typ des Schaltservers an
+     *
+     * @return Typ
+     */
+    @Override
+    public int getType() {
+        return SWITCH_SERVER_RASPBERRY_PI;
+    }
 }

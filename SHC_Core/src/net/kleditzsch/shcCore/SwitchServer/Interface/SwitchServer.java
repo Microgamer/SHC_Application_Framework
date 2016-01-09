@@ -12,6 +12,12 @@ import net.kleditzsch.shcCore.Core.Element;
 public interface SwitchServer extends Element {
 
     /**
+     * Schaltserver Arten
+     */
+    int SWITCH_SERVER_RASPBERRY_PI = 1;
+    int SWITCH_SERVER_MICRO_CONTROLLER = 1;
+
+    /**
      * gibt die IP Adresse zurück
      *
      * @return IP Adresse
@@ -164,4 +170,11 @@ public interface SwitchServer extends Element {
      * @param shutdownEnabled aktiviert/deaktiviert
      */
     void setShutdownEnabled(boolean shutdownEnabled);
+
+    /**
+     * gibt den Typ des Schaltservers an
+     *
+     * @return Typ
+     */
+    int getType();
 }

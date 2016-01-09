@@ -1,5 +1,8 @@
 package net.kleditzsch.shcCore.SwitchServer;
 
+import net.kleditzsch.shcCore.Core.BasicElement;
+import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
+
 /**
  * Kommentar
  *
@@ -7,7 +10,7 @@ package net.kleditzsch.shcCore.SwitchServer;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class MicroControllerSwitchServer {
+public class MicroControllerSwitchServer extends BasicElement implements SwitchServer {
 
     /**
      * IP Adresse
@@ -260,5 +263,15 @@ public class MicroControllerSwitchServer {
      */
     public void setShutdownEnabled(boolean shutdownEnabled) {
         this.shutdownEnabled = shutdownEnabled;
+    }
+
+    /**
+     * gibt den Typ des Schaltservers an
+     *
+     * @return Typ
+     */
+    @Override
+    public int getType() {
+        return SWITCH_SERVER_MICRO_CONTROLLER;
     }
 }
