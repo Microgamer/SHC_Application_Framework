@@ -60,6 +60,7 @@ public interface ViewElements {
     int LDR = 209;
     int RAIN = 210;
     int SCT_013 = 211;
+    int BATTERY = 212;
 
     /**
      * virtuelle Sensoren
