@@ -1,4 +1,4 @@
-package net.kleditzsch.shcApplicationServer.Json.Deserializer;
+package net.kleditzsch.shcApplicationServer.Json.Deserializer.User;
 
 import com.google.gson.*;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
