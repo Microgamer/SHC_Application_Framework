@@ -23,12 +23,14 @@ public class UserAtHome extends AbstractUserAtHome {
     @Override
     public int readState() {
 
+        int state;
         try {
 
             InetAddress inetAddress = InetAddress.getByName(ipAddress);
             if(inetAddress.isReachable(500)) {
 
                 state = ONLINE;
+                updateLastContact();
             } else {
 
                 state = OFFLINE;
