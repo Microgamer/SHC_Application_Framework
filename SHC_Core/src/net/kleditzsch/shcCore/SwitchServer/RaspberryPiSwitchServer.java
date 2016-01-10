@@ -4,7 +4,7 @@ import net.kleditzsch.shcCore.Core.BasicElement;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
 
 /**
- * Kommentar
+ * Schaltserver für Rasberry Pi
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch

@@ -15,7 +15,7 @@ public interface SwitchServer extends Element {
      * Schaltserver Arten
      */
     int SWITCH_SERVER_RASPBERRY_PI = 1;
-    int SWITCH_SERVER_MICRO_CONTROLLER = 1;
+    int SWITCH_SERVER_MICRO_CONTROLLER = 2;
 
     /**
      * gibt die IP Adresse zurück
