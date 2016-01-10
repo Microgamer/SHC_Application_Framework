@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.Json.Deserializer.User.UserDeserializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.User.UserSerializer;
+import net.kleditzsch.shcApplicationServer.Room.RoomEditor;
 import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
 import net.kleditzsch.shcApplicationServer.User.UserEditor;
@@ -67,6 +68,11 @@ public class ShcApplicationServer {
      * Sessionverwaltung
      */
     private SessionEditor sessionEditor;
+
+    /**
+     * Raum Verwaltung
+     */
+    private RoomEditor roomEditor;
 
     /**
      * Eintrittspunkt in die Anwendung
@@ -184,6 +190,10 @@ public class ShcApplicationServer {
         //Sessions laden
         sessionEditor = new SessionEditor();
         sessionEditor.loadData();
+
+        //Räume laden
+        roomEditor = new RoomEditor();
+        roomEditor.loadData();
     }
 
     /**
@@ -203,6 +213,16 @@ public class ShcApplicationServer {
     public UserEditor getUserEditor() {
 
         return userEditor;
+    }
+
+    /**
+     * gibt den Raum Editor zurück
+     *
+     * @return
+     */
+    public RoomEditor getRoomEditor() {
+
+        return roomEditor;
     }
 
     /**
