@@ -1,6 +1,6 @@
 package net.kleditzsch.shcCore.Room.Elements.Abstract;
 
-import net.kleditzsch.shcCore.Command.Commands.SwitchCommand;
+import net.kleditzsch.shcCore.Command.Interface.SwitchCommand;
 import net.kleditzsch.shcCore.Room.Elements.Interface.Switchable;
 import net.kleditzsch.shcCore.Room.Elements.Interface.SwitchableGroup;
 
@@ -33,7 +33,7 @@ public abstract class AbstractSwitchableGroup extends AbstractSwitchable impleme
 
         if(!containsSwitchable(switchable) && !(switchable instanceof SwitchableGroup)) {
 
-            commands.add(new SwitchCommand(switchable, command));
+            commands.add(new net.kleditzsch.shcCore.Command.Commands.SwitchCommand(switchable, command));
             return true;
         }
         return false;
@@ -82,5 +82,15 @@ public abstract class AbstractSwitchableGroup extends AbstractSwitchable impleme
             }
         }
         return false;
+    }
+
+    /**
+     * gibt eine Liste mit allen Kommandos zurück
+     *
+     * @return Liste mit Kommandos
+     */
+    public List<SwitchCommand> getCommands() {
+
+        return this.commands;
     }
 }

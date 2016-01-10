@@ -1,6 +1,6 @@
 package net.kleditzsch.shcCore.Room.Elements.Elements.Groups;
 
-import net.kleditzsch.shcCore.Command.Commands.SwitchCommand;
+import net.kleditzsch.shcCore.Command.Interface.SwitchCommand;
 import net.kleditzsch.shcCore.Room.Elements.Abstract.AbstractSwitchableGroup;
 import net.kleditzsch.shcCore.Room.Elements.Interface.Switchable;
 
