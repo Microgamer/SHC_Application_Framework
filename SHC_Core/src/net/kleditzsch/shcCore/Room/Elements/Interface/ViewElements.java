@@ -31,13 +31,13 @@ public interface ViewElements {
     int REMOTE_SCRIPT = 60;
     int VIRTUAL_SOCKET = 61;
     int WAKE_ON_LAN = 62;
-    int BUTTON = 63;
 
     /**
      * schaltbare Gruppenelemente
      */
     int ACTIVITY = 100;
     int COUNTDOWN = 101;
+    int BUTTON = 102;
 
     /**
      * lesbare Elemente
