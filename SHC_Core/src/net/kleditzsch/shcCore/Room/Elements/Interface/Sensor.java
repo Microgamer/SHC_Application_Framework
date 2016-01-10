@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public interface Sensor {
+public interface Sensor extends RoomElement {
 
     /**
      * gibt an ob die Datenaufzeichnung aktiviert/deaktiviert ist
