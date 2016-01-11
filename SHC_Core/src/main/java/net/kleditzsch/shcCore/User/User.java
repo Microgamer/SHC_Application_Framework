@@ -1,7 +1,7 @@
 package net.kleditzsch.shcCore.User;
 
 import net.kleditzsch.shcCore.Core.BasicElement;
-import org.mindrot.jbcrypt.BCrypt;
+import org.mindrot.BCrypt;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -2,7 +2,6 @@ package net.kleditzsch.shcApplicationServer.Room;
 
 import net.kleditzsch.shcApplicationServer.Database.DatabaseEditor;
 import net.kleditzsch.shcCore.Room.Elements.Interface.RoomElement;
-import net.kleditzsch.shcCore.Room.Elements.Interface.Sensor;
 
 /**
  * Raum Verwaltung

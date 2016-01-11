@@ -5,7 +5,7 @@ import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.Database.DatabaseEditor;
 import net.kleditzsch.shcCore.User.User;
 import net.kleditzsch.shcCore.User.UserGroup;
-import org.mindrot.jbcrypt.BCrypt;
+import org.mindrot.BCrypt;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 
