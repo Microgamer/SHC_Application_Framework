@@ -3,8 +3,20 @@ package net.kleditzsch.shcApplicationServer.Core;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
+import net.kleditzsch.shcApplicationServer.Json.Deserializer.Room.AvmSocketDeserializer;
+import net.kleditzsch.shcApplicationServer.Json.Deserializer.Room.BatteryDeserializer;
+import net.kleditzsch.shcApplicationServer.Json.Deserializer.Room.BmpDeserializer;
+import net.kleditzsch.shcApplicationServer.Json.Deserializer.Room.DhtDeserializer;
 import net.kleditzsch.shcApplicationServer.Json.Deserializer.User.UserDeserializer;
+import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.AvmSocketSerializer;
+import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.BatterySerializer;
+import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.BmpSerializer;
+import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.DhtSerializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.User.UserSerializer;
+import net.kleditzsch.shcApplicationServer.Room.Elements.AvmSocket;
+import net.kleditzsch.shcApplicationServer.Room.Elements.Battery;
+import net.kleditzsch.shcApplicationServer.Room.Elements.Bmp;
+import net.kleditzsch.shcApplicationServer.Room.Elements.DHT;
 import net.kleditzsch.shcApplicationServer.Room.RoomEditor;
 import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
@@ -142,8 +154,20 @@ public class ShcApplicationServer {
         builder = new GsonBuilder();
 
         //Serialisierer und Deserialisierer anmelden
+
+        //User
         builder.registerTypeAdapter(User.class, new UserSerializer());
         builder.registerTypeAdapter(User.class, new UserDeserializer());
+
+        //Raum
+        builder.registerTypeAdapter(AvmSocket.class, new AvmSocketSerializer());
+        builder.registerTypeAdapter(AvmSocket.class, new AvmSocketDeserializer());
+        builder.registerTypeAdapter(Battery.class, new BatterySerializer());
+        builder.registerTypeAdapter(Battery.class, new BatteryDeserializer());
+        builder.registerTypeAdapter(Bmp.class, new BmpSerializer());
+        builder.registerTypeAdapter(Bmp.class, new BmpDeserializer());
+        builder.registerTypeAdapter(DHT.class, new DhtSerializer());
+        builder.registerTypeAdapter(DHT.class, new DhtDeserializer());
     }
 
     /**

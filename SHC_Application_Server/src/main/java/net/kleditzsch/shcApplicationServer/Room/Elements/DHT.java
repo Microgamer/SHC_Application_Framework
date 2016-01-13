@@ -9,7 +9,7 @@ import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractDht;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class DHT extends AbstractDht{
+public class DHT extends AbstractDht {
 
 
 }
