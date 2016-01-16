@@ -163,6 +163,8 @@ public class ShcApplicationServer {
         builder.registerTypeAdapter(DS18X20.class, new DS18X20Deserializer());
         builder.registerTypeAdapter(EdimaxSocket.class, new EdimaxSocketSerializer());
         builder.registerTypeAdapter(EdimaxSocket.class, new EdimaxSocketDeserializer());
+        builder.registerTypeAdapter(ElectricMeter.class, new ElectricMeterSerializer());
+        builder.registerTypeAdapter(ElectricMeter.class, new ElectricMeterDeserializer());
     }
 
     /**
