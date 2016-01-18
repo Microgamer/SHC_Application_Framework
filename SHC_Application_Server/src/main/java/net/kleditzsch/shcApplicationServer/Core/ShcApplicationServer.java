@@ -169,6 +169,8 @@ public class ShcApplicationServer {
         builder.registerTypeAdapter(FritzBox.class, new FritzBoxDeserializer());
         builder.registerTypeAdapter(GasMeter.class, new GasMeterSerializer());
         builder.registerTypeAdapter(GasMeter.class, new GasMeterDeserializer());
+        builder.registerTypeAdapter(Hygrometer.class, new HygrometerSerializer());
+        builder.registerTypeAdapter(Hygrometer.class, new HygrometerDeserializer());
     }
 
     /**
