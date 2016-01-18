@@ -166,6 +166,7 @@ public class ShcApplicationServer {
         builder.registerTypeAdapter(HcSr04.class, new HcSr04Serializer());
         builder.registerTypeAdapter(Hygrometer.class, new HygrometerSerializer());
         builder.registerTypeAdapter(Input.class, new InputSerializer());
+        builder.registerTypeAdapter(LDR.class, new LdrSerializer());
     }
 
     /**
