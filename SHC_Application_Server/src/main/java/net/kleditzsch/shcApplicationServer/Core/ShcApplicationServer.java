@@ -9,6 +9,7 @@ import net.kleditzsch.shcApplicationServer.Room.Elements.*;
 import net.kleditzsch.shcApplicationServer.Room.RoomEditor;
 import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
+import net.kleditzsch.shcApplicationServer.SwitchServer.SwitchServerEditor;
 import net.kleditzsch.shcApplicationServer.User.UserEditor;
 import net.kleditzsch.shcApplicationServer.Util.CliConfigEditor;
 import net.kleditzsch.shcCore.User.User;
@@ -64,6 +65,11 @@ public class ShcApplicationServer {
      * Benutzer verwaltung
      */
     private UserEditor userEditor;
+
+    /**
+     * Schaltserver verwaltung
+     */
+    private SwitchServerEditor switchServerEditor;
 
     /**
      * Sessionverwaltung
@@ -159,6 +165,7 @@ public class ShcApplicationServer {
         builder.registerTypeAdapter(GasMeter.class, new GasMeterSerializer());
         builder.registerTypeAdapter(HcSr04.class, new HcSr04Serializer());
         builder.registerTypeAdapter(Hygrometer.class, new HygrometerSerializer());
+        builder.registerTypeAdapter(Input.class, new InputSerializer());
     }
 
     /**
@@ -206,6 +213,10 @@ public class ShcApplicationServer {
         sessionEditor = new SessionEditor();
         sessionEditor.loadData();
 
+        //Schaltserver laden
+        switchServerEditor = new SwitchServerEditor();
+        switchServerEditor.loadData();
+
         //Räume laden
         roomEditor = new RoomEditor();
         roomEditor.loadData();
@@ -226,8 +237,25 @@ public class ShcApplicationServer {
      * @return
      */
     public UserEditor getUserEditor() {
-
         return userEditor;
+    }
+
+    /**
+     * gibt den SessionEditor zurück
+     *
+     * @return
+     */
+    public SessionEditor getSessionEditor() {
+        return sessionEditor;
+    }
+
+    /**
+     * gibt den Schaltserver Editor zurück
+     *
+     * @return
+     */
+    public SwitchServerEditor getSwitchServerEditor() {
+        return switchServerEditor;
     }
 
     /**
@@ -236,7 +264,6 @@ public class ShcApplicationServer {
      * @return
      */
     public RoomEditor getRoomEditor() {
-
         return roomEditor;
     }
 
