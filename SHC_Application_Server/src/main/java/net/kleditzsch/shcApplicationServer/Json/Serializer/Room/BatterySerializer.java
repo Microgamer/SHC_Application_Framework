@@ -13,7 +13,22 @@ import java.lang.reflect.Type;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class BatterySerializer implements JsonSerializer<Battery> {
+public class BatterySerializer implements JsonSerializer<Battery>, JsonDeserializer<Battery> {
+
+    @Override
+    public Battery deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+        JsonObject jo = jsonElement.getAsJsonObject();
+
+        Battery element = new Battery();
+        SerializerUtil.deserializeAbstractSensor(jo, element);
+
+        //Spezifische Daten serialisieren
+        element.setBatteryLevel(jo.get("batteryLevel").getAsDouble());
+        element.setChargeing(jo.get("isChargeing").getAsBoolean());
+
+        return element;
+    }
 
     @Override
     public JsonElement serialize(Battery battery, Type type, JsonSerializationContext jsonSerializationContext) {

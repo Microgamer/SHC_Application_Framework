@@ -13,7 +13,24 @@ import java.lang.reflect.Type;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class EdimaxSocketSerializer implements JsonSerializer<EdimaxSocket> {
+public class EdimaxSocketSerializer implements JsonSerializer<EdimaxSocket>, JsonDeserializer<EdimaxSocket> {
+
+    @Override
+    public EdimaxSocket deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+        JsonObject jo = jsonElement.getAsJsonObject();
+
+        EdimaxSocket element = new EdimaxSocket();
+        SerializerUtil.deserializeAbstractSwitchable(jo, element);
+
+        //Spezifische Daten serialisieren
+        element.setIpAddress(jo.get("ipAddress").getAsString());
+        element.setUsername(jo.get("username").getAsString());
+        element.setPassword(jo.get("password").getAsString());
+        element.setSocketType(jo.get("socketType").getAsInt());
+
+        return element;
+    }
 
     @Override
     public JsonElement serialize(EdimaxSocket edimaxSocket, Type type, JsonSerializationContext jsonSerializationContext) {

@@ -13,7 +13,23 @@ import java.lang.reflect.Type;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class AvmSocketSerializer implements JsonSerializer<AvmSocket> {
+public class AvmSocketSerializer implements JsonSerializer<AvmSocket>, JsonDeserializer<AvmSocket> {
+
+    @Override
+    public AvmSocket deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+        JsonObject jo = jsonElement.getAsJsonObject();
+
+        AvmSocket element = new AvmSocket();
+        SerializerUtil.deserializeAbstractSwitchable(jo, element);
+
+        //Spezifische Daten serialisieren
+        element.setIdentifier(jo.get("identifier").getAsString());
+        element.setTemerature(jo.get("temperature").getAsDouble());
+        element.setTemperatureOffset(jo.get("temperatureOffset").getAsDouble());
+
+        return element;
+    }
 
     @Override
     public JsonElement serialize(AvmSocket avmSocket, Type type, JsonSerializationContext jsonSerializationContext) {

@@ -3,8 +3,6 @@ package net.kleditzsch.shcApplicationServer.Core;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
-import net.kleditzsch.shcApplicationServer.Json.Deserializer.Room.*;
-import net.kleditzsch.shcApplicationServer.Json.Deserializer.User.UserDeserializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.*;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.User.UserSerializer;
 import net.kleditzsch.shcApplicationServer.Room.Elements.*;
@@ -148,29 +146,19 @@ public class ShcApplicationServer {
 
         //User
         builder.registerTypeAdapter(User.class, new UserSerializer());
-        builder.registerTypeAdapter(User.class, new UserDeserializer());
 
         //Raum
         builder.registerTypeAdapter(AvmSocket.class, new AvmSocketSerializer());
-        builder.registerTypeAdapter(AvmSocket.class, new AvmSocketDeserializer());
         builder.registerTypeAdapter(Battery.class, new BatterySerializer());
-        builder.registerTypeAdapter(Battery.class, new BatteryDeserializer());
         builder.registerTypeAdapter(Bmp.class, new BmpSerializer());
-        builder.registerTypeAdapter(Bmp.class, new BmpDeserializer());
         builder.registerTypeAdapter(DHT.class, new DhtSerializer());
-        builder.registerTypeAdapter(DHT.class, new DhtDeserializer());
         builder.registerTypeAdapter(DS18X20.class, new DS18X20Serializer());
-        builder.registerTypeAdapter(DS18X20.class, new DS18X20Deserializer());
         builder.registerTypeAdapter(EdimaxSocket.class, new EdimaxSocketSerializer());
-        builder.registerTypeAdapter(EdimaxSocket.class, new EdimaxSocketDeserializer());
         builder.registerTypeAdapter(ElectricMeter.class, new ElectricMeterSerializer());
-        builder.registerTypeAdapter(ElectricMeter.class, new ElectricMeterDeserializer());
         builder.registerTypeAdapter(FritzBox.class, new FritzBoxSerializer());
-        builder.registerTypeAdapter(FritzBox.class, new FritzBoxDeserializer());
         builder.registerTypeAdapter(GasMeter.class, new GasMeterSerializer());
-        builder.registerTypeAdapter(GasMeter.class, new GasMeterDeserializer());
+        builder.registerTypeAdapter(HcSr04.class, new HcSr04Serializer());
         builder.registerTypeAdapter(Hygrometer.class, new HygrometerSerializer());
-        builder.registerTypeAdapter(Hygrometer.class, new HygrometerDeserializer());
     }
 
     /**

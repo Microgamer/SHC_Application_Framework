@@ -13,7 +13,21 @@ import java.lang.reflect.Type;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class FritzBoxSerializer implements JsonSerializer<FritzBox> {
+public class FritzBoxSerializer implements JsonSerializer<FritzBox>, JsonDeserializer<FritzBox> {
+
+    @Override
+    public FritzBox deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+        JsonObject jo = jsonElement.getAsJsonObject();
+
+        FritzBox element = new FritzBox();
+        SerializerUtil.deserializeAbstractSwitchable(jo, element);
+
+        //Spezifische Daten serialisieren
+        element.setFunction(jo.get("function").getAsInt());
+
+        return element;
+    }
 
     @Override
     public JsonElement serialize(FritzBox fritzBox, Type type, JsonSerializationContext jsonSerializationContext) {

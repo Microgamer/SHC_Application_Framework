@@ -13,7 +13,21 @@ import java.lang.reflect.Type;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class ElectricMeterSerializer implements JsonSerializer<ElectricMeter> {
+public class ElectricMeterSerializer implements JsonSerializer<ElectricMeter>, JsonDeserializer<ElectricMeter> {
+
+    @Override
+    public ElectricMeter deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+        JsonObject jo = jsonElement.getAsJsonObject();
+
+        ElectricMeter element = new ElectricMeter();
+        SerializerUtil.deserializeAbstractSensor(jo, element);
+
+        //Spezifische Daten serialisieren
+        element.setAmount(jo.get("amount").getAsDouble());
+
+        return element;
+    }
 
     @Override
     public JsonElement serialize(ElectricMeter electricMeter, Type type, JsonSerializationContext jsonSerializationContext) {

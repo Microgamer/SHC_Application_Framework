@@ -13,7 +13,24 @@ import java.lang.reflect.Type;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class BmpSerializer implements JsonSerializer<Bmp> {
+public class BmpSerializer implements JsonSerializer<Bmp>, JsonDeserializer<Bmp> {
+
+    @Override
+    public Bmp deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+        JsonObject jo = jsonElement.getAsJsonObject();
+
+        Bmp element = new Bmp();
+        SerializerUtil.deserializeAbstractSensor(jo, element);
+
+        //Spezifische Daten serialisieren
+        element.setTemerature(jo.get("temperature").getAsDouble());
+        element.setTemperatureOffset(jo.get("temperatureOffset").getAsDouble());
+        element.setAirPressure(jo.get("airPressure").getAsDouble());
+        element.setAltitude(jo.get("altitude").getAsDouble());
+
+        return element;
+    }
 
     @Override
     public JsonElement serialize(Bmp bmp, Type type, JsonSerializationContext jsonSerializationContext) {

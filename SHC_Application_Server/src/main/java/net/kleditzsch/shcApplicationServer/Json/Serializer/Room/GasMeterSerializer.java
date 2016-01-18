@@ -13,7 +13,21 @@ import java.lang.reflect.Type;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class GasMeterSerializer implements JsonSerializer<GasMeter> {
+public class GasMeterSerializer implements JsonSerializer<GasMeter>, JsonDeserializer<GasMeter> {
+
+    @Override
+    public GasMeter deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+        JsonObject jo = jsonElement.getAsJsonObject();
+
+        GasMeter element = new GasMeter();
+        SerializerUtil.deserializeAbstractSensor(jo, element);
+
+        //Spezifische Daten serialisieren
+        element.setAmount(jo.get("amount").getAsDouble());
+
+        return element;
+    }
 
     @Override
     public JsonElement serialize(GasMeter gasMeter, Type type, JsonSerializationContext jsonSerializationContext) {
