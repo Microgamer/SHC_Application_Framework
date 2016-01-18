@@ -3,7 +3,7 @@ package net.kleditzsch.shcApplicationServer.Core;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
-import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.*;
+import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.*;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.User.UserSerializer;
 import net.kleditzsch.shcApplicationServer.Room.Elements.*;
 import net.kleditzsch.shcApplicationServer.Room.RoomEditor;

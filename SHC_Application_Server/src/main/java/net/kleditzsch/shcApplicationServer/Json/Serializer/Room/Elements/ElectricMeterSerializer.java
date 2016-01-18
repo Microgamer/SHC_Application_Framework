@@ -1,4 +1,4 @@
-package net.kleditzsch.shcApplicationServer.Json.Serializer.Room;
+package net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements;
 
 import com.google.gson.*;
 import net.kleditzsch.shcApplicationServer.Json.SerializerUtil;
