@@ -165,6 +165,10 @@ public class ShcApplicationServer {
         builder.registerTypeAdapter(EdimaxSocket.class, new EdimaxSocketDeserializer());
         builder.registerTypeAdapter(ElectricMeter.class, new ElectricMeterSerializer());
         builder.registerTypeAdapter(ElectricMeter.class, new ElectricMeterDeserializer());
+        builder.registerTypeAdapter(FritzBox.class, new FritzBoxSerializer());
+        builder.registerTypeAdapter(FritzBox.class, new FritzBoxDeserializer());
+        builder.registerTypeAdapter(GasMeter.class, new GasMeterSerializer());
+        builder.registerTypeAdapter(GasMeter.class, new GasMeterDeserializer());
     }
 
     /**
