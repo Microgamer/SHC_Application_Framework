@@ -11,8 +11,6 @@ import net.kleditzsch.shcCore.Room.Elements.Abstract.AbstractSwitchable;
  */
 public abstract class AbstractReboot extends AbstractSwitchable {
 
-
-
     /**
      * Aktion die bei Betätigung des "aus" Buttons ausgeführt wird
      */

@@ -44,9 +44,9 @@ public abstract class AbstractRemoteScript extends AbstractSwitchable {
     /**
      * gibt den Einschaltbefehl zurück
      *
-     * @return Ausschaltbefehl
+     * @return Einschaltbefehl
      */
-    public String Einschaltbefehl() {
+    public String getOnCommand() {
         return onCommand;
     }
 

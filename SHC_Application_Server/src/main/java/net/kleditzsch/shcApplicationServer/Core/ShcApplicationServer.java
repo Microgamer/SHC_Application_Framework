@@ -168,6 +168,19 @@ public class ShcApplicationServer {
         builder.registerTypeAdapter(Input.class, new InputSerializer());
         builder.registerTypeAdapter(LDR.class, new LdrSerializer());
         builder.registerTypeAdapter(Output.class, new OutputSerializer());
+        builder.registerTypeAdapter(RadioSocket.class, new RadioSocketSerializer());
+        builder.registerTypeAdapter(Rain.class, new RainSerializer());
+        builder.registerTypeAdapter(Reboot.class, new RebootSerializer());
+        builder.registerTypeAdapter(RemoteReboot.class, new RemoteRebootSerializer());
+        builder.registerTypeAdapter(RemoteScript.class, new RemoteScriptSerializer());
+        builder.registerTypeAdapter(RemoteShutdown.class, new RemoteShutdownSerializer());
+        builder.registerTypeAdapter(Script.class, new ScriptSerializer());
+        builder.registerTypeAdapter(Sct013.class, new Sct013Serializer());
+        builder.registerTypeAdapter(Shutdown.class, new ShutdownSerializer());
+        builder.registerTypeAdapter(UserAtHome.class, new UserAtHomeSerializer());
+        //TODO Virtuelle Sensoren
+        builder.registerTypeAdapter(WakeOnLan.class, new WakeOnLanSerializer());
+        builder.registerTypeAdapter(WaterMeter.class, new WaterMeterSerializer());
     }
 
     /**
