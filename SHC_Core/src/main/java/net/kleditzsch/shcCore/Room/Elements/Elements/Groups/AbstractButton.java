@@ -68,6 +68,24 @@ public abstract class AbstractButton extends AbstractSwitchableGroup {
     }
 
     /**
+     * gibt den Rückschaltebefehl zurück
+     *
+     * @return Rückschaltebefehl
+     */
+    public int getSwitchBackCommand() {
+        return switchBackCommand;
+    }
+
+    /**
+     * setzt den Rückschaltebefehl
+     *
+     * @param switchBackCommand Rückschaltebefehl
+     */
+    public void setSwitchBackCommand(int switchBackCommand) {
+        this.switchBackCommand = switchBackCommand;
+    }
+
+    /**
      * Aktion die bei Betätigung des "an" Buttons ausgeführt wird
      */
     @Override
