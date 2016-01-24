@@ -10,9 +10,13 @@ import net.kleditzsch.shcApplicationServer.User.UserEditor;
 import net.kleditzsch.shcCore.Command.Interface.SwitchCommand;
 import net.kleditzsch.shcCore.Core.BasicElement;
 import net.kleditzsch.shcCore.Room.Elements.Abstract.*;
+import net.kleditzsch.shcCore.Room.Elements.Interface.RoomElement;
+import net.kleditzsch.shcCore.Room.Elements.Interface.RoomElementGroup;
 import net.kleditzsch.shcCore.Room.Elements.Interface.Sensor;
 import net.kleditzsch.shcCore.Room.Elements.Interface.Switchable;
 import net.kleditzsch.shcCore.User.UserGroup;
+
+import java.util.Map;
 
 /**
  * Hilfsfunktionen für die Serialisierer/Deserialisierer
@@ -285,12 +289,52 @@ public abstract class SerializerUtil {
     }
 
     /**
+     * Serialisiert ein AbstractSwitchableGroup Objekt
+     *
+     * @param jsonObject Json Objekt
+     * @param roomElementGroup RoomElement Gruoup Objekt
+     */
+    public static void serializeAbstractRoomElementGroup(JsonObject jsonObject, RoomElementGroup roomElementGroup) {
+
+        //Switchable Group
+        JsonArray array = new JsonArray();
+        Map<Integer, RoomElement> roomElements = roomElementGroup.getRoomElements();
+        for(Integer orderId : roomElements.keySet()) {
+
+            JsonObject jo = new JsonObject();
+            jo.add("orderId", new JsonPrimitive(orderId));
+            jo.add("roomElement", new JsonPrimitive(roomElements.get(orderId).getHash()));
+            array.add(jo);
+        }
+        jsonObject.add("roomElements", array);
+    }
+
+    /**
+     * Deserialisiert ein AbstractSwitchableGroup Objekt
+     *
+     * @param jsonObject Json Objekt
+     * @param roomElementGroup RoomElement Gruoup Objekt
+     */
+    public static void deserializeAbstractRoomElementGroup(JsonObject jsonObject, RoomElementGroup roomElementGroup) {
+
+        //Switchable Group
+        JsonArray array = jsonObject.get("roomElements").getAsJsonArray();
+        Map<Integer, RoomElement> roomElements = roomElementGroup.getRoomElements();
+        RoomEditor roomEditor = ShcApplicationServer.getInstance().getRoomEditor();
+        for(int i = 0; i < array.size(); i++) {
+
+            JsonObject element = array.get(i).getAsJsonObject();
+            roomElements.put(element.get("orderId").getAsInt(), roomEditor.getElement(element.get("roomElement").getAsString()));
+        }
+    }
+
+    /**
      * Serialisiert die Daten einen StateElement
      *
      * @param jsonObject Json Objekt
      * @param abstractStateElement Element
      */
-    protected static void serializeAbstractStateElement(JsonObject jsonObject, AbstractStateElement abstractStateElement) {
+    public static void serializeAbstractStateElement(JsonObject jsonObject, AbstractStateElement abstractStateElement) {
 
         jsonObject.add("state", new JsonPrimitive(abstractStateElement.getState()));
     }
@@ -301,7 +345,7 @@ public abstract class SerializerUtil {
      * @param jsonObject Json Objekt
      * @param abstractStateElement Element
      */
-    protected static void deserializeAbstractStateElement(JsonObject jsonObject, AbstractStateElement abstractStateElement) {
+    public static void deserializeAbstractStateElement(JsonObject jsonObject, AbstractStateElement abstractStateElement) {
 
         abstractStateElement.setState(jsonObject.get("state").getAsInt());
     }
@@ -312,7 +356,7 @@ public abstract class SerializerUtil {
      * @param jsonObject Json Objekt
      * @param abstractRoomElement Element
      */
-    protected static void serializeAbstractRoomElement(JsonObject jsonObject, AbstractRoomElement abstractRoomElement) {
+    public static void serializeAbstractRoomElement(JsonObject jsonObject, AbstractRoomElement abstractRoomElement) {
 
         jsonObject.add("visible", new JsonPrimitive(abstractRoomElement.isVisible()));
         jsonObject.add("icon", new JsonPrimitive(abstractRoomElement.getIcon()));
@@ -324,7 +368,7 @@ public abstract class SerializerUtil {
      * @param jsonObject Json Objekt
      * @param abstractRoomElement Element
      */
-    protected static void deserializeAbstractRoomElement(JsonObject jsonObject, AbstractRoomElement abstractRoomElement) {
+    public static void deserializeAbstractRoomElement(JsonObject jsonObject, AbstractRoomElement abstractRoomElement) {
 
         abstractRoomElement.setVisible(jsonObject.get("visible").getAsBoolean());
         abstractRoomElement.setIcon(jsonObject.get("icon").getAsString());
@@ -336,7 +380,7 @@ public abstract class SerializerUtil {
      * @param jsonObject Json Objekt
      * @param abstractViewElement Element
      */
-    protected static void serializeAbstractViewElement(JsonObject jsonObject, AbstractViewElement abstractViewElement) {
+    public static void serializeAbstractViewElement(JsonObject jsonObject, AbstractViewElement abstractViewElement) {
 
         jsonObject.add("enabled", new JsonPrimitive(abstractViewElement.isEnabled()));
 
@@ -354,7 +398,7 @@ public abstract class SerializerUtil {
      * @param jsonObject Json Objekt
      * @param abstractViewElement Element
      */
-    protected static void deserializeAbstractViewElement(JsonObject jsonObject, AbstractViewElement abstractViewElement) {
+    public static void deserializeAbstractViewElement(JsonObject jsonObject, AbstractViewElement abstractViewElement) {
 
         abstractViewElement.setEnabled(jsonObject.get("enabled").getAsBoolean());
 
@@ -374,7 +418,7 @@ public abstract class SerializerUtil {
      * @param jsonObject Json Objekt
      * @param basicElement Element
      */
-    protected static void serializeAbstractBasicElement(JsonObject jsonObject, BasicElement basicElement) {
+    public static void serializeAbstractBasicElement(JsonObject jsonObject, BasicElement basicElement) {
 
         jsonObject.add("hash", new JsonPrimitive(basicElement.getHash()));
         jsonObject.add("name", new JsonPrimitive(basicElement.getName()));
@@ -386,7 +430,7 @@ public abstract class SerializerUtil {
      * @param jsonObject Json Objekt
      * @param basicElement Element
      */
-    protected static void deserializeAbstractBasicElement(JsonObject jsonObject, BasicElement basicElement) {
+    public static void deserializeAbstractBasicElement(JsonObject jsonObject, BasicElement basicElement) {
 
         basicElement.setHash(jsonObject.get("hash").getAsString());
         basicElement.setName(jsonObject.get("name").getAsString());

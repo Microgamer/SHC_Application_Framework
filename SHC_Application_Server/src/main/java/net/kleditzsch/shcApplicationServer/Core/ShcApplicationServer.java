@@ -3,15 +3,19 @@ package net.kleditzsch.shcApplicationServer.Core;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
+import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.BoxSerializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.*;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.Groups.ActivitySerializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.Groups.ButtonSerializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.Groups.CountdownSerializer;
+import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.RoomSerializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.User.UserSerializer;
+import net.kleditzsch.shcApplicationServer.Room.Box;
 import net.kleditzsch.shcApplicationServer.Room.Elements.*;
 import net.kleditzsch.shcApplicationServer.Room.Elements.Groups.Activity;
 import net.kleditzsch.shcApplicationServer.Room.Elements.Groups.Button;
 import net.kleditzsch.shcApplicationServer.Room.Elements.Groups.Countdown;
+import net.kleditzsch.shcApplicationServer.Room.Room;
 import net.kleditzsch.shcApplicationServer.Room.RoomEditor;
 import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
@@ -199,7 +203,8 @@ public class ShcApplicationServer {
         builder.registerTypeAdapter(Countdown.class, new CountdownSerializer());
         builder.registerTypeAdapter(Button.class, new ButtonSerializer());
 
-        
+        builder.registerTypeAdapter(Box.class, new BoxSerializer());
+        builder.registerTypeAdapter(Room.class, new RoomSerializer());
     }
 
     /**
