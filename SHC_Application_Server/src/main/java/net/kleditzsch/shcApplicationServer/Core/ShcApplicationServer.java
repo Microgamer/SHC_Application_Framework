@@ -136,24 +136,7 @@ public class ShcApplicationServer {
             return;
         }
 
-        //Test
-        AvmSocket socket = new AvmSocket();
-        socket.setName("hallo 1");
-        socket.setEnabled(true);
-        socket.triggerOn();
-        socket.triggerOff();
-        socket.triggerOn();
-        socket.triggerOff();
-        socket.triggerOn();
-        socket.triggerOff();
-        socket.triggerOn();
-        socket.triggerOff();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        CommandExecutor.getInstance().stopService();
+        //Anwendung ausführen
     }
 
     /**
