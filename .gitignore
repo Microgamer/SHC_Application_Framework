@@ -18,5 +18,5 @@ out/*
 *.iml
 JavaTools/target/*
 SHC_Application_Server/target/*
-/JavaTools/src/main/java/net/kleditzsch/Test/*
+JavaTools/src/main/java/net/kleditzsch/Test/*
 SHC_Core/target/*
