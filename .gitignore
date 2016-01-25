@@ -12,11 +12,11 @@
 hs_err_pid*
 
 # IDEA Dateien
-.idea/*
-out/*
+/.idea/*
+/out/*
 /db.config.json
 *.iml
-JavaTools/target/*
-SHC_Application_Server/target/*
-JavaTools/src/main/java/net/kleditzsch/Test/*
-SHC_Core/target/*
+/JavaTools/target/*
+/SHC_Application_Server/target/*
+/JavaTools/src/main/java/net/kleditzsch/Test/*
+/SHC_Core/target/*
