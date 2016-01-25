@@ -1,5 +1,7 @@
 package net.kleditzsch.shcApplicationServer.Room.Elements;
 
+import net.kleditzsch.shcApplicationServer.CommandExecutor.CommandExecutor;
+import net.kleditzsch.shcCore.Command.Commands.SwitchCommand;
 import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractRemoteScript;
 
 /**
@@ -18,7 +20,10 @@ public class RemoteScript extends AbstractRemoteScript {
     public void triggerOn() {
         super.triggerOn();
 
-        //TODO implementieren
+        if(isEnabled() && !getOnCommand().equals("")) {
+
+            CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_ON));
+        }
     }
 
     /**
@@ -28,6 +33,9 @@ public class RemoteScript extends AbstractRemoteScript {
     public void triggerOff() {
         super.triggerOff();
 
-        //TODO implementieren
+        if(isEnabled() && !getOffCommand().equals("")) {
+
+            CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_OFF));
+        }
     }
 }

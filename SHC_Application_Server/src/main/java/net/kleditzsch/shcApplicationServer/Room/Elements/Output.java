@@ -1,5 +1,7 @@
 package net.kleditzsch.shcApplicationServer.Room.Elements;
 
+import net.kleditzsch.shcApplicationServer.CommandExecutor.CommandExecutor;
+import net.kleditzsch.shcCore.Command.Commands.SwitchCommand;
 import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractOutput;
 
 /**
@@ -18,7 +20,10 @@ public class Output extends AbstractOutput {
     public void triggerOn() {
         super.triggerOn();
 
-        //TODO implementieren (Invertierung beachten)
+        if(isEnabled()) {
+
+            CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_ON));
+        }
     }
 
     /**
@@ -28,6 +33,9 @@ public class Output extends AbstractOutput {
     public void triggerOff() {
         super.triggerOff();
 
-        //TODO implementieren (Invertierung beachten)
+        if(isEnabled()) {
+
+            CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_OFF));
+        }
     }
 }

@@ -2,6 +2,8 @@ package net.kleditzsch.shcApplicationServer.Core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.kleditzsch.shcApplicationServer.CommandExecutor.CommandExecutor;
+import net.kleditzsch.shcApplicationServer.CommandExecutor.ExecutorService;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.BoxSerializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.*;
@@ -113,7 +115,6 @@ public class ShcApplicationServer {
         if(arguments.contains("-d") || arguments.contains("--Debug")) {
 
             debug = true;
-            return;
         }
 
         //Datenbank Konfiguration
@@ -134,6 +135,25 @@ public class ShcApplicationServer {
             CliConfigEditor.startApplicationConfig();
             return;
         }
+
+        //Test
+        AvmSocket socket = new AvmSocket();
+        socket.setName("hallo 1");
+        socket.setEnabled(true);
+        socket.triggerOn();
+        socket.triggerOff();
+        socket.triggerOn();
+        socket.triggerOff();
+        socket.triggerOn();
+        socket.triggerOff();
+        socket.triggerOn();
+        socket.triggerOff();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CommandExecutor.getInstance().stopService();
     }
 
     /**
@@ -149,6 +169,12 @@ public class ShcApplicationServer {
 
         //Daten laden
         initData();
+
+        //Info komplett durchlaufen
+        if(isDebug()) {
+
+            System.out.println("Initialisierung beendet");
+        }
     }
 
     /**

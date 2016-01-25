@@ -1,5 +1,7 @@
 package net.kleditzsch.shcApplicationServer.Room.Elements;
 
+import net.kleditzsch.shcApplicationServer.CommandExecutor.CommandExecutor;
+import net.kleditzsch.shcCore.Command.Commands.SwitchCommand;
 import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractRadioSocket;
 
 /**
@@ -16,9 +18,12 @@ public class RadioSocket extends AbstractRadioSocket {
      */
     @Override
     public void triggerOn() {
-
         super.triggerOn();
-        //TODO implementieren
+
+        if(isEnabled()) {
+
+            CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_ON));
+        }
     }
 
     /**
@@ -26,8 +31,11 @@ public class RadioSocket extends AbstractRadioSocket {
      */
     @Override
     public void triggerOff() {
-
         super.triggerOff();
-        //TODO implementieren
+
+        if(isEnabled()) {
+
+            CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_OFF));
+        }
     }
 }

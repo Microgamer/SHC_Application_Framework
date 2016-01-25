@@ -1,5 +1,7 @@
 package net.kleditzsch.shcApplicationServer.Room.Elements;
 
+import net.kleditzsch.shcApplicationServer.CommandExecutor.CommandExecutor;
+import net.kleditzsch.shcCore.Command.Commands.SwitchCommand;
 import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractReboot;
 
 /**
@@ -16,8 +18,11 @@ public class Reboot extends AbstractReboot {
      */
     @Override
     public void triggerOn() {
-
         super.triggerOn();
-        //TODO implementieren
+
+        if(isEnabled()) {
+
+            CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_ON));
+        }
     }
 }

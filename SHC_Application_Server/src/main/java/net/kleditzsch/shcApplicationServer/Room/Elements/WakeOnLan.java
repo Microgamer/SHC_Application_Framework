@@ -1,5 +1,7 @@
 package net.kleditzsch.shcApplicationServer.Room.Elements;
 
+import net.kleditzsch.shcApplicationServer.CommandExecutor.CommandExecutor;
+import net.kleditzsch.shcCore.Command.Commands.SwitchCommand;
 import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractWakeOnLan;
 
 import java.io.IOException;
@@ -21,7 +23,10 @@ public class WakeOnLan extends AbstractWakeOnLan {
     public void triggerOn() {
         super.triggerOn();
 
-        //TODO implementieren
+        if(isEnabled()) {
+
+            CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_ON));
+        }
     }
 
     /**
