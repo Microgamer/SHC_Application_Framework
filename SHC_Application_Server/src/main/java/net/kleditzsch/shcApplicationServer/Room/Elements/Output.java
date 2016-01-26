@@ -21,8 +21,14 @@ public class Output extends AbstractOutput {
         super.triggerOn();
 
         if(isEnabled()) {
-
-            CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_ON));
+            
+            if(invert == false) {
+                
+                CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_ON));
+            } else {
+             
+                CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_OFF));   
+            }
         }
     }
 
@@ -35,7 +41,13 @@ public class Output extends AbstractOutput {
 
         if(isEnabled()) {
 
-            CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_OFF));
+            if(invert == false) {
+                
+                CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_OFF));
+            } else {
+             
+                CommandExecutor.getInstance().addSwtichCommand(new SwitchCommand(this, SWITCH_ON));   
+            }
         }
     }
 }
