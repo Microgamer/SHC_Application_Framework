@@ -20,3 +20,5 @@ hs_err_pid*
 /SHC_Application_Server/target/*
 /JavaTools/src/main/java/net/kleditzsch/Test/*
 /SHC_Core/target/*
+/SHC_Application_Server/src/main/java/net/kleditzsch/shcApplicationServer/Test/Test.java
+/SHC_Application_Server/src/main/java/net/kleditzsch/shcApplicationServer/Test/*
