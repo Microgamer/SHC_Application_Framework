@@ -1,5 +1,8 @@
 package net.kleditzsch.shcCore.Automation.Conditions;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.MonthDay;
 
 import static org.junit.Assert.*;
@@ -107,6 +110,64 @@ public class ConditionTest {
         if(dayOfWeekCondition.isSatisfies() == true) {
 
             fail("Tag im Bereichereich, sollte aber nicht!");
+        }
+    }
+
+    /**
+     * Datei Bedingung
+     *
+     * @throws Exception
+     */
+    @org.junit.Test
+    public void testFileCondition() throws Exception {
+
+        String testFile = "/tmp/test";
+        Path testPath = Paths.get(testFile);
+
+        FileCondition fileCondition = new FileCondition();
+        fileCondition.setFile(testFile);
+
+        //Test Datei existiert
+        Files.createFile(testPath);
+
+        if(fileCondition.isSatisfies() == false) {
+
+            fail("Datei nicht erkannt, sollte aber!");
+        }
+
+        //Test Datei existiert und wird nach der Test gelöscht
+        fileCondition.setDeleteFileIfExist(true);
+        if(fileCondition.isSatisfies() == false) {
+
+            fail("Datei nicht erkannt, sollte aber!");
+        }
+        if(Files.exists(testPath)) {
+
+            fail("Datei wurde nach dem Test nicht gelöscht, sollte aber!");
+        }
+        fileCondition.setDeleteFileIfExist(false);
+
+        //Test Datei existiert nicht
+        Files.deleteIfExists(testPath);
+
+        if(fileCondition.isSatisfies() == true) {
+
+            fail("Datei erkannt, sollte aber nicht!");
+        }
+
+        //Test invertiert Datei existiert nicht
+        fileCondition.setInvert(true);
+        if(fileCondition.isSatisfies() == false) {
+
+            fail("Datei erkannt, sollte aber nicht!");
+        }
+
+        //Test invertiert Datei existiert
+        Files.createFile(testPath);
+
+        if(fileCondition.isSatisfies() == true) {
+
+            fail("Datei nicht erkannt, sollte aber!");
         }
     }
 }
