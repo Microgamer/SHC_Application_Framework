@@ -3,7 +3,7 @@ package net.kleditzsch.Util;
 /**
  * Hilfsfunktionen für Threads
  */
-public class ThreadUtil {
+public abstract class ThreadUtil {
 
     /**
      * wartet bis alle Threads der übergebenen Gruppe abgearbeitet sind
