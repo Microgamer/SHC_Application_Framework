@@ -19,45 +19,45 @@ public class GermanHolidays {
      * Feiertage
      */
     //Neujahr
-    public final int NEW_YEARS_DAY = 1;
+    public final static int NEW_YEARS_DAY = 1;
     //Heilige Drei Koenige
-    public final int EPIPHANY = 2;
+    public final static int EPIPHANY = 2;
     //Gruendonnerstag
-    public final int MAUNDY_THURSDAY = 4;
+    public final static int MAUNDY_THURSDAY = 4;
     //Karfreitag
-    public final int GOOD_FRIDAY = 8;
+    public final static int GOOD_FRIDAY = 8;
     //Ostersonntag
-    public final int EASTER_DAY = 16;
+    public final static int EASTER_DAY = 16;
     //Ostermontag
-    public final int EASTER_MONDAY = 32;
+    public final static int EASTER_MONDAY = 32;
     //Tag der Arbeit
-    public final int DAY_OF_WORK = 64;
+    public final static int DAY_OF_WORK = 64;
     //Christi Himmelfahrt
-    public final int ASCENSION_DAY = 128;
+    public final static int ASCENSION_DAY = 128;
     //Pfingstsonntag
-    public final int WHIT_SUN = 256;
+    public final static int WHIT_SUN = 256;
     //Pfingstmontag
-    public final int WHIT_MONDAY = 512;
+    public final static int WHIT_MONDAY = 512;
     //Fronleichnam
-    public final int CORPUS_CHRISTI = 1024;
+    public final static int CORPUS_CHRISTI = 1024;
     //Tag der Deutschen Einheit
-    public final int GERMAN_UNIFICATION_DAY = 2048;
+    public final static int GERMAN_UNIFICATION_DAY = 2048;
     //Reformationstag
-    public final int REFOMATION_DAY = 4096;
+    public final static int REFOMATION_DAY = 4096;
     //Allerheiligen
-    public final int ALL_SAINTS_DAY = 8192;
+    public final static int ALL_SAINTS_DAY = 8192;
     //Buss- und Bettag
-    public final int DAY_OF_REPENTANCE = 16384;
+    public final static int DAY_OF_REPENTANCE = 16384;
     //Heiligabend
-    public final int CHRISTMAS_DAY = 32768;
+    public final static int CHRISTMAS_DAY = 32768;
     //1. Weihnachtstag
-    public final int XMAS_DAY = 65536;
+    public final static int XMAS_DAY = 65536;
     //2. Weihnachtstag
-    public final int BOXING_DAY = 131072;
+    public final static int BOXING_DAY = 131072;
     //Silvester
-    public final int NEW_YEARS_EVE = 262144;
+    public final static int NEW_YEARS_EVE = 262144;
     //Mariae Himmelfahrt
-    public final int ASSUMPTION = 524288;
+    public final static int ASSUMPTION = 524288;
 
     /**
      * Jahr
