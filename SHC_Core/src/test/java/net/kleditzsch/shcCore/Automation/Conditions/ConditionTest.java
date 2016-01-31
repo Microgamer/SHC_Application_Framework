@@ -173,4 +173,29 @@ public class ConditionTest {
         //cleanup
         Files.deleteIfExists(testPath);
     }
+
+    /**
+     * Datei Bedingung
+     *
+     * @throws Exception
+     */
+    @org.junit.Test
+    public void testHolidayCondition() throws Exception {
+
+        HolidaysCondition holidaysCondition = new HolidaysCondition();
+        holidaysCondition.setTestMode(true);
+
+        //Nicht invertiert
+        if(holidaysCondition.isSatisfies() == true) {
+
+            fail("Feiertag erkannt, sollte aber nicht!");
+        }
+
+        //Invertiert
+        holidaysCondition.setInvert(true);
+        if(holidaysCondition.isSatisfies() == false) {
+
+            fail("Feiertag erkannt, sollte aber nicht!");
+        }
+    }
 }

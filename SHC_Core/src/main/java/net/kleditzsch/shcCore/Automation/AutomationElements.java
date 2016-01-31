@@ -13,6 +13,7 @@ public interface AutomationElements {
     int DATE_CONDITION = 1;
     int DAY_OF_WEEK_CONDITION = 2;
     int FILE_CONDITION = 3;
+    int HOLIDAYS_CONDITION = 4;
 
     //Wochentage
     int MONDAY = 1;
