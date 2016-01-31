@@ -169,5 +169,8 @@ public class ConditionTest {
 
             fail("Datei nicht erkannt, sollte aber!");
         }
+
+        //cleanup
+        Files.deleteIfExists(testPath);
     }
 }
