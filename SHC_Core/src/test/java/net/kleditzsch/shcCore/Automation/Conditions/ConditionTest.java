@@ -1,0 +1,112 @@
+package net.kleditzsch.shcCore.Automation.Conditions;
+
+import java.time.MonthDay;
+
+import static org.junit.Assert.*;
+
+/**
+ * Test der Bedingungen
+ *
+ * @author Oliver Kleditzsch
+ * @copyright Copyright (c) 2016, Oliver Kleditzsch
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ */
+public class ConditionTest {
+
+    /**
+     * Datums Bedingung
+     *
+     * @throws Exception
+     */
+    @org.junit.Test
+    public void testDateCondition() throws Exception {
+
+        //Daten vorbereiten
+        DateCondition dateCondition = new DateCondition();
+        dateCondition.setTestMode(true); //Vergleichsdatum immer der 19.07.
+
+        //Test im Datumsbereich
+        dateCondition.setStartDate(MonthDay.of(7, 10));
+        dateCondition.setEndDate(MonthDay.of(7, 22));
+
+        if(dateCondition.isSatisfies() == false) {
+
+            fail("Datum nicht im Datumsbereich, sollte aber!");
+        }
+
+        //Test nicht im Datumsbereich
+        dateCondition.setStartDate(MonthDay.of(5, 10));
+        dateCondition.setEndDate(MonthDay.of(5, 22));
+
+        if(dateCondition.isSatisfies() == true) {
+
+            fail("Datum im Datumsbereich, sollte aber nicht!");
+        }
+
+        //Test im Datumsbereich rückwärts
+        dateCondition.setStartDate(MonthDay.of(11, 10));
+        dateCondition.setEndDate(MonthDay.of(8, 22));
+
+        if(dateCondition.isSatisfies() == false) {
+
+            fail("Datum nicht im Datumsbereich, sollte aber!");
+        }
+
+        //Test im Datumsbereich rückwärts
+        dateCondition.setStartDate(MonthDay.of(11, 10));
+        dateCondition.setEndDate(MonthDay.of(5, 22));
+
+        if(dateCondition.isSatisfies() == true) {
+
+            fail("Datum im Datumsbereich, sollte aber nicht!");
+        }
+    }
+
+    /**
+     * Wochentag Bedingung
+     *
+     * @throws Exception
+     */
+    @org.junit.Test
+    public void testDayOfWeekCondition() throws Exception {
+
+        DayOfWeekCondition dayOfWeekCondition = new DayOfWeekCondition();
+        dayOfWeekCondition.setTestMode(true); //19.07.2016 -> Dienstag
+
+        //Test im Bereich
+        dayOfWeekCondition.setStartDay(DayOfWeekCondition.MONDAY);
+        dayOfWeekCondition.setEndDay(DayOfWeekCondition.FRIDAY);
+
+        if(dayOfWeekCondition.isSatisfies() == false) {
+
+            fail("Tag nicht im Bereichereich, sollte aber!");
+        }
+
+        //Test nicht im Bereich
+        dayOfWeekCondition.setStartDay(DayOfWeekCondition.WEDNESDAY);
+        dayOfWeekCondition.setEndDay(DayOfWeekCondition.FRIDAY);
+
+        if(dayOfWeekCondition.isSatisfies() == true) {
+
+            fail("Tag im Bereichereich, sollte aber nicht!");
+        }
+
+        //Test im Bereich rückwärts
+        dayOfWeekCondition.setStartDay(DayOfWeekCondition.SATURDAY);
+        dayOfWeekCondition.setEndDay(DayOfWeekCondition.WEDNESDAY);
+
+        if(dayOfWeekCondition.isSatisfies() == false) {
+
+            fail("Tag nicht im Bereichereich, sollte aber!");
+        }
+
+        //Test nicht im Bereich rückwärts
+        dayOfWeekCondition.setStartDay(DayOfWeekCondition.SATURDAY);
+        dayOfWeekCondition.setEndDay(DayOfWeekCondition.MONDAY);
+
+        if(dayOfWeekCondition.isSatisfies() == true) {
+
+            fail("Tag im Bereichereich, sollte aber nicht!");
+        }
+    }
+}

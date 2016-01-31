@@ -89,14 +89,14 @@ public class DateCondition extends AbstractCondition {
             if(startDate.isBefore(endDate)) {
 
                 //start vor ende
-                if((today.isAfter(startDate) || today.equals(startDate)) && (today.isBefore(endDate) || today.equals(endDate))) {
+                if((today.isAfter(startDate) && today.isBefore(endDate)) || today.equals(startDate) || today.equals(endDate)) {
 
                     return true;
                 }
             } else {
 
                 //ende vor start
-                if((today.isBefore(startDate) || today.equals(startDate)) && (today.isBefore(endDate) || today.equals(endDate))) {
+                if((today.isBefore(startDate) && today.isBefore(endDate)) || today.equals(startDate) || today.equals(endDate)) {
 
                     return true;
                 }
