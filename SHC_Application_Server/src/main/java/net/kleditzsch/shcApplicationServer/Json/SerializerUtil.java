@@ -35,6 +35,8 @@ public abstract class SerializerUtil {
      */
     public static void serializeAbstractReadable(JsonObject jsonObject, AbstractReadable abstractReadable) {
 
+        jsonObject.add("state", new JsonPrimitive(abstractReadable.getState()));
+
         //Abstract State Element
         serializeAbstractStateElement(jsonObject, abstractReadable);
 
@@ -55,6 +57,8 @@ public abstract class SerializerUtil {
      * @param abstractReadable Readable Objekt
      */
     public static void deserializeAbstractReadable(JsonObject jsonObject, AbstractReadable abstractReadable) {
+
+        abstractReadable.setState(jsonObject.get("state").getAsInt());
 
         //Abstract State Element
         deserializeAbstractStateElement(jsonObject, abstractReadable);
