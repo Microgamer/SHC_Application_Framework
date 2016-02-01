@@ -14,6 +14,7 @@ public interface AutomationElements {
     int DAY_OF_WEEK_CONDITION = 2;
     int FILE_CONDITION = 3;
     int HOLIDAYS_CONDITION = 4;
+    int HUMIDITY_CONDITION = 5;
 
     //Wochentage
     int MONDAY = 1;
