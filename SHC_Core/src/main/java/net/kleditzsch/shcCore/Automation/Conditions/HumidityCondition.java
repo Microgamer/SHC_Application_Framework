@@ -82,34 +82,6 @@ public class HumidityCondition extends AbstractCondition {
      */
     @Override
     public boolean isSatisfies() {
-
-        //prüfen ob deaktiviert
-        if(!isEnabled()) {
-
-            return true;
-        }
-
-        if(sensorList.size() > 0) {
-
-            for (Humidity sensor : sensorList) {
-
-                if(!invert) {
-
-                    //größer als
-                    if(sensor.getHumidity() > limit) {
-
-                        return true;
-                    }
-                } else {
-
-                    //Kleiner als
-                    if(sensor.getHumidity() < limit) {
-
-                        return true;
-                    }
-                }
-            }
-        }
         return false;
     }
 

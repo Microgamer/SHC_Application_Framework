@@ -14,7 +14,7 @@ import java.util.Set;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class NobodyAtHome extends AbstractCondition {
+public class NobodyAtHomeCondition extends AbstractCondition {
 
     /**
      * liste mit allen Sensoren die überwacht werden sollen
@@ -37,24 +37,7 @@ public class NobodyAtHome extends AbstractCondition {
      */
     @Override
     public boolean isSatisfies() {
-
-        //prüfen ob deaktiviert
-        if(!isEnabled()) {
-
-            return true;
-        }
-
-        if(userAtHomeList.size() > 0) {
-
-            for (AbstractUserAtHome userAtHome : userAtHomeList) {
-
-                if(userAtHome.isEnabled() && userAtHome.getState() == Constant.HIGH) {
-
-                    return false;
-                }
-            }
-        }
-        return true;
+        return false;
     }
 
     /**

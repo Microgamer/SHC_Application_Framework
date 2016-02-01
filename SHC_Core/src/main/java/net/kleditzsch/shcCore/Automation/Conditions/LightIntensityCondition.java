@@ -82,34 +82,6 @@ public class LightIntensityCondition extends AbstractCondition {
      */
     @Override
     public boolean isSatisfies() {
-
-        //prüfen ob deaktiviert
-        if(!isEnabled()) {
-
-            return true;
-        }
-
-        if(sensorList.size() > 0) {
-
-            for (LightIntensity sensor : sensorList) {
-
-                if(!invert) {
-
-                    //größer als
-                    if(sensor.getLightIntensity() > limit) {
-
-                        return true;
-                    }
-                } else {
-
-                    //Kleiner als
-                    if(sensor.getLightIntensity() < limit) {
-
-                        return true;
-                    }
-                }
-            }
-        }
         return false;
     }
 

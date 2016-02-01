@@ -1,4 +1,6 @@
-package net.kleditzsch.shcCore.Automation.Conditions;
+package net.kleditzsch.shcApplicationServer.Automation.Conditions;
+
+import org.junit.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,7 +10,7 @@ import java.time.MonthDay;
 import static org.junit.Assert.*;
 
 /**
- * Test der Bedingungen
+ * Bedingungen Test
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch

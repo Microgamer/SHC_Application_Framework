@@ -2,6 +2,8 @@ package net.kleditzsch.shcApplicationServer.Core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.kleditzsch.shcApplicationServer.Automation.Conditions.DayCondition;
+import net.kleditzsch.shcApplicationServer.Automation.Conditions.NightCondition;
 import net.kleditzsch.shcApplicationServer.CommandExecutor.CommandExecutor;
 import net.kleditzsch.shcApplicationServer.CommandExecutor.ExecutorService;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
@@ -136,7 +138,8 @@ public class ShcApplicationServer {
             return;
         }
 
-        //Anwendung ausführen
+        //Anwendung
+        
     }
 
     /**

@@ -2,7 +2,6 @@ package net.kleditzsch.shcCore.Automation.Conditions;
 
 import net.kleditzsch.shcCore.Automation.AbstractCondition;
 import net.kleditzsch.shcCore.Room.Elements.Interface.Readable;
-import net.kleditzsch.shcCore.Util.Constant;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -60,34 +59,6 @@ public class InputCondition extends AbstractCondition {
      */
     @Override
     public boolean isSatisfies() {
-
-        //prüfen ob deaktiviert
-        if(!isEnabled()) {
-
-            return true;
-        }
-
-        if(readableList.size() > 0) {
-
-            for (Readable readable : readableList) {
-
-                if(!invert) {
-
-                    //auf Status "1" prüfen
-                    if(readable.getState() == Constant.HIGH) {
-
-                        return true;
-                    }
-                } else {
-
-                    //auf Status "0" prüfen
-                    if(readable.getState() == Constant.LOW) {
-
-                        return true;
-                    }
-                }
-            }
-        }
         return false;
     }
 

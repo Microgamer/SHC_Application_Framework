@@ -75,6 +75,11 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>com.luckycatlabs</groupId>
+            <artifactId>SunriseSunsetCalculator</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.jeremyh</groupId>
             <artifactId>jBCrypt</artifactId>
             <version>jbcrypt-0.4</version>

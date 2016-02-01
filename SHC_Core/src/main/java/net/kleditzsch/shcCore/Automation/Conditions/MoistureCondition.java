@@ -82,34 +82,6 @@ public class MoistureCondition extends AbstractCondition {
      */
     @Override
     public boolean isSatisfies() {
-
-        //prüfen ob deaktiviert
-        if(!isEnabled()) {
-
-            return true;
-        }
-
-        if(sensorList.size() > 0) {
-
-            for (Moisture sensor : sensorList) {
-
-                if(!invert) {
-
-                    //größer als
-                    if(sensor.getMoisture() > limit) {
-
-                        return true;
-                    }
-                } else {
-
-                    //Kleiner als
-                    if(sensor.getMoisture() < limit) {
-
-                        return true;
-                    }
-                }
-            }
-        }
         return false;
     }
 

@@ -2,11 +2,6 @@ package net.kleditzsch.shcCore.Automation.Conditions;
 
 import net.kleditzsch.shcCore.Automation.AbstractCondition;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 /**
  * Datei Bedingung
  *
@@ -92,40 +87,6 @@ public class FileCondition extends AbstractCondition {
      */
     @Override
     public boolean isSatisfies() {
-
-        //prüfen ob deaktiviert
-        if(!isEnabled()) {
-
-            return true;
-        }
-
-        if(file != null) {
-
-            Path path = Paths.get(file);
-            if(invert == false) {
-
-                //prüfen ob Datei vorhanden
-                if(Files.exists(path)) {
-
-                    if(deleteFileIfExist) {
-
-                        try {
-                            Files.deleteIfExists(path);
-                        } catch (IOException e) {}
-                    }
-
-                    return true;
-                }
-            } else {
-
-                //prüfen ob Datei nicht vorhanden
-                if(!Files.exists(path)) {
-
-                    return true;
-                }
-            }
-        }
-
         return false;
     }
 
