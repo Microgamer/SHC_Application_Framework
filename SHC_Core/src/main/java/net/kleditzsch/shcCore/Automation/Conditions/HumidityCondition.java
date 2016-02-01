@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Kommentar
+ * Luftfeuchte Bedingung
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch

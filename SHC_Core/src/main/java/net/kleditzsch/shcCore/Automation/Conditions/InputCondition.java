@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Kommentar
+ * Eingangs Bedingung
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
