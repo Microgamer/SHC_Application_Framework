@@ -7,7 +7,7 @@ package net.kleditzsch.shcCore.Room.Elements.Interface;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public interface Readable {
+public interface Readable extends StateElement {
 
     /**
      * liest den Status des Elements

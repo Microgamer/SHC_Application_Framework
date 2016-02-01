@@ -9,7 +9,7 @@ import net.kleditzsch.shcCore.Util.Constant;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public interface StateElement extends RoomElement, Constant{
+public interface StateElement extends RoomElement, Constant {
 
     /**
      * gibt den aktuellen Status zurück
