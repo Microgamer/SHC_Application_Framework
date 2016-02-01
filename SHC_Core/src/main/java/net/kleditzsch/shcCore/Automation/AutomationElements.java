@@ -10,13 +10,14 @@ package net.kleditzsch.shcCore.Automation;
 public interface AutomationElements {
 
     //Bedingungen
-    int DATE_CONDITION = 1;
-    int DAY_OF_WEEK_CONDITION = 2;
-    int FILE_CONDITION = 3;
-    int HOLIDAYS_CONDITION = 4;
-    int HUMIDITY_CONDITION = 5;
-    int INPUT_CONDITION = 6;
-    int LIGHT_INTENSITY_CONDITION = 7;
+    int CALENDAR_WEEK_CONDITION = 1;
+    int DATE_CONDITION = 2;
+    int DAY_OF_WEEK_CONDITION = 3;
+    int FILE_CONDITION = 4;
+    int HOLIDAYS_CONDITION = 5;
+    int HUMIDITY_CONDITION = 6;
+    int INPUT_CONDITION = 7;
+    int LIGHT_INTENSITY_CONDITION = 8;
 
     //Wochentage
     int MONDAY = 1;
