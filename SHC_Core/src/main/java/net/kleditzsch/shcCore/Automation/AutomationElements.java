@@ -19,6 +19,7 @@ public interface AutomationElements {
     int INPUT_CONDITION = 7;
     int LIGHT_INTENSITY_CONDITION = 8;
     int MOISTURE_CONDITION = 9;
+    int NOBODY_AT_HOME_CONDITION = 10;
 
     //Wochentage
     int MONDAY = 1;
