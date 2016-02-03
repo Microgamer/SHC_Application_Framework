@@ -23,14 +23,11 @@ public interface ViewElements {
     int FRITZ_BOX = 52;
     int RADIO_SOCKET = 53;
     int REBOOT = 54;
-    int REMOTE_REBOOT = 55;
-    int SHUTDOWN = 56;
-    int REMOTE_SHUTDOWN = 57;
-    int OUTPUT = 58;
-    int SCRIPT = 59;
-    int REMOTE_SCRIPT = 60;
-    int VIRTUAL_SOCKET = 61;
-    int WAKE_ON_LAN = 62;
+    int SHUTDOWN = 55;
+    int OUTPUT = 56;
+    int SCRIPT = 57;
+    int VIRTUAL_SOCKET = 58;
+    int WAKE_ON_LAN = 59;
 
     /**
      * schaltbare Gruppenelemente

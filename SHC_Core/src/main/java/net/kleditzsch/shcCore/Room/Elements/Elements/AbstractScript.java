@@ -1,6 +1,7 @@
 package net.kleditzsch.shcCore.Room.Elements.Elements;
 
 import net.kleditzsch.shcCore.Room.Elements.Abstract.AbstractSwitchable;
+import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
 
 /**
  * Script
@@ -16,6 +17,11 @@ public abstract class AbstractScript extends AbstractSwitchable {
      */
     protected String onCommand;
     protected String offCommand;
+
+    /**
+     * Schaltserver
+     */
+    protected SwitchServer switchServer;
 
     /**
      * gibt den Ausschaltbefehl zurück
@@ -51,6 +57,24 @@ public abstract class AbstractScript extends AbstractSwitchable {
      */
     public void setOnCommand(String onCommand) {
         this.onCommand = onCommand;
+    }
+
+    /**
+     * gibt den Schaltserver zurück
+     *
+     * @return Schaltserver
+     */
+    public SwitchServer getSwitchServer() {
+        return switchServer;
+    }
+
+    /**
+     * setzt den Schaltserver
+     *
+     * @param switchServer Schaltserver
+     */
+    public void setSwitchServer(SwitchServer switchServer) {
+        this.switchServer = switchServer;
     }
 
     /**

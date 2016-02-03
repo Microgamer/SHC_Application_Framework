@@ -186,30 +186,6 @@ public class RoomEditor implements DatabaseEditor {
         }
 
         elements.clear();
-        elements = redis.hgetAll(KEY_ROOM_ELEMENTS + ":" + ViewElements.REMOTE_REBOOT);
-        for(String hash : elements.keySet()) {
-
-            String elementJson = elements.get(hash);
-            roomElements.put(hash, gson.fromJson(elementJson, RemoteReboot.class));
-        }
-
-        elements.clear();
-        elements = redis.hgetAll(KEY_ROOM_ELEMENTS + ":" + ViewElements.REMOTE_SCRIPT);
-        for(String hash : elements.keySet()) {
-
-            String elementJson = elements.get(hash);
-            roomElements.put(hash, gson.fromJson(elementJson, RemoteScript.class));
-        }
-
-        elements.clear();
-        elements = redis.hgetAll(KEY_ROOM_ELEMENTS + ":" + ViewElements.REMOTE_SHUTDOWN);
-        for(String hash : elements.keySet()) {
-
-            String elementJson = elements.get(hash);
-            roomElements.put(hash, gson.fromJson(elementJson, RemoteShutdown.class));
-        }
-
-        elements.clear();
         elements = redis.hgetAll(KEY_ROOM_ELEMENTS + ":" + ViewElements.SCRIPT);
         for(String hash : elements.keySet()) {
 

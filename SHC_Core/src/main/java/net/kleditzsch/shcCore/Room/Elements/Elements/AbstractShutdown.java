@@ -1,6 +1,7 @@
 package net.kleditzsch.shcCore.Room.Elements.Elements;
 
 import net.kleditzsch.shcCore.Room.Elements.Abstract.AbstractSwitchable;
+import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
 
 /**
  * Herunterfahren
@@ -10,6 +11,29 @@ import net.kleditzsch.shcCore.Room.Elements.Abstract.AbstractSwitchable;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public abstract class AbstractShutdown extends AbstractSwitchable {
+
+    /**
+     * Schaltserver
+     */
+    protected SwitchServer switchServer;
+
+    /**
+     * gibt den Schaltserver zurück
+     *
+     * @return Schaltserver
+     */
+    public SwitchServer getSwitchServer() {
+        return switchServer;
+    }
+
+    /**
+     * setzt den Schaltserver
+     *
+     * @param switchServer Schaltserver
+     */
+    public void setSwitchServer(SwitchServer switchServer) {
+        this.switchServer = switchServer;
+    }
 
     /**
      * Aktion die bei Betätigung des "aus" Buttons ausgeführt wird
