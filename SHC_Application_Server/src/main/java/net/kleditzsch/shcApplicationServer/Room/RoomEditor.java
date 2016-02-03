@@ -475,9 +475,6 @@ public class RoomEditor implements DatabaseEditor {
                 KEY_ROOM_ELEMENTS + ":" + ViewElements.RADIO_SOCKET,
                 KEY_ROOM_ELEMENTS + ":" + ViewElements.RAIN,
                 KEY_ROOM_ELEMENTS + ":" + ViewElements.REBOOT,
-                KEY_ROOM_ELEMENTS + ":" + ViewElements.REMOTE_REBOOT,
-                KEY_ROOM_ELEMENTS + ":" + ViewElements.REMOTE_SCRIPT,
-                KEY_ROOM_ELEMENTS + ":" + ViewElements.REMOTE_SHUTDOWN,
                 KEY_ROOM_ELEMENTS + ":" + ViewElements.SCRIPT,
                 KEY_ROOM_ELEMENTS + ":" + ViewElements.SCT_013,
                 KEY_ROOM_ELEMENTS + ":" + ViewElements.SHUTDOWN,
@@ -571,18 +568,6 @@ public class RoomEditor implements DatabaseEditor {
                 case ViewElements.REBOOT:
 
                     pipeline.hset(KEY_ROOM_ELEMENTS + ":" + ViewElements.REBOOT, hash, gson.toJson(roomElement));
-                    break;
-                case ViewElements.REMOTE_REBOOT:
-
-                    pipeline.hset(KEY_ROOM_ELEMENTS + ":" + ViewElements.REMOTE_REBOOT, hash, gson.toJson(roomElement));
-                    break;
-                case ViewElements.REMOTE_SCRIPT:
-
-                    pipeline.hset(KEY_ROOM_ELEMENTS + ":" + ViewElements.REMOTE_SCRIPT, hash, gson.toJson(roomElement));
-                    break;
-                case ViewElements.REMOTE_SHUTDOWN:
-
-                    pipeline.hset(KEY_ROOM_ELEMENTS + ":" + ViewElements.REMOTE_SHUTDOWN, hash, gson.toJson(roomElement));
                     break;
                 case ViewElements.SCRIPT:
 

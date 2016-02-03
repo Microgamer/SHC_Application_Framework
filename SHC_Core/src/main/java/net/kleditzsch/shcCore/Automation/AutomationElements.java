@@ -22,6 +22,9 @@ public interface AutomationElements {
     int NOBODY_AT_HOME_CONDITION = 10;
     int DAY_CONDITION = 11;
     int NIGHT_CONDITION = 12;
+    int SWITCHABLE_STATE_CONDITION = 13;
+    int TEMPERATURE_CONDITION = 14;
+    int TIME_CONDITION = 15;
 
     //Wochentage
     int MONDAY = 1;
