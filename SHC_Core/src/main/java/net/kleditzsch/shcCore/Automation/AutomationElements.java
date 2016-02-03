@@ -25,6 +25,8 @@ public interface AutomationElements {
     int SWITCHABLE_STATE_CONDITION = 13;
     int TEMPERATURE_CONDITION = 14;
     int TIME_CONDITION = 15;
+    int USER_AT_HOME_CONDITION = 16;
+    int USER_NOT_AT_HOME_CONDITION = 17;
 
     //Wochentage
     int MONDAY = 1;

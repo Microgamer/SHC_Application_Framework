@@ -1,16 +1,16 @@
 package net.kleditzsch.shcApplicationServer.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Room.Elements.Interface.Readable;
+import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractUserAtHome;
 import net.kleditzsch.shcCore.Util.Constant;
 
 /**
- * Eingangs Bedingung
+ * Benutzer nicht zu Hause Bedingung
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class InputCondition extends net.kleditzsch.shcCore.Automation.Conditions.InputCondition {
+public class UserNotAtHomeCondition extends net.kleditzsch.shcCore.Automation.Conditions.UserNotAtHomeCondition {
 
     /**
      * gibt an ob die Bedingung erfuellt ist
@@ -26,9 +26,9 @@ public class InputCondition extends net.kleditzsch.shcCore.Automation.Conditions
             return true;
         }
 
-        if(readableList.size() > 0) {
+        if(userAtHomeList.size() > 0) {
 
-            for (Readable readable : readableList) {
+            for (AbstractUserAtHome readable : userAtHomeList) {
 
                 //Deaktivierte überspringen
                 if(!readable.isEnabled()) {
@@ -36,20 +36,10 @@ public class InputCondition extends net.kleditzsch.shcCore.Automation.Conditions
                     continue;
                 }
 
-                if(!invert) {
+                //auf Status "1" prüfen
+                if(readable.getState() == Constant.LOW) {
 
-                    //auf Status "1" prüfen
-                    if(readable.getState() == Constant.HIGH) {
-
-                        return true;
-                    }
-                } else {
-
-                    //auf Status "0" prüfen
-                    if(readable.getState() == Constant.LOW) {
-
-                        return true;
-                    }
+                    return true;
                 }
             }
         }

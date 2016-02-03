@@ -30,6 +30,12 @@ public class SwitchableStateCondition extends net.kleditzsch.shcCore.Automation.
 
             for (Switchable switchable : switchableList) {
 
+                //Deaktivierte überspringen
+                if(!switchable.isEnabled()) {
+
+                    continue;
+                }
+
                 if(!invert) {
 
                     //auf Status "1" prüfen
