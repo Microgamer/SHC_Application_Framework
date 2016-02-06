@@ -12,5 +12,28 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-    
+
+
+    <dependencies>
+        <dependency>
+            <groupId>net.kleditzsch.shcApplicationFramework</groupId>
+            <artifactId>SHC_Core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.kleditzsch.shcApplicationFramework</groupId>
+            <artifactId>JavaTools</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>8.40.10</version>
+        </dependency>
+    </dependencies>
 </project>
