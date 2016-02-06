@@ -28,6 +28,7 @@ public class RadioSocketSerializer implements JsonSerializer<RadioSocket>, JsonD
         element.setSystemCode(jo.get("systemCode").getAsString());
         element.setDeviceCode(jo.get("deviceCode").getAsString());
         element.setContinues(jo.get("continues").getAsInt());
+        element.setUseID(jo.get("useId").getAsBoolean());
 
         return element;
     }
@@ -43,6 +44,7 @@ public class RadioSocketSerializer implements JsonSerializer<RadioSocket>, JsonD
         jo.add("systemCode", new JsonPrimitive(radioSocket.getSystemCode()));
         jo.add("deviceCode", new JsonPrimitive(radioSocket.getDeviceCode()));
         jo.add("continues", new JsonPrimitive(radioSocket.getContinues()));
+        jo.add("useId", new JsonPrimitive(radioSocket.isUseID()));
 
         return jo;
     }

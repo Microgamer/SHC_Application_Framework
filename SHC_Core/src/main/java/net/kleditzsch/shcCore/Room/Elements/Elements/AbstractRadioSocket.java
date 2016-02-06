@@ -32,6 +32,11 @@ public abstract class AbstractRadioSocket extends AbstractSwitchable {
     protected int continues;
 
     /**
+     * ID oder Systemcode beim senden verwenden
+     */
+    protected boolean useID = false;
+
+    /**
      * gibt das 433MHz Protokoll zurück
      *
      * @return 433MHz Potokoll
@@ -101,6 +106,24 @@ public abstract class AbstractRadioSocket extends AbstractSwitchable {
      */
     public void setContinues(int continues) {
         this.continues = continues;
+    }
+
+    /**
+     * gibt an ob die ID statt des Systemcodes verwendet werden soll
+     *
+     * @return ID wenn true
+     */
+    public boolean isUseID() {
+        return useID;
+    }
+
+    /**
+     * aktiviert die Verwendung von ID beim senden
+     *
+     * @param useID ID wenn true
+     */
+    public void setUseID(boolean useID) {
+        this.useID = useID;
     }
 
     /**
