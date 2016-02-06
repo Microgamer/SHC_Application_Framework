@@ -24,6 +24,11 @@ public abstract class AbstractRoom extends AbstractViewElement implements Room, 
     private int orderId;
 
     /**
+     * Icon
+     */
+    protected String icon;
+
+    /**
      * Elemente des Raumes
      */
     private Map<Integer, RoomElement> roomElements = new HashMap<>();
@@ -44,6 +49,26 @@ public abstract class AbstractRoom extends AbstractViewElement implements Room, 
      */
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    /**
+     * gibt das Icon zurück
+     *
+     * @return Icon
+     */
+    public String getIcon() {
+
+        return this.icon;
+    };
+
+    /**
+     * setzt das Icon
+     *
+     * @param icon Icon
+     */
+    public void setIcon(String icon) {
+
+        this.icon = icon;
     }
 
     /**

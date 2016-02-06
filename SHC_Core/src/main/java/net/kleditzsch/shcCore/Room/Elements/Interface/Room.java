@@ -22,4 +22,18 @@ public interface Room extends RoomElementGroup {
      * @param orderId Sortierungs ID
      */
     void setOrderId(int orderId);
+
+    /**
+     * gibt das Icon zurück
+     *
+     * @return Icon
+     */
+    String getIcon();
+
+    /**
+     * setzt das Icon
+     *
+     * @param icon Icon
+     */
+    void setIcon(String icon);
 }

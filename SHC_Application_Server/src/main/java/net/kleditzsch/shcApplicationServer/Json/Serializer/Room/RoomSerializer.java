@@ -24,6 +24,7 @@ public class RoomSerializer implements JsonSerializer<Room>, JsonDeserializer<Ro
 
         //Spezifische Daten serialisieren
         element.setOrderId(jo.get("orderId").getAsInt());
+        element.setIcon(jo.get("icon").getAsString());
 
         //Abstract View Element
         SerializerUtil.deserializeAbstractViewElement(jo, element);
@@ -41,6 +42,7 @@ public class RoomSerializer implements JsonSerializer<Room>, JsonDeserializer<Ro
 
         //Spezifische Daten serialisieren
         jo.add("orderId", new JsonPrimitive(room.getOrderId()));;
+        jo.add("icon", new JsonPrimitive(room.getIcon()));;
 
         //Abstract View Element
         SerializerUtil.serializeAbstractViewElement(jo, room);
