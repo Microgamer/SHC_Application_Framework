@@ -7,6 +7,8 @@ import net.kleditzsch.shcApplicationServer.Automation.Conditions.NightCondition;
 import net.kleditzsch.shcApplicationServer.CommandExecutor.CommandExecutor;
 import net.kleditzsch.shcApplicationServer.CommandExecutor.ExecutorService;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
+import net.kleditzsch.shcApplicationServer.DeviceManager.DeviceManager;
+import net.kleditzsch.shcApplicationServer.HTTPInterface.ServerRunnable;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.BoxSerializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.*;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.Groups.ActivitySerializer;
@@ -91,6 +93,11 @@ public class ShcApplicationServer {
     private SessionEditor sessionEditor;
 
     /**
+     * Gerätemanager
+     */
+    private DeviceManager deviceManager;
+
+    /**
      * Raum Verwaltung
      */
     private RoomEditor roomEditor;
@@ -138,8 +145,20 @@ public class ShcApplicationServer {
             return;
         }
 
-        //Anwendung
+        //Shutdown Funktion
+        Runtime.getRuntime().addShutdownHook(new Thread() {
 
+            @Override
+            public void run() {
+
+                ShcApplicationServer.getInstance().shutdown();
+            }
+        });
+
+        //HTTP Server starten
+        ServerRunnable httpServer = new ServerRunnable();
+        Thread serverThread = new Thread(httpServer);
+        serverThread.start();
     }
 
     /**
@@ -259,7 +278,6 @@ public class ShcApplicationServer {
 
         //Sessions laden
         sessionEditor = new SessionEditor();
-        sessionEditor.loadData();
 
         //Schaltserver laden
         switchServerEditor = new SwitchServerEditor();
@@ -268,6 +286,10 @@ public class ShcApplicationServer {
         //Räume laden
         roomEditor = new RoomEditor();
         roomEditor.loadData();
+
+        //Gerätemanager
+        deviceManager = new DeviceManager();
+        deviceManager.loadData();
     }
 
     /**
@@ -298,6 +320,15 @@ public class ShcApplicationServer {
     }
 
     /**
+     * gibt den Gerätemanager zurück
+     *
+     * @return
+     */
+    public DeviceManager getDeviceManager() {
+        return deviceManager;
+    }
+
+    /**
      * gibt den Schaltserver Editor zurück
      *
      * @return
@@ -313,6 +344,18 @@ public class ShcApplicationServer {
      */
     public RoomEditor getRoomEditor() {
         return roomEditor;
+    }
+
+    /**
+     * bereitet den Server zum herunterfahren vor
+     */
+    public void shutdown() {
+
+        settings.saveData();
+        userEditor.saveData();
+        deviceManager.saveData();
+        switchServerEditor.saveData();
+        roomEditor.saveData();
     }
 
     /**

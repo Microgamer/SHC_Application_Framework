@@ -5,7 +5,6 @@ import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.Database.DatabaseEditor;
 import net.kleditzsch.shcCore.User.User;
 import net.kleditzsch.shcCore.User.UserGroup;
-import org.mindrot.BCrypt;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 
@@ -226,7 +225,7 @@ public class UserEditor implements DatabaseEditor {
         User admin = new User(true);
         admin.setHash(User.createHash());
         admin.setName("admin");
-        admin.setPasswordHash(BCrypt.hashpw("admin", BCrypt.gensalt()));
+        admin.setPasswordHash(User.createHash().substring(0, 11));
         admin.getUserGroups().add(admins);
         addUser(admin);
 

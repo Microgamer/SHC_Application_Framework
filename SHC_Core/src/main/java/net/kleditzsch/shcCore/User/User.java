@@ -1,7 +1,6 @@
 package net.kleditzsch.shcCore.User;
 
 import net.kleditzsch.shcCore.Core.BasicElement;
-import org.mindrot.BCrypt;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -74,21 +73,6 @@ public class User extends BasicElement {
      */
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
-    }
-
-    /**
-     * prüft ob das angegebene Passwort mit dem gespeicherten Passwort Hash übereinstimmt
-     *
-     * @param password Passwort
-     * @return
-     */
-    public boolean checkPassword(String password) {
-
-        if(BCrypt.checkpw(password, passwordHash)) {
-
-            return true;
-        }
-        return false;
     }
 
     /**

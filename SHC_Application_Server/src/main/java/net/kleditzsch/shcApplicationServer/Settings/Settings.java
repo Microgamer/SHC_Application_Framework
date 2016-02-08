@@ -28,6 +28,7 @@ public class Settings implements DatabaseEditor {
      * Einstellungen
      */
     public static final String SETTING_SERVER_PORT = "setting.server.port";
+    public static final String SETTING_SERVER_CERTIFICATE_PASSWORD = "setting.server.certificate.password";
     public static final String SETTING_SERVER_STATELED_PIN = "setting.server.stateled.pin";
 
     public static final String SETTING_SUNRISE_OFFSET = "setting.sunrise.offset";
@@ -62,6 +63,8 @@ public class Settings implements DatabaseEditor {
         //Server Port
         Setting<Double> serverPort = new Setting<>(SETTING_SERVER_PORT, 8080d, 8080d);
         knownSettings.put(serverPort.getName(), serverPort);
+        Setting<String> certificatePassword = new Setting<>(SETTING_SERVER_CERTIFICATE_PASSWORD, "password", "password");
+        knownSettings.put(certificatePassword.getName(), certificatePassword);
 
         //Server Status LED
         Setting<Double> serverStateLed = new Setting<>(SETTING_SERVER_STATELED_PIN, -1d, -1d);

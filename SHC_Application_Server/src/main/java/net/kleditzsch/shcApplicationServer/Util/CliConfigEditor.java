@@ -127,6 +127,13 @@ public abstract class CliConfigEditor {
                 serverPort.setValue((double) port.get());
             }
 
+            Setting<String> certificatePassword = settings.getSetting(Settings.SETTING_SERVER_CERTIFICATE_PASSWORD);
+            Optional<String> password = CliUtil.inputStringOption("Passwort des SSL Zertifikates: ", certificatePassword.getValue());
+            if(password.isPresent()) {
+
+                certificatePassword.setValue((String) password.get());
+            }
+
             Setting<Double> serverStateLed = settings.getSetting(Settings.SETTING_SERVER_STATELED_PIN);
             Optional<Integer> pin = CliUtil.inputIntegerOption("Pin Nummer [wiringpi] für die Status LED", serverStateLed.getValue().intValue(), 0, 35, 5);
             if(pin.isPresent()) {

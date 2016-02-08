@@ -10,7 +10,9 @@ import redis.clients.jedis.Pipeline;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Sitzungs Verwaltung
@@ -19,7 +21,7 @@ import java.util.Map;
  * @copyright Copyright (c) 2015, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class SessionEditor implements DatabaseEditor {
+public class SessionEditor {
 
     /**
      * Sitzung
@@ -33,22 +35,22 @@ public class SessionEditor implements DatabaseEditor {
         /**
          * Session ID
          */
-        private String sessionId;
+        protected String sessionId;
 
         /**
          * Session Timeout
          */
-        private LocalDateTime sessionTimeout;
+        protected LocalDateTime sessionTimeout;
 
         /**
          * Angemeldeter Benutzer
          */
-        private String userHash;
+        protected String userHash;
 
         /**
          * Session Daten
          */
-        private Map<String, String> sessionData = new HashMap<>();
+        protected Map<String, String> sessionData = new HashMap<>();
 
         /**
          * @param sessionId ID der Sitzung
@@ -120,34 +122,17 @@ public class SessionEditor implements DatabaseEditor {
     /**
      * Redis Keys für die Datenhaltung
      */
-    private static final String KEY_SESSIONS = "shc:sessions";
+    protected static final String KEY_SESSIONS = "shc:sessions";
 
     /**
      * Liste aller Sitzungen
      */
-    private Map<String, Session> sessions = new HashMap<>();
+    protected Map<String, Session> sessions = new HashMap<>();
 
     /**
-     * lädt die Sitzungen aus der Datenbank
+     * bekannte Callenges
      */
-    @Override
-    public void loadData() {
-
-        Jedis db = ShcApplicationServer.getInstance().getRedis();
-        Map<String, String> sessions = db.hgetAll(KEY_SESSIONS);
-
-        Gson gson = ShcApplicationServer.getInstance().getGson();
-
-        this.sessions.clear();
-
-        //Sitzungen laden
-        for(String key : sessions.keySet()) {
-
-            String sessionJson = sessions.get(key);
-            Session session = gson.fromJson(sessionJson, Session.class);
-            this.sessions.put(session.getSessionId(), session);
-        }
-    }
+    protected Set<String> challanges = new HashSet<>();
 
     /**
      * löscht abgelaufene Sitzungen
@@ -165,16 +150,24 @@ public class SessionEditor implements DatabaseEditor {
     }
 
     /**
+     * gibt die Liste der bekannten Challenges zurück
+     *
+     * @return Challenges
+     */
+    public Set<String> getChallenges() {
+
+        return this.challanges;
+    }
+
+    /**
      * erstellt eine neue Benutzersitzung
      *
-     * @param username Benutzername
-     * @param password Passwort
+     * @param user Benutzer
      * @return Sitzungs ID
      */
-    public String login(String username, String password) {
+    public String login(User user) {
 
-        User user = ShcApplicationServer.getInstance().getUserEditor().getUserByName(username);
-        if(user != null && user.checkPassword(password)) {
+        if(user != null) {
 
             //neue Session erstellen
             String sessionId = BasicElement.createHash();
@@ -233,26 +226,5 @@ public class SessionEditor implements DatabaseEditor {
             return true;
         }
         return false;
-    }
-
-    /**
-     * schreibt die Sitzungen in die Datenbank
-     */
-    @Override
-    public void saveData() {
-
-        Pipeline pipeline = ShcApplicationServer.getInstance().getRedis().pipelined();
-        Gson gson = ShcApplicationServer.getInstance().getGson();
-        pipeline.del(KEY_SESSIONS);
-
-        for(String sid : sessions.keySet()) {
-
-            Session session = sessions.get(sid);
-            String sessionJson = gson.toJson(session);
-
-            pipeline.hset(KEY_SESSIONS, session.getSessionId(), sessionJson);
-        }
-
-        pipeline.sync();
     }
 }

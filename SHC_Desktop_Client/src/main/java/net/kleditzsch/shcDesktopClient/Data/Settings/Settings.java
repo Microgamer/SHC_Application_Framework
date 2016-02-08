@@ -79,8 +79,7 @@ public class Settings {
         knownSettings.put(address.getName(), address);
         Setting<Double> port = new Setting<>(SETTING_SERVER_PORT, 443d, 443d);
         knownSettings.put(port.getName(), port);
-        String md5Hash = BasicElement.createHash();
-        Setting<String> clientHash = new Setting<>(SETTING_SERVER_CLIENT_HASH, md5Hash, md5Hash);
+        Setting<String> clientHash = new Setting<>(SETTING_SERVER_CLIENT_HASH, "", "");
         knownSettings.put(clientHash.getName(), clientHash);
         Setting<String> user = new Setting<>(SETTING_SERVER_USER, "", "");
         knownSettings.put(user.getName(), user);

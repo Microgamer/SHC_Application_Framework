@@ -80,9 +80,9 @@
             <version>1.2</version>
         </dependency>
         <dependency>
-            <groupId>com.github.jeremyh</groupId>
-            <artifactId>jBCrypt</artifactId>
-            <version>jbcrypt-0.4</version>
+            <groupId>org.nanohttpd</groupId> <!-- <groupId>com.nanohttpd</groupId> for 2.1.0 and earlier -->
+            <artifactId>nanohttpd</artifactId>
+            <version>2.2.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.kleditzsch.Ui.UiDialogHelper;
+import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
 import net.kleditzsch.shcDesktopClient.Data.Settings.Settings;
 import net.kleditzsch.shcDesktopClient.View.Main.MainViewController;
 
@@ -33,6 +34,11 @@ public class ShcDesktopClient extends Application {
      * Einstellungen
      */
     protected Settings settings;
+
+    /**
+     * Verbindungs Manager
+     */
+    protected ConnectionManager connectionManager;
 
     /**
      * Hauptfenster
@@ -64,6 +70,11 @@ public class ShcDesktopClient extends Application {
 
         //Anwendung initalisieren
         this.initApp();
+
+        //Verbindungs Manager initalisieren
+        String serverAddress = (String) settings.getSetting(Settings.SETTING_SERVER_ADDRESS).getValue();
+        int serverPort = Double.valueOf((double) settings.getSetting(Settings.SETTING_SERVER_PORT).getValue()).intValue();
+        this.connectionManager = new ConnectionManager(serverAddress, serverPort);
 
         //Hauptfenster initalisieren
         FXMLLoader loader = new FXMLLoader(classLoader.getResource("FXML/MainView.fxml"));
@@ -133,7 +144,7 @@ public class ShcDesktopClient extends Application {
             settings.load();
         } catch (IOException e) {
 
-            UiDialogHelper.showExceptionDialog(e);
+            UiDialogHelper.showExceptionDialog(primaryStage, e);
             Platform.exit();
         }
 
@@ -197,15 +208,24 @@ public class ShcDesktopClient extends Application {
                 settings.dump();
             } catch (IOException e1) {
 
-                UiDialogHelper.showExceptionDialog(e1);
+                UiDialogHelper.showExceptionDialog(primaryStage, e1);
             }
         }
     }
 
     /**
+     * gibt den Verbindungsmanager zurück
+     *
+     * @return Verbindungsmanager
+     */
+    public ConnectionManager getConnectionManager() {
+        return connectionManager;
+    }
+
+    /**
      * gibt das Hauptfenster zurück
      *
-     * @return
+     * @return Hauptfenster
      */
     public Stage getPrimaryStage() {
         return primaryStage;
