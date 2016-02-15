@@ -3,12 +3,10 @@ package net.kleditzsch.shcApplicationServer.HTTPInterface.Handler;
 import com.google.gson.Gson;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.DeviceManager.ClientDevice;
-import net.kleditzsch.shcApplicationServer.DeviceManager.DeviceManager;
 import net.kleditzsch.shcApplicationServer.HTTPInterface.RequestHandler;
 import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
-import net.kleditzsch.shcApplicationServer.User.UserEditor;
 import net.kleditzsch.shcCore.Core.BasicElement;
-import net.kleditzsch.shcCore.ServerConnection.HttpInterfaceData.LoginResponse;
+import net.kleditzsch.shcCore.ClientData.Login.LoginResponse;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
 import net.kleditzsch.shcCore.User.User;
 
@@ -28,8 +26,8 @@ public class LoginRequest implements RequestHandler {
     /**
      * behandelt eine Anfrage
      *
-     * @param params Parameter
-     * @param gson   Gson Objekt
+     * @param params GET Parameter
+     * @param gson Gson Objekt
      * @return Json Antwort
      */
     @Override

@@ -17,7 +17,7 @@ public interface RequestHandler {
     /**
      * behandelt eine Anfrage
      *
-     * @param params Parameter
+     * @param params GET Parameter
      * @param gson Gson Objekt
      * @return Json Antwort
      */

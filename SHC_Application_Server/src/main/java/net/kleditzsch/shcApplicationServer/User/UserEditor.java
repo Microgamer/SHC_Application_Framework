@@ -119,6 +119,17 @@ public class UserEditor implements DatabaseEditor {
     }
 
     /**
+     * gibt sofern vorhanden das Benutzerobjekt zum Benutzerhash zurück
+     *
+     * @param userHash Benutzerhash
+     * @return Benutzer
+     */
+    public User getUserByHash(String userHash) {
+
+        return users.get(userHash);
+    }
+
+    /**
      * regestriert einen neuen Benutzer
      *
      * @param user Benutzer

@@ -1,4 +1,6 @@
-package net.kleditzsch.shcCore.ServerConnection.HttpInterfaceData;
+package net.kleditzsch.shcCore.ClientData.Login;
+
+import net.kleditzsch.shcCore.ClientData.AbstractResponse;
 
 /**
  * Handshake Data
@@ -7,13 +9,11 @@ package net.kleditzsch.shcCore.ServerConnection.HttpInterfaceData;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class Handshake {
+public class Handshake extends AbstractResponse {
 
     protected String clientHash;
     protected String userAgent;
     protected boolean isKnown;
-    protected boolean success;
-    protected String message;
 
     public String getClientHash() {
         return clientHash;
@@ -37,21 +37,5 @@ public class Handshake {
 
     public void setKnown(boolean known) {
         isKnown = known;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

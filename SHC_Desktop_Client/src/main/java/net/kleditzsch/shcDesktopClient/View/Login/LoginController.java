@@ -1,4 +1,4 @@
-package net.kleditzsch.shcDesktopClient.View.Main.Login;
+package net.kleditzsch.shcDesktopClient.View.Login;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,12 +13,13 @@ import javafx.scene.layout.StackPane;
 import javafx.util.StringConverter;
 import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcCore.Core.BasicElement;
-import net.kleditzsch.shcCore.ServerConnection.HttpInterfaceData.Handshake;
-import net.kleditzsch.shcCore.ServerConnection.HttpInterfaceData.LoginResponse;
+import net.kleditzsch.shcCore.ClientData.Login.Handshake;
+import net.kleditzsch.shcCore.ClientData.Login.LoginResponse;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Data.Settings.Settings;
+import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
 import org.controlsfx.control.MaskerPane;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -129,7 +130,7 @@ public class LoginController {
 
             //Handshake senden
             clientHash = BasicElement.createHash();
-            String userAgent = "SHC Desktop Client von " + System.getProperty("user.name") + " unter " + System.getProperty("os.name") + " " + System.getProperty("os.version");
+            String userAgent = "SHC Desktop ClientData von " + System.getProperty("user.name") + " unter " + System.getProperty("os.name") + " " + System.getProperty("os.version");
             try {
 
                 Handshake handshake = cm.sendHandshake(clientHash, userAgent);
@@ -144,13 +145,15 @@ public class LoginController {
                     settings.dump();
 
                     //Meldung
-                    UiDialogHelper.showInfoDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät angemeldet", null, "Das Gerät wurde erfolgreich angemeldet, nach der Freischaltung dur einen Andministrator kannst du das SHC benutzen");
+                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät angemeldet", "Das Gerät wurde erfolgreich angemeldet, nach der Freischaltung dur einen Andministrator kannst du das SHC benutzen");
+                    //UiDialogHelper.showInfoDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät angemeldet", null, "Das Gerät wurde erfolgreich angemeldet, nach der Freischaltung dur einen Andministrator kannst du das SHC benutzen");
                     maskerPane.setVisible(false);
                     return;
                 } else {
 
                     //Fehler beim senden
-                    UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", null, handshake.getMessage());
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", handshake.getMessage());
+                    //UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", null, handshake.getMessage());
                     maskerPane.setVisible(false);
                     return;
                 }
@@ -186,12 +189,14 @@ public class LoginController {
                 //Connectionmanager über die Session ID informieren
                 ShcDesktopClient.getInstance().getConnectionManager().setSessionId(loginResponse.getSessionId());
                 ShcDesktopClient.getInstance().getConnectionManager().updateLastContact();
+                UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Login erfolgreich");
                 return;
             } else {
 
                 //Login Fehlgeschlagen
                 maskerPane.setVisible(false);
-                UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Login Fehler", null, loginResponse.getMessage());
+                UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Login Fehler", loginResponse.getMessage());
+                //UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Login Fehler", null, loginResponse.getMessage());
                 return;
             }
 
@@ -199,7 +204,8 @@ public class LoginController {
 
             //Verbindungsfehler
             maskerPane.setVisible(false);
-            UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Verbindungsfehler", null, e.getLocalizedMessage());
+            UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Verbindungsfehler", e.getMessage());
+            //UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Verbindungsfehler", null, e.getLocalizedMessage());
             return;
         }
     }

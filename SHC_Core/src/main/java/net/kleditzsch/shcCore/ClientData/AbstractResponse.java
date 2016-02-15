@@ -1,19 +1,17 @@
-package net.kleditzsch.shcCore.ServerConnection.HttpInterfaceData;
+package net.kleditzsch.shcCore.ClientData;
 
 /**
- * Login Antwort
+ * Basis Antwort
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class LoginResponse {
+public abstract class AbstractResponse {
 
     protected boolean success;
-
     protected String message;
-
-    protected String sessionId;
+    protected int errorCode;
 
     public boolean isSuccess() {
         return success;
@@ -31,11 +29,11 @@ public class LoginResponse {
         this.message = message;
     }
 
-    public String getSessionId() {
-        return sessionId;
+    public int getErrorCode() {
+        return errorCode;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 }

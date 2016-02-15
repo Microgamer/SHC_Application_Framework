@@ -12,9 +12,9 @@ import java.io.StringWriter;
 import java.util.Optional;
 
 /**
- * Vereinfachung der
+ * Hilfklasse für Meldefenster
  */
-public class UiDialogHelper {
+public abstract class UiDialogHelper {
 
     /**
      * zeigt einen Info-Dialog an

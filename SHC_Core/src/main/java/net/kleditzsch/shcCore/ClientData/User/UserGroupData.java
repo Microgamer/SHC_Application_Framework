@@ -1,4 +1,4 @@
-package net.kleditzsch.shcCore.User;
+package net.kleditzsch.shcCore.ClientData.User;
 
 import net.kleditzsch.shcCore.Core.BasicElement;
 
@@ -6,13 +6,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Benutzergruppe
+ * Benutzer Gruppe (Client)
  *
  * @author Oliver Kleditzsch
- * @copyright Copyright (c) 2015, Oliver Kleditzsch
+ * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class UserGroup extends BasicElement {
+public class UserGroupData extends BasicElement {
 
     /**
      * Beschreibung der Gruppe
@@ -29,12 +29,12 @@ public class UserGroup extends BasicElement {
      */
     private Set<String> permissions = new HashSet<>();
 
-    public UserGroup() {}
+    public UserGroupData() {}
 
     /**
      * @param systemGroup Systemgruppe
      */
-    public UserGroup(boolean systemGroup) {
+    public UserGroupData(boolean systemGroup) {
 
         this.systemGroup = systemGroup;
     }
@@ -67,7 +67,16 @@ public class UserGroup extends BasicElement {
     }
 
     /**
-     * gibt die Liste der Berechtigungen zurück
+     * markiert die Gruppe als Systemgruppe
+     *
+     * @param systemGroup
+     */
+    public void setSystemGroup(boolean systemGroup) {
+        this.systemGroup = systemGroup;
+    }
+
+    /**
+     * gibt die Liste mit den Berechtigungen zurück
      *
      * @return
      */

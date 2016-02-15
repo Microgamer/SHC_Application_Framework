@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.DeviceManager.ClientDevice;
 import net.kleditzsch.shcApplicationServer.DeviceManager.DeviceManager;
-import net.kleditzsch.shcCore.ServerConnection.HttpInterfaceData.Handshake;
+import net.kleditzsch.shcCore.ClientData.Login.Handshake;
 import net.kleditzsch.shcApplicationServer.HTTPInterface.RequestHandler;
 
 import java.util.Map;
@@ -21,7 +21,7 @@ public class HandshakeRequest implements RequestHandler {
     /**
      * behandelt eine Anfrage
      *
-     * @param params Parameter
+     * @param params GET Parameter
      * @param gson Gson Objekt
      * @return Json Antwort
      */
@@ -55,6 +55,7 @@ public class HandshakeRequest implements RequestHandler {
         } else {
 
             handshake.setSuccess(false);
+            handshake.setErrorCode(200);
             handshake.setMessage("Parameter fehler!");
         }
         return gson.toJson(handshake);

@@ -1,4 +1,4 @@
-package net.kleditzsch.shcDesktopClient.View.Main;
+package net.kleditzsch.shcDesktopClient.View;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
+import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
 import org.controlsfx.control.StatusBar;
 
 /**
@@ -53,28 +54,32 @@ public class MainViewController {
             //Status setzen
             setState(false);
 
-
             if(cm.autoLogin()) {
 
                 setState(true);
             } else {
 
                 //Anmeldefenster zeigen
-                FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Login.fxml"));
-                Parent loginPane;
-                try {
-
-                    loginPane = loader.load();
-                    mainBorderPane.setCenter(loginPane);
-
-                } catch (IOException e) {
-
-                    UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
-                }
+                MainViewLoader.loadLoginView();
             }
         }
 
         if (cm.isConnected()) {
+
+            //Admin Menü Button
+            //TODO Rechte überprüfen
+            if(true) {
+
+                Button adminButton = new Button("Administration");
+                adminButton.setBackground(new Background(new BackgroundFill(Color.BLUE, new CornerRadii(5), new Insets(5))));
+                adminButton.setTextFill(Color.WHITE);
+                stateBar.getRightItems().add(adminButton);
+
+                adminButton.setOnAction(e -> {
+
+                    MainViewLoader.loadAdminMenueView();
+                });
+            }
 
             //Dashboard lasen
             System.out.println("Dash Laden");
@@ -111,5 +116,15 @@ public class MainViewController {
     public DoubleProperty progressProperty() {
 
         return stateBar.progressProperty();
+    }
+
+    /**
+     * gibt das Haupt Pane zurüeck
+     *
+     * @return BorderPane
+     */
+    public BorderPane getMainPane() {
+
+        return mainBorderPane;
     }
 }

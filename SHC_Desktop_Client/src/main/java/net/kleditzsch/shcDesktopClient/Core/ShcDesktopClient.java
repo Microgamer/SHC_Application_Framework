@@ -1,7 +1,7 @@
 package net.kleditzsch.shcDesktopClient.Core;
 
 /**
- * SHC Dasktop Client
+ * SHC Dasktop ClientData
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
 import net.kleditzsch.shcDesktopClient.Data.Settings.Settings;
-import net.kleditzsch.shcDesktopClient.View.Main.MainViewController;
+import net.kleditzsch.shcDesktopClient.View.MainViewController;
 
 import java.io.IOException;
 
@@ -108,7 +108,7 @@ public class ShcDesktopClient extends Application {
                 //Maximiert
                 primaryStage.setFullScreen(true);
             }
-            primaryStage.setTitle("SHC Desktop Client");
+            primaryStage.setTitle("SHC Desktop ClientData");
             primaryStage.setScene(scene);
 
             //Fenster Anzeigen

@@ -30,7 +30,7 @@ public class SessionEditor {
      * @copyright Copyright (c) 2016, Oliver Kleditzsch
      * @license http://opensource.org/licenses/gpl-license.php GNU Public License
      */
-    private class Session {
+    public class Session {
 
         /**
          * Session ID
@@ -171,7 +171,8 @@ public class SessionEditor {
 
             //neue Session erstellen
             String sessionId = BasicElement.createHash();
-            Session session = new Session(sessionId, user.getPasswordHash());
+            Session session = new Session(sessionId, user.getHash());
+            session.updateExpire();
             sessions.put(session.getSessionId(), session);
             return session.getSessionId();
         }
@@ -201,8 +202,9 @@ public class SessionEditor {
         Session session = sessions.get(sessionId);
         if(session != null) {
 
-            if(!session.updateExpire()) {
+            if(!session.isExpired()) {
 
+                session.updateExpire();
                 return session;
             } else {
 

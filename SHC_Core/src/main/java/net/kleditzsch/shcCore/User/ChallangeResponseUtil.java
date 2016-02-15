@@ -18,7 +18,7 @@ public abstract class ChallangeResponseUtil {
      * @param challange Challange
      * @param userName Benutzername
      * @param userHash Benutzer Hash
-     * @param clientHash Client Hash
+     * @param clientHash ClientData Hash
      * @return ChallangeResponse
      */
     public static String computeChallangeResponse(String challange, String userName, String userHash, String clientHash) throws NoSuchAlgorithmException {

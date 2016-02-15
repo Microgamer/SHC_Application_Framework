@@ -1,9 +1,8 @@
-package net.kleditzsch.shcCore.ServerConnection;
+package net.kleditzsch.shcCore.ClientData;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import net.kleditzsch.shcCore.ClientData.User.UserData;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -41,7 +40,7 @@ public class HttpRequestUtil {
     /**
      * Handshake Anfrage senden
      *
-     * @param clientHash Client Hash
+     * @param clientHash ClientData Hash
      * @param userAgent Benutzerkennung
      * @return Handshake Json
      * @throws IOException
@@ -51,7 +50,7 @@ public class HttpRequestUtil {
         Map<String, String> params = new HashMap<>();
         params.put("clientHash", clientHash);
         params.put("userAgent", userAgent);
-        return sendHttpRequest("handshake", params);
+        return sendHttpRequest("handshake", params, null);
     }
 
     /**
@@ -63,7 +62,7 @@ public class HttpRequestUtil {
     public String getLoginChallange() throws IOException {
 
         Map<String, String> params = new HashMap<>();
-        return sendHttpRequest("login", params);
+        return sendHttpRequest("login", params, null);
     }
 
     /**
@@ -77,10 +76,77 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("challangeResponse", challangeResponse);
-        return sendHttpRequest("login", params);
+        return sendHttpRequest("login", params, null);
     }
 
-    protected String sendHttpRequest(String request, Map<String, String> getParams) throws IOException {
+    /**
+     * holt die Benutzer und Gruppen von Server
+     *
+     * @param sid Sessnion ID
+     * @return UserAdminstrationResponse
+     */
+    public String getUsersAndGroups(String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "listusers");
+        return sendHttpRequest("useradmin", params, null);
+    }
+
+    /**
+     * sendet eine Anfrage zum erstellen eines Benutzers an den Server
+     *
+     * @param userData Benutzerdaten
+     * @param sid Sessnion ID
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String addUser(String userData, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "adduser");
+        Map<String, String> postParams = new HashMap<>();
+        postParams.put("data", userData);
+        return sendHttpRequest("useradmin", params, postParams);
+    }
+
+    /**
+     * sendet eine Anfrage zum bearbeiten eines Benutzers an den Server
+     *
+     * @param userData Benutzerdaten
+     * @param sid Sessnion ID
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String editUser(String userData, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "edituser");
+        Map<String, String> postParams = new HashMap<>();
+        postParams.put("data", userData);
+        return sendHttpRequest("useradmin", params, postParams);
+    }
+
+    /**
+     * sendet eine Anfrage zum Benutzer löschen an den Server
+     *
+     * @param userData Benutzerdaten
+     * @param sid Sessnion ID
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String deleteUser(UserData userData, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "deleteuser");
+        params.put("hash", userData.getHash());
+        return sendHttpRequest("useradmin", params, null);
+    }
+
+    protected String sendHttpRequest(String request, Map<String, String> getParams, Map<String, String> postParams) throws IOException {
 
         /*
         // Jedes Zertifikat akzeptieren >>>
@@ -128,10 +194,35 @@ public class HttpRequestUtil {
         //HTTP Anfrage
         URL url = new URL(urlString);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setConnectTimeout(1000);
+        urlConnection.setReadTimeout(3000);
+
+        //POST Daten senden
+        if(postParams != null) {
+
+            StringBuilder postData = new StringBuilder();
+            for (Map.Entry<String, String> param : postParams.entrySet()) {
+                if (postData.length() != 0) postData.append('&');
+                postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                postData.append('=');
+                postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+            }
+            byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            urlConnection.setRequestProperty("charset", "utf-8");
+            urlConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+            urlConnection.setUseCaches(false);
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
+            urlConnection.getOutputStream().write(postDataBytes);
+        }
+
+        //Antwort empfangen
         InputStream in = urlConnection.getInputStream();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
 
-        //Antwort empfangen
         StringBuffer response = new StringBuffer();
         String line;
         while ((line = bufferedReader.readLine()) != null) {

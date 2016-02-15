@@ -1,7 +1,7 @@
 package net.kleditzsch.shcApplicationServer.DeviceManager;
 
 /**
- * Client Gerät
+ * ClientData Gerät
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
@@ -10,7 +10,7 @@ package net.kleditzsch.shcApplicationServer.DeviceManager;
 public class ClientDevice {
 
     /**
-     * Client Hash
+     * ClientData Hash
      */
     protected String clientHash;
 
@@ -25,18 +25,18 @@ public class ClientDevice {
     protected boolean allowed = false;
 
     /**
-     * gibt den Client Hash zurück
+     * gibt den ClientData Hash zurück
      *
-     * @return Client Hash
+     * @return ClientData Hash
      */
     public String getClientHash() {
         return clientHash;
     }
 
     /**
-     * setzt den Client Hasn
+     * setzt den ClientData Hasn
      *
-     * @param clientHash Client Hash
+     * @param clientHash ClientData Hash
      */
     public void setClientHash(String clientHash) {
         this.clientHash = clientHash;

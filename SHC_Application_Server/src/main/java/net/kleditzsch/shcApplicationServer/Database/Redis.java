@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 public class Redis {
 
     /**
-     * Datenbank Client
+     * Datenbank ClientData
      */
     private Jedis jedis;
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<StackPane fx:id="rootStackPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.kleditzsch.shcDesktopClient.View.Admin.User.UserAdminstration">
+   <children>
+      <BorderPane fx:id="roodBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="200.0" prefHeight="550.0" prefWidth="800.0">
+         <center>
+            <TableView fx:id="userTable" prefHeight="600.0" prefWidth="535.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="columnUserName" minWidth="0.0" prefWidth="639.0" text="Benutzername" />
+                <TableColumn fx:id="columnUserOriginator" minWidth="0.0" prefWidth="158.0" text="Hauptbenutzer" />
+              </columns>
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                        <MenuItem fx:id="menuButtonCreateUser" mnemonicParsing="false" onAction="#createUser" text="neuer Benutzer" />
+                      <MenuItem fx:id="menuButtonEditUser" mnemonicParsing="false" onAction="#editUser" text="bearbeiten" />
+                        <MenuItem fx:id="menuButtonDeleteUser" mnemonicParsing="false" onAction="#deleteUser" text="löschen" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+            </TableView>
+         </center>
+         <top>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <items>
+                  <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#back" text="zurück" />
+                  <Button fx:id="buttonRefresh" mnemonicParsing="false" onAction="#refreshList" text="aktualisieren" />
+                <Button fx:id="buttonUserGroups" mnemonicParsing="false" onAction="#openUserGroupAdmistration" text="Benutzergruppen" />
+              </items>
+            </ToolBar>
+         </top>
+      </BorderPane>
+   </children>
+</StackPane>
