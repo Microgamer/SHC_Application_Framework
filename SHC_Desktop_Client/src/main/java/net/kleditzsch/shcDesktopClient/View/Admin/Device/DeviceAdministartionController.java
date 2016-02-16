@@ -2,6 +2,8 @@ package net.kleditzsch.shcDesktopClient.View.Admin.Device;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -59,6 +61,30 @@ public class DeviceAdministartionController {
         }
     }
 
+    private static class LastLoginCell extends TableCell<DeviceData, LocalDateTime> {
+
+        protected DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
+
+        /**
+         * @param item  The new item for the cell.
+         * @param empty whether or not this cell represents data from the list. If it
+         *              is empty, then it does not represent any domain data, but is a cell
+         *              being used to render an "empty" row.
+         * @expert
+         */
+        @Override
+        protected void updateItem(LocalDateTime item, boolean empty) {
+
+            if(item != null) {
+
+                setText(dateTimeFormatter.format(item));
+            } else {
+
+                setText("");
+            }
+        }
+    }
+
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -85,6 +111,9 @@ public class DeviceAdministartionController {
 
     @FXML // fx:id="columnAllowed"
     private TableColumn<DeviceData, Boolean> columnAllowed; // Value injected by FXMLLoader
+
+    @FXML // fx:id="columnLastLogin"
+    private TableColumn<DeviceData, LocalDateTime> columnLastLogin; // Value injected by FXMLLoader
 
     @FXML // fx:id="menuButtonAllow"
     private MenuItem menuButtonAllow; // Value injected by FXMLLoader
@@ -287,19 +316,23 @@ public class DeviceAdministartionController {
         assert deviceTable != null : "fx:id=\"deviceTable\" was not injected: check your FXML file 'DeviceAdministration.fxml'.";
         assert columnUserAgent != null : "fx:id=\"columnUserAgent\" was not injected: check your FXML file 'DeviceAdministration.fxml'.";
         assert columnAllowed != null : "fx:id=\"columnAllowed\" was not injected: check your FXML file 'DeviceAdministration.fxml'.";
+        assert columnLastLogin != null : "fx:id=\"columnLastLogin\" was not injected: check your FXML file 'DeviceAdministration.fxml'.";
         assert menuButtonAllow != null : "fx:id=\"menuButtonAllow\" was not injected: check your FXML file 'DeviceAdministration.fxml'.";
         assert menuButtonDenied != null : "fx:id=\"menuButtonDenied\" was not injected: check your FXML file 'DeviceAdministration.fxml'.";
         assert menuButtonDelete != null : "fx:id=\"menuButtonDelete\" was not injected: check your FXML file 'DeviceAdministration.fxml'.";
 
         //Spaltenbreite
         deviceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        columnUserAgent.setMaxWidth(1f * Integer.MAX_VALUE * 80);
-        columnAllowed.setMaxWidth(1f * Integer.MAX_VALUE * 20);
+        columnUserAgent.setMaxWidth(1f * Integer.MAX_VALUE * 65);
+        columnAllowed.setMaxWidth(1f * Integer.MAX_VALUE * 15);
+        columnLastLogin.setMaxWidth(1f * Integer.MAX_VALUE * 20);
 
         //Spalte Benutzername
         columnUserAgent.setCellValueFactory(new PropertyValueFactory<>("UserAgend"));
         columnAllowed.setCellValueFactory(new PropertyValueFactory<>("Allowed"));
         columnAllowed.setCellFactory(param -> new AllowedCell());
+        columnLastLogin.setCellValueFactory(new PropertyValueFactory<>("lastLogin"));
+        columnLastLogin.setCellFactory(param -> new LastLoginCell());
 
         //Optionen erst einmal deaktivieren
         menuButtonAllow.setDisable(true);

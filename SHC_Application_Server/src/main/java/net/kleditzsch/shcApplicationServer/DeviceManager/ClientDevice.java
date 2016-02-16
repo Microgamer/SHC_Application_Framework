@@ -1,5 +1,7 @@
 package net.kleditzsch.shcApplicationServer.DeviceManager;
 
+import java.time.LocalDateTime;
+
 /**
  * Gerät
  *
@@ -23,6 +25,11 @@ public class ClientDevice {
      * Zutritt erlaubt
      */
     protected boolean allowed = false;
+
+    /**
+     * letzter Login
+     */
+    protected LocalDateTime lastLogin;
 
     /**
      * gibt den ClientData Hash zurück
@@ -76,5 +83,23 @@ public class ClientDevice {
      */
     public void setAllowed(boolean allowed) {
         this.allowed = allowed;
+    }
+
+    /**
+     * gibt die zeit des letzten Logions zurück
+     *
+     * @return Letzter Login
+     */
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    /**
+     * setzt die Zeit des letzten Logins
+     *
+     * @param lastLogin Letzter Login
+     */
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
     }
 }

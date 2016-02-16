@@ -2,10 +2,6 @@ package net.kleditzsch.shcApplicationServer.Core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.kleditzsch.shcApplicationServer.Automation.Conditions.DayCondition;
-import net.kleditzsch.shcApplicationServer.Automation.Conditions.NightCondition;
-import net.kleditzsch.shcApplicationServer.CommandExecutor.CommandExecutor;
-import net.kleditzsch.shcApplicationServer.CommandExecutor.ExecutorService;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.DeviceManager.DeviceManager;
 import net.kleditzsch.shcApplicationServer.HTTPInterface.ServerRunnable;
@@ -28,12 +24,18 @@ import net.kleditzsch.shcApplicationServer.Settings.Settings;
 import net.kleditzsch.shcApplicationServer.SwitchServer.SwitchServerEditor;
 import net.kleditzsch.shcApplicationServer.User.UserEditor;
 import net.kleditzsch.shcApplicationServer.Util.CliConfigEditor;
+import net.kleditzsch.shcCore.Json.LocalDateSerializer;
+import net.kleditzsch.shcCore.Json.LocalDateTimeSerializer;
+import net.kleditzsch.shcCore.Json.LocalTimeSerializer;
 import net.kleditzsch.shcCore.User.User;
 import redis.clients.jedis.Jedis;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -233,6 +235,10 @@ public class ShcApplicationServer {
 
         builder.registerTypeAdapter(Box.class, new BoxSerializer());
         builder.registerTypeAdapter(Room.class, new RoomSerializer());
+
+        builder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
+        builder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+        builder.registerTypeAdapter(LocalTime.class, new LocalTimeSerializer());
     }
 
     /**

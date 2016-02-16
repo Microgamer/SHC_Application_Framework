@@ -17,11 +17,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.kleditzsch.Ui.UiDialogHelper;
+import net.kleditzsch.shcCore.Json.LocalDateSerializer;
+import net.kleditzsch.shcCore.Json.LocalDateTimeSerializer;
+import net.kleditzsch.shcCore.Json.LocalTimeSerializer;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
 import net.kleditzsch.shcDesktopClient.Data.Settings.Settings;
 import net.kleditzsch.shcDesktopClient.View.MainViewController;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class ShcDesktopClient extends Application {
 
@@ -159,7 +165,9 @@ public class ShcDesktopClient extends Application {
         builder = new GsonBuilder();
 
         //Serialisierer und Deserialisierer anmelden
-
+        builder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
+        builder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+        builder.registerTypeAdapter(LocalTime.class, new LocalTimeSerializer());
     }
 
     /**

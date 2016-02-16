@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <StackPane fx:id="rootStackPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.kleditzsch.shcDesktopClient.View.Admin.Device.DeviceAdministartionController">
    <children>
       <BorderPane fx:id="roodBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="200.0" prefHeight="550.0" prefWidth="800.0">
@@ -24,8 +23,9 @@
          <center>
             <TableView fx:id="deviceTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="columnUserAgent" prefWidth="689.0" text="Gerätekennung" />
-                <TableColumn fx:id="columnAllowed" prefWidth="110.0" text="Zutritt" />
+                <TableColumn fx:id="columnUserAgent" prefWidth="554.0" text="Gerätekennung" />
+                <TableColumn fx:id="columnAllowed" prefWidth="94.0" text="Zutritt" />
+                  <TableColumn fx:id="columnLastLogin" prefWidth="151.0" text="letzter Login" />
               </columns>
                <contextMenu>
                   <ContextMenu onShowing="#showingContextMenu">

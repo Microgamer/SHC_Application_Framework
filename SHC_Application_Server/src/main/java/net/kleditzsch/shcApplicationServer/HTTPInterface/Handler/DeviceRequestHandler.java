@@ -55,6 +55,7 @@ public class DeviceRequestHandler extends AbstractRequestHandler {
                                 deviceData.setClientHash(clientDevice.getClientHash());
                                 deviceData.setUserAgend(clientDevice.getUserAgend());
                                 deviceData.setAllowed(clientDevice.isAllowed());
+                                deviceData.setLastLogin(clientDevice.getLastLogin());
                                 deviceResponse.getDeviceDataList().add(deviceData);
                             }
 

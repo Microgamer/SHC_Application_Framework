@@ -11,6 +11,7 @@ import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
 import net.kleditzsch.shcCore.User.User;
 
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
 
@@ -77,6 +78,8 @@ public class LoginRequestHandler implements RequestHandler {
                                             //zutritt für dieses Gerät erlaubt
                                             String sessionId = sessionEditor.login(user);
                                             sessionEditor.getChallenges().remove(challange);
+
+                                            device.setLastLogin(LocalDateTime.now());
 
                                             loginResponse.setSuccess(true);
                                             loginResponse.setSessionId(sessionId);
