@@ -143,7 +143,7 @@ public class UserGroupAdminstration {
                 if(successResponse.isSuccess()) {
 
                     UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich erstellt");
-                    updateList();
+                    update();
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe erstellen fehlgeschlagen", successResponse.getMessage());
@@ -189,7 +189,7 @@ public class UserGroupAdminstration {
                 if(successResponse.isSuccess()) {
 
                     UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich gelöscht");
-                    updateList();
+                    update();
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe löschen fehlgeschlagen", successResponse.getMessage());
@@ -236,7 +236,7 @@ public class UserGroupAdminstration {
                 if(successResponse.isSuccess()) {
 
                     UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich bearbeitet");
-                    updateList();
+                    update();
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe bearbeiten fehlgeschlagen", successResponse.getMessage());
@@ -254,7 +254,7 @@ public class UserGroupAdminstration {
     @FXML
     void refreshList(ActionEvent event) {
 
-        updateList();
+        update();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -291,12 +291,16 @@ public class UserGroupAdminstration {
         rootStackPane.getChildren().add(maskerPane);
         maskerPane.setText("Bitte warten ...");
 
-        updateList();
+        update();
     }
 
-    protected void updateList() {
+    protected void update() {
 
         maskerPane.setVisible(true);
+
+        menuButtonCreateGroup.setDisable(true);
+        menuButtonEditGroup.setDisable(true);
+        menuButtonDeleteGroup.setDisable(true);
 
         //Benutzerdaten laden
         Task<UserAdministrationResponse> task = new Task<UserAdministrationResponse>() {

@@ -2,18 +2,14 @@ package net.kleditzsch.shcApplicationServer.HTTPInterface;
 
 import com.google.gson.Gson;
 import fi.iki.elonen.NanoHTTPD;
-import javafx.geometry.Pos;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
-import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.HandshakeRequest;
-import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.LoginRequest;
-import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.UserAdministartionRequest;
+import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.DeviceRequestHandler;
+import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.HandshakeRequestHandler;
+import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.LoginRequestHandler;
+import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.UserAdministartionRequestHandler;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,15 +41,19 @@ public class HttpServer extends NanoHTTPD {
 
             case "/handshake":
 
-                requestHandler = new HandshakeRequest();
+                requestHandler = new HandshakeRequestHandler();
                 break;
             case "/login":
 
-                requestHandler = new LoginRequest();
+                requestHandler = new LoginRequestHandler();
                 break;
             case "/useradmin":
 
-                requestHandler = new UserAdministartionRequest();
+                requestHandler = new UserAdministartionRequestHandler();
+                break;
+            case "/deviceadmin":
+
+                requestHandler = new DeviceRequestHandler();
                 break;
             default:
 

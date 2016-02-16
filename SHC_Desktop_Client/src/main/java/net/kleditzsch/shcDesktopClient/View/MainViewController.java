@@ -60,7 +60,16 @@ public class MainViewController {
             } else {
 
                 //Anmeldefenster zeigen
-                MainViewLoader.loadLoginView();
+                FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Login/Login.fxml"));
+                Parent pane;
+                try {
+
+                    pane = loader.load();
+                    mainBorderPane.setCenter(pane);
+                } catch (IOException e1) {
+
+                    UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
+                }
             }
         }
 

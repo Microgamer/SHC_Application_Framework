@@ -87,7 +87,7 @@ public class AdminMenuController {
 
     protected void openDeviceAdminstration() {
 
-
+        MainViewLoader.loadDeviceAdministartionView();
     }
 
     protected void openSettingsAdminstration() {

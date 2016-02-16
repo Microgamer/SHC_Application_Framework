@@ -1,13 +1,13 @@
-package net.kleditzsch.shcApplicationServer.DeviceManager;
+package net.kleditzsch.shcCore.ClientData.Device;
 
 /**
- * Gerät
+ * Gerätedaten
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class ClientDevice {
+public class DeviceData {
 
     /**
      * ClientData Hash

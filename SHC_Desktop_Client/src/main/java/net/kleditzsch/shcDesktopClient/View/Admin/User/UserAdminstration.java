@@ -152,7 +152,7 @@ public class UserAdminstration {
                 if(successResponse.isSuccess()) {
 
                     UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich erstellt");
-                    updateList();
+                    update();
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer erstellen fehlgeschlagen", successResponse.getMessage());
@@ -203,7 +203,7 @@ public class UserAdminstration {
                 if(successResponse.isSuccess()) {
 
                     UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich gelöscht");
-                    updateList();
+                    update();
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer löschen fehlgeschlagen", successResponse.getMessage());
@@ -255,7 +255,7 @@ public class UserAdminstration {
                 if(successResponse.isSuccess()) {
 
                     UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich bearbeitet");
-                    updateList();
+                    update();
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer bearbeiten fehlgeschlagen", successResponse.getMessage());
@@ -279,7 +279,7 @@ public class UserAdminstration {
     @FXML
     void refreshList(ActionEvent event) {
 
-        updateList();
+        update();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -310,15 +310,19 @@ public class UserAdminstration {
         rootStackPane.getChildren().add(maskerPane);
         maskerPane.setText("Bitte warten ...");
 
-        updateList();
+        update();
     }
 
     /**
      * läadt die Benutzer und zeigt sie in der Tabelle an
      */
-    protected void updateList() {
+    protected void update() {
 
         maskerPane.setVisible(true);
+
+        menuButtonCreateUser.setDisable(true);
+        menuButtonEditUser.setDisable(true);
+        menuButtonDeleteUser.setDisable(true);
 
         //Benutzerdaten laden
         Task<UserAdministrationResponse> task = new Task<UserAdministrationResponse>() {

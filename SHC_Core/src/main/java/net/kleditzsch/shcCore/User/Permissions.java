@@ -12,10 +12,11 @@ import java.util.List;
  */
 public interface Permissions {
 
-    /**
-     * Benutzer Verwalten
-     */
+    //Benutzer und Gruppen verwalten
     String USER_ADMINISTRATION = "shc.permission.user.administration";
+
+    //Geräte verwalten
+    String DEVICE_ADMINISTRATION = "shc.permission.device.administration";
 
     /**
      * gibt eine Liste mit allen Berechtigungen zurück
@@ -26,6 +27,7 @@ public interface Permissions {
 
         List<String> permissions = new ArrayList<>();
         permissions.add(USER_ADMINISTRATION);
+        permissions.add(DEVICE_ADMINISTRATION);
         return permissions;
     }
 }

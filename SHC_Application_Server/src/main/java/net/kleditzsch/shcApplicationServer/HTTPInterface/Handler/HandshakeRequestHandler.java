@@ -16,7 +16,7 @@ import java.util.Map;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class HandshakeRequest implements RequestHandler {
+public class HandshakeRequestHandler implements RequestHandler {
 
     /**
      * behandelt eine Anfrage
@@ -41,6 +41,10 @@ public class HandshakeRequest implements RequestHandler {
                 ClientDevice clientDevice = new ClientDevice();
                 clientDevice.setClientHash(handshake.getClientHash());
                 clientDevice.setUserAgend(handshake.getUserAgent());
+                if(deviceManager.getDevices().size() == 0) {
+
+                    clientDevice.setAllowed(true);
+                }
                 deviceManager.getDevices().put(clientDevice.getClientHash(), clientDevice);
 
                 handshake.setSuccess(true);

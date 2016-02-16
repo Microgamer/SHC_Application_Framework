@@ -1,6 +1,8 @@
 package net.kleditzsch.shcDesktopClient.HttpInterface;
 
 import com.google.gson.Gson;
+import net.kleditzsch.shcCore.ClientData.Device.DeviceData;
+import net.kleditzsch.shcCore.ClientData.Device.DeviceResponse;
 import net.kleditzsch.shcCore.ClientData.Login.Handshake;
 import net.kleditzsch.shcCore.ClientData.Login.LoginResponse;
 import net.kleditzsch.shcCore.ClientData.HttpRequestUtil;
@@ -257,6 +259,77 @@ public class ConnectionManager {
         if(!Objects.equals(this.sessionId, "")) {
 
             String response = this.requestUtil.deleteUserGroup(userGroupData, this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SuccessResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum auflisten der Geräte an den Server
+     *
+     * @return Geräteliste
+     * @throws IOException
+     */
+    public DeviceResponse getDevices() throws IOException {
+
+        if(!Objects.equals(this.sessionId, "")) {
+
+            String response = this.requestUtil.getDevices(this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, DeviceResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum auflisten der Geräte an den Server
+     *
+     * @param  deviceData Gerätedaten
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public SuccessResponse allowDevice(DeviceData deviceData) throws IOException {
+
+        if(!Objects.equals(this.sessionId, "")) {
+
+            String response = this.requestUtil.allowDevice(deviceData, this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SuccessResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum verweigern der Geräte an den Server
+     *
+     * @param  deviceData Gerätedaten
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public SuccessResponse denyDevice(DeviceData deviceData) throws IOException {
+
+        if(!Objects.equals(this.sessionId, "")) {
+
+            String response = this.requestUtil.denyDevice(deviceData, this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SuccessResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum löschen der Geräte an den Server
+     *
+     * @param  deviceData Gerätedaten
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public SuccessResponse deleteDevice(DeviceData deviceData) throws IOException {
+
+        if(!Objects.equals(this.sessionId, "")) {
+
+            String response = this.requestUtil.deleteDevice(deviceData, this.sessionId);
             updateLastContact();
             return gson.fromJson(response, SuccessResponse.class);
         }

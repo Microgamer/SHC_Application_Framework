@@ -1,5 +1,6 @@
 package net.kleditzsch.shcCore.ClientData;
 
+import net.kleditzsch.shcCore.ClientData.Device.DeviceData;
 import net.kleditzsch.shcCore.ClientData.User.UserData;
 import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 
@@ -198,6 +199,72 @@ public class HttpRequestUtil {
         params.put("action", "deleteusergroup");
         params.put("hash", userGroupData.getHash());
         return sendHttpRequest("useradmin", params, null);
+    }
+
+    /**
+     * sendet eine Anfrage zum auflisten der Geräte an den Server
+     *
+     * @param sid Session ID
+     * @return Geräteliste
+     * @throws IOException
+     */
+    public String getDevices(String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "listdevices");
+        return sendHttpRequest("deviceadmin", params, null);
+    }
+
+    /**
+     * sendet eine Anfrage zum erlauben eines Gerätes an den Server
+     *
+     * @param deviceData Gerätedaten
+     * @param sid Session ID
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String allowDevice(DeviceData deviceData, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "setdeviceallowed");
+        params.put("hash", deviceData.getClientHash());
+        return sendHttpRequest("deviceadmin", params, null);
+    }
+
+    /**
+     * sendet eine Anfrage zum verweigern eines Gerätes an den Server
+     *
+     * @param deviceData Gerätedaten
+     * @param sid Session ID
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String denyDevice(DeviceData deviceData, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "setdevicedenied");
+        params.put("hash", deviceData.getClientHash());
+        return sendHttpRequest("deviceadmin", params, null);
+    }
+
+    /**
+     * sendet eine Anfrage zum löschen eines Gerätes an den Server
+     *
+     * @param deviceData Gerätedaten
+     * @param sid Session ID
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String deleteDevice(DeviceData deviceData, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "deletedevice");
+        params.put("hash", deviceData.getClientHash());
+        return sendHttpRequest("deviceadmin", params, null);
     }
 
     protected String sendHttpRequest(String request, Map<String, String> getParams, Map<String, String> postParams) throws IOException {

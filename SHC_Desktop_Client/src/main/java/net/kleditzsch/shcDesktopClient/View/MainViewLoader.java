@@ -49,6 +49,14 @@ public abstract class MainViewLoader {
     }
 
     /**
+     * lädt die Geräte Adminstrations
+     */
+    public static void loadDeviceAdministartionView() {
+
+        MainViewLoader.load("FXML/Admin/Device/DeviceAdministration.fxml");
+    }
+
+    /**
      * lädt eine FXML Datei als View
      *
      * @param loaction Speicherort
@@ -56,11 +64,11 @@ public abstract class MainViewLoader {
     protected static void load(String loaction) {
 
         FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(loaction));
-        Parent loginPane;
+        Parent pane;
         try {
 
-            loginPane = loader.load();
-            ShcDesktopClient.getInstance().getMainViewController().getMainPane().setCenter(loginPane);
+            pane = loader.load();
+            ShcDesktopClient.getInstance().getMainViewController().getMainPane().setCenter(pane);
         } catch (IOException e1) {
 
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");

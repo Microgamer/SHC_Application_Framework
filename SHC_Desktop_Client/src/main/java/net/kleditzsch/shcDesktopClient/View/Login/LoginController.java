@@ -130,7 +130,7 @@ public class LoginController {
 
             //Handshake senden
             clientHash = BasicElement.createHash();
-            String userAgent = "SHC Desktop ClientData von " + System.getProperty("user.name") + " unter " + System.getProperty("os.name") + " " + System.getProperty("os.version");
+            String userAgent = "SHC Desktop Client von " + System.getProperty("user.name") + " unter " + System.getProperty("os.name") + " " + System.getProperty("os.version");
             try {
 
                 Handshake handshake = cm.sendHandshake(clientHash, userAgent);
