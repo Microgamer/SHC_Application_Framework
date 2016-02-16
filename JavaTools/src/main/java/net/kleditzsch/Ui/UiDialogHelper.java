@@ -123,7 +123,7 @@ public abstract class UiDialogHelper {
      */
     public static boolean showConfirmDialog(String title, String header, String message) {
 
-        return UiDialogHelper.showConfirmDialog(title, header, message);
+        return UiDialogHelper.showConfirmDialog(null, title, header, message);
     }
 
     /**

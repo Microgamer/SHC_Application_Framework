@@ -1,5 +1,8 @@
 package net.kleditzsch.shcCore.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Schnittstelle welche die Berechtigungen definiert
  *
@@ -13,4 +16,16 @@ public interface Permissions {
      * Benutzer Verwalten
      */
     String USER_ADMINISTRATION = "shc.permission.user.administration";
+
+    /**
+     * gibt eine Liste mit allen Berechtigungen zurück
+     *
+     * @return Liste mit Berechtigungen
+     */
+    static List<String> listPermissions() {
+
+        List<String> permissions = new ArrayList<>();
+        permissions.add(USER_ADMINISTRATION);
+        return permissions;
+    }
 }

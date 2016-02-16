@@ -16,6 +16,7 @@ public class UserAdministrationResponse extends AbstractResponse {
 
     protected List<UserData> userDatas = new ArrayList();
     protected List<UserGroupData> groups = new ArrayList();
+    protected List<String> permissions = new ArrayList();
 
     public List<UserData> getUserDataList() {
         return userDatas;
@@ -23,5 +24,9 @@ public class UserAdministrationResponse extends AbstractResponse {
 
     public List<UserGroupData> getGroupDataList() {
         return groups;
+    }
+
+    public List<String> getPermissions() {
+        return permissions;
     }
 }

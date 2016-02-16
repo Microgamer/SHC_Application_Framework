@@ -32,7 +32,7 @@ public class UserSerializer implements JsonSerializer<User>, JsonDeserializer<Us
         for(int i = 0; i < array.size(); i++) {
 
             String userGroupHash = array.get(i).getAsString();
-            UserGroup userGroup = userEditor.getUserGroup(userGroupHash);
+            UserGroup userGroup = userEditor.getUserGroupByHash(userGroupHash);
             user.getUserGroups().add(userGroup);
         }
 

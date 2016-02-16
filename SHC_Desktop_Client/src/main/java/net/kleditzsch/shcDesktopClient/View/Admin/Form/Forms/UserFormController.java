@@ -151,6 +151,11 @@ public class UserFormController {
         buttonSave.disableProperty().bind(validationSupport.invalidProperty());
     }
 
+    /**
+     * setzt die Liste mit allen Benutzergruppen
+     *
+     * @param userGroupDataList Gruppen Liste
+     */
     public void setGroups(List<UserGroupData> userGroupDataList) {
 
         userGrouoDataList = userGroupDataList;
@@ -160,6 +165,11 @@ public class UserFormController {
         }
     }
 
+    /**setzt den Benutzer
+     *
+     *
+     * @param userData Benutzer
+     */
     public void setUser(UserData userData) {
 
         this.userData = userData;
@@ -189,11 +199,21 @@ public class UserFormController {
         }
     }
 
+    /**
+     * gibt den bearbeiteten Benutzer zurück
+     *
+     * @return Benutzer
+     */
     public UserData getUser() {
 
         return this.userData;
     }
 
+    /**
+     * gibt an ob die Bearbeitung abgebrochen wurde
+     *
+     * @return true wenn abgebrochen
+     */
     public boolean isCanceld() {
         return canceld;
     }

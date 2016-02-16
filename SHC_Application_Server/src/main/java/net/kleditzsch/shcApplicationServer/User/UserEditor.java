@@ -174,12 +174,31 @@ public class UserEditor implements DatabaseEditor {
     }
 
     /**
+     * gibt sofern vorhanden das Benutzergruppenobjekt zum Benutzernamen zurück
+     *
+     * @param username Benutzergruppe Name
+     * @return Benutzergruppe
+     */
+    public UserGroup getUserGroupByName(String username) {
+
+        for (String hash : userGroups.keySet()) {
+
+            UserGroup userGroup = userGroups.get(hash);
+            if(userGroup.getName().equals(username)) {
+
+                return userGroup;
+            }
+        }
+        return null;
+    }
+
+    /**
      * gibt eine bestimmte Benutzergruppe zurück
      *
      * @param hash Identififzierung
      * @return Benutzer Gruppe
      */
-    public UserGroup getUserGroup(String hash) {
+    public UserGroup getUserGroupByHash(String hash) {
 
         return userGroups.get(hash);
     }

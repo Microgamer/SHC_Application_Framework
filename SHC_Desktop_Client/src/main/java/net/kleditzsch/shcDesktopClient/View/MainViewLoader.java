@@ -45,7 +45,7 @@ public abstract class MainViewLoader {
      */
     public static void loadUserGroupAdministartionView() {
 
-        MainViewLoader.load("FXML/Admin/User/UserGroupAdminstration.fxml");
+        MainViewLoader.load("FXML/Admin/User/UserGroupAdministarion.fxml");
     }
 
     /**

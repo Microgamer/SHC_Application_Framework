@@ -54,6 +54,7 @@ public class UserAdministartionRequest extends AbstractRequestHandler {
                             Set<UserGroup> groups = ShcApplicationServer.getInstance().getUserEditor().getUserGroups();
 
                             //Daten zum senden Vorbereiten
+                            //Benutzer
                             for (User user1 : users) {
 
                                 UserData userData = new UserData();
@@ -68,6 +69,8 @@ public class UserAdministartionRequest extends AbstractRequestHandler {
 
                                 userAdministrationResponse.getUserDataList().add(userData);
                             }
+
+                            //Benutzergruppen
                             for (UserGroup userGroup : groups) {
 
                                 UserGroupData groupData = new UserGroupData();
@@ -79,6 +82,11 @@ public class UserAdministartionRequest extends AbstractRequestHandler {
 
                                 userAdministrationResponse.getGroupDataList().add(groupData);
                             }
+
+                            //Berechtigungen
+                            userAdministrationResponse.getPermissions().addAll(Permissions.listPermissions());
+
+                            //Antwort
                             userAdministrationResponse.setSuccess(true);
                             return gson.toJson(userAdministrationResponse);
 
@@ -116,7 +124,7 @@ public class UserAdministartionRequest extends AbstractRequestHandler {
                                         user2.setPasswordHash(userData.getPasswordHash());
                                         for(String groupHash : userData.getUserGroups()) {
 
-                                            UserGroup userGroup = userEditor.getUserGroup(groupHash);
+                                            UserGroup userGroup = userEditor.getUserGroupByHash(groupHash);
                                             if(userGroup != null) {
 
                                                 user2.getUserGroups().add(userGroup);
@@ -187,7 +195,7 @@ public class UserAdministartionRequest extends AbstractRequestHandler {
                                         user2.getUserGroups().clear();
                                         for(String groupHash : userData.getUserGroups()) {
 
-                                            UserGroup userGroup = userEditor.getUserGroup(groupHash);
+                                            UserGroup userGroup = userEditor.getUserGroupByHash(groupHash);
                                             if(userGroup != null) {
 
                                                 user2.getUserGroups().add(userGroup);
@@ -266,6 +274,194 @@ public class UserAdministartionRequest extends AbstractRequestHandler {
                                         //ungültiger Benutzer
                                         successResponse.setSuccess(false);
                                         successResponse.setMessage("ungültiger Benutzer");
+                                    }
+                                } else {
+
+                                    //ungültiger Hash
+                                    successResponse.setSuccess(false);
+                                    successResponse.setMessage("ungültiger Hash");
+                                }
+                            } else {
+
+                                //fehlender Parameter Hash
+                                successResponse.setSuccess(false);
+                                successResponse.setErrorCode(200);
+                                successResponse.setMessage("Fehlender Parameter \"hash\"");
+                            }
+                            return gson.toJson(successResponse);
+                        }
+                        //nicht Berechtigt
+                        successResponse.setSuccess(false);
+                        successResponse.setErrorCode(101);
+                        successResponse.setMessage("Fehlende Berechtigung");
+                        return gson.toJson(successResponse);
+                    }
+                    //Ungültige Session
+                    successResponse.setSuccess(false);
+                    successResponse.setErrorCode(100);
+                    successResponse.setMessage("Ungültige Session");
+                    return gson.toJson(successResponse);
+
+                case "addusergroup":
+
+                    //Benutzergruppe erstellen
+                    successResponse = new SuccessResponse();
+                    if(sessionUser != null) {
+
+                        if(checkUserPermission(sessionUser, Permissions.USER_ADMINISTRATION)) {
+
+                            if(params.containsKey("data")) {
+
+                                UserGroupData userGroupData = gson.fromJson(params.get("data"), UserGroupData.class);
+                                if(userGroupData != null) {
+
+                                    UserEditor userEditor = ShcApplicationServer.getInstance().getUserEditor();
+                                    if(userEditor.getUserGroupByHash(userGroupData.getHash()) == null && userEditor.getUserGroupByName(userGroupData.getName()) == null) {
+
+                                        UserGroup userGroup = new UserGroup();
+                                        userGroup.setHash(userGroupData.getHash());
+                                        userGroup.setName(userGroupData.getName());
+                                        userGroup.setDescripion(userGroupData.getDescripion());
+                                        userGroup.getPermissions().addAll(userGroupData.getPermissions());
+
+                                        if(userEditor.addUserGroup(userGroup)) {
+
+                                            //erfolgreich
+                                            successResponse.setSuccess(true);
+                                        } else {
+
+                                            //fehler
+                                            successResponse.setSuccess(false);
+                                            successResponse.setMessage("die Benutzergruppe konnte nicht erstellt werden");
+                                        }
+                                    } else {
+
+                                        //benutzer existiert bereits
+                                        successResponse.setSuccess(false);
+                                        successResponse.setMessage("die Benutzergruppe existiert bereits");
+                                    }
+                                } else {
+
+                                    //ungültige Daten
+                                    successResponse.setSuccess(false);
+                                    successResponse.setMessage("ungültige Daten");
+                                }
+                            } else {
+
+                                //fehlender Parameter Data
+                                successResponse.setSuccess(false);
+                                successResponse.setErrorCode(200);
+                                successResponse.setMessage("Fehlender Parameter \"data\"");
+                            }
+                            return gson.toJson(successResponse);
+                        }
+                        //nicht Berechtigt
+                        successResponse.setSuccess(false);
+                        successResponse.setErrorCode(101);
+                        successResponse.setMessage("Fehlende Berechtigung");
+                        return gson.toJson(successResponse);
+                    }
+                    //Ungültige Session
+                    successResponse.setSuccess(false);
+                    successResponse.setErrorCode(100);
+                    successResponse.setMessage("Ungültige Session");
+                    return gson.toJson(successResponse);
+                case "editeusergroup":
+
+                    //Benutzergruppe bearbeiten
+                    successResponse = new SuccessResponse();
+                    if(sessionUser != null) {
+
+                        if(checkUserPermission(sessionUser, Permissions.USER_ADMINISTRATION)) {
+
+                            if(params.containsKey("data")) {
+
+                                UserGroupData userGroupData = gson.fromJson(params.get("data"), UserGroupData.class);
+                                if(userGroupData != null) {
+
+                                    UserEditor userEditor = ShcApplicationServer.getInstance().getUserEditor();
+                                    if(userEditor.getUserGroupByHash(userGroupData.getHash()) != null) {
+
+                                        UserGroup userGroup = userEditor.getUserGroupByHash(userGroupData.getHash());
+                                        userGroup.setHash(userGroupData.getHash());
+                                        userGroup.setName(userGroupData.getName());
+                                        userGroup.setDescripion(userGroupData.getDescripion());
+                                        userGroup.getPermissions().clear();
+                                        userGroup.getPermissions().addAll(userGroupData.getPermissions());
+
+                                        successResponse.setSuccess(true);
+                                    } else {
+
+                                        //benutzer existiert bereits
+                                        successResponse.setSuccess(false);
+                                        successResponse.setMessage("die Benutzergruppe existiert nicht");
+                                    }
+                                } else {
+
+                                    //ungültige Daten
+                                    successResponse.setSuccess(false);
+                                    successResponse.setMessage("ungültige Daten");
+                                }
+                            } else {
+
+                                //fehlender Parameter Data
+                                successResponse.setSuccess(false);
+                                successResponse.setErrorCode(200);
+                                successResponse.setMessage("Fehlender Parameter \"data\"");
+                            }
+                            return gson.toJson(successResponse);
+                        }
+                        //nicht Berechtigt
+                        successResponse.setSuccess(false);
+                        successResponse.setErrorCode(101);
+                        successResponse.setMessage("Fehlende Berechtigung");
+                        return gson.toJson(successResponse);
+                    }
+                    //Ungültige Session
+                    successResponse.setSuccess(false);
+                    successResponse.setErrorCode(100);
+                    successResponse.setMessage("Ungültige Session");
+                    return gson.toJson(successResponse);
+                case "deleteusergroup":
+
+                    //Benutzergruppe löschen
+                    successResponse = new SuccessResponse();
+                    if(sessionUser != null) {
+
+                        if(checkUserPermission(sessionUser, Permissions.USER_ADMINISTRATION)) {
+
+                            if(params.containsKey("hash")) {
+
+                                String hash = params.get("hash");
+                                if(hash.length() > 10) {
+
+                                    UserEditor userEditor = ShcApplicationServer.getInstance().getUserEditor();
+                                    UserGroup userGroup = userEditor.getUserGroupByHash(hash);
+                                    if(userGroup != null) {
+
+                                        if(!userGroup.isSystemGroup()) {
+
+                                            if(userEditor.removeUserGroup(userGroup)) {
+
+                                                //erfolgreich
+                                                successResponse.setSuccess(true);
+                                            } else {
+
+                                                //fehler beim löschen
+                                                successResponse.setSuccess(false);
+                                                successResponse.setMessage("");
+                                            }
+                                        } else {
+
+                                            //Systemgruppe
+                                            successResponse.setSuccess(false);
+                                            successResponse.setMessage("Die Benutzergruppe kann nicht gelöscht werden");
+                                        }
+                                    } else {
+
+                                        //ungültiger Benutzer
+                                        successResponse.setSuccess(false);
+                                        successResponse.setMessage("ungültige Benutzergruppe");
                                     }
                                 } else {
 

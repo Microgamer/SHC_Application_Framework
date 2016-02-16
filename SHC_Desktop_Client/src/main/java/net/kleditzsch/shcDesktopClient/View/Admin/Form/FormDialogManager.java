@@ -10,6 +10,7 @@ import net.kleditzsch.shcCore.ClientData.User.UserData;
 import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.UserFormController;
+import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.UserGroupFormController;
 
 import java.io.IOException;
 import java.util.List;
@@ -62,6 +63,40 @@ public abstract class FormDialogManager {
             if(!userFormController.isCanceld()) {
 
                 return Optional.of(userFormController.getUser());
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * öffnet den Benutzergruppen Formular Dialog
+     *
+     * @param userGroupData Benutzergruppe Daten
+     * @param permissions Berechtigungen
+     * @return Benutzergruppe Daten
+     */
+    public static Optional<UserGroupData> showUserGroupDataDialog(UserGroupData userGroupData, List<String> permissions) {
+
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/UserGroupForm.fxml"));
+        Parent pane;
+        try {
+
+            pane = loader.load();
+            Stage dialog = FormDialogManager.createModalDialog();
+            dialog.setScene(new Scene(pane));
+            dialog.setTitle("Benutzergruppe Formular");
+            UserGroupFormController userGroupFormController = loader.getController();
+            userGroupFormController.setPermissionList(permissions);
+            userGroupFormController.setUserGroupData(userGroupData);
+            dialog.showAndWait();
+
+            if(!userGroupFormController.isCanceld()) {
+
+                return Optional.of(userGroupFormController.getUserGroupData());
             }
         } catch (IOException e) {
 

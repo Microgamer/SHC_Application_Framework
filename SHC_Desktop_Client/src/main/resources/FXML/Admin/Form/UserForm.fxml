@@ -45,17 +45,17 @@
       </Label>
       <TextField fx:id="inputHash" editable="false" GridPane.columnIndex="1">
          <GridPane.margin>
-            <Insets right="10.0" />
+            <Insets />
          </GridPane.margin>
       </TextField>
       <TextField fx:id="inputName" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
-            <Insets right="10.0" />
+            <Insets />
          </GridPane.margin>
       </TextField>
       <TextField fx:id="intutAuthHash" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
-            <Insets right="10.0" />
+            <Insets />
          </GridPane.margin>
       </TextField>
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
@@ -79,7 +79,7 @@
       </HBox>
       <CheckComboBox fx:id="inputGroups" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <GridPane.margin>
-            <Insets right="10.0" />
+            <Insets />
          </GridPane.margin>
       </CheckComboBox>
    </children>

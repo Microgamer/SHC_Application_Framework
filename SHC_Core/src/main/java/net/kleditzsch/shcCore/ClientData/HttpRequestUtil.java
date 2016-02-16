@@ -1,6 +1,7 @@
 package net.kleditzsch.shcCore.ClientData;
 
 import net.kleditzsch.shcCore.ClientData.User.UserData;
+import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -143,6 +144,59 @@ public class HttpRequestUtil {
         params.put("sid", sid);
         params.put("action", "deleteuser");
         params.put("hash", userData.getHash());
+        return sendHttpRequest("useradmin", params, null);
+    }
+
+    /**
+     * sendet eine Anfrage zum erstellen einer Benutzergruppe an den Server
+     *
+     * @param userGroupData Benutzergruppe Daten
+     * @param sid Sessnion Id
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String addUserGroup(String userGroupData, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "addusergroup");
+        Map<String, String> postParams = new HashMap<>();
+        postParams.put("data", userGroupData);
+        return sendHttpRequest("useradmin", params, postParams);
+    }
+
+    /**
+     * sendet eine Anfrage zum bearbeiten einer Benutzergruppe an den Server
+     *
+     * @param userGroupData Benutzergruppe Daten
+     * @param sid Sessnion Id
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String editUserGroup(String userGroupData, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "editeusergroup");
+        Map<String, String> postParams = new HashMap<>();
+        postParams.put("data", userGroupData);
+        return sendHttpRequest("useradmin", params, postParams);
+    }
+
+    /**
+     * sendet eine Anfrage zum löschen einer Benutzergruppe an den Server
+     *
+     * @param userGroupData Benutzergruppe Daten
+     * @param sid Sessnion Id
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String deleteUserGroup(UserGroupData userGroupData, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "deleteusergroup");
+        params.put("hash", userGroupData.getHash());
         return sendHttpRequest("useradmin", params, null);
     }
 

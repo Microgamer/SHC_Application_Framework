@@ -7,9 +7,11 @@ import net.kleditzsch.shcCore.ClientData.HttpRequestUtil;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserAdministrationResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserData;
+import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Data.Settings.Settings;
+import net.kleditzsch.shcDesktopClient.View.MainViewLoader;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -147,6 +149,7 @@ public class ConnectionManager {
         if(!Objects.equals(this.sessionId, "")) {
 
             String response = this.requestUtil.getUsersAndGroups(this.sessionId);
+            updateLastContact();
             return gson.fromJson(response, UserAdministrationResponse.class);
         }
         return null;
@@ -164,6 +167,7 @@ public class ConnectionManager {
         if(!Objects.equals(this.sessionId, "")) {
 
             String response = this.requestUtil.addUser(gson.toJson(userData), this.sessionId);
+            updateLastContact();
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -181,6 +185,7 @@ public class ConnectionManager {
         if(!Objects.equals(this.sessionId, "")) {
 
             String response = this.requestUtil.editUser(gson.toJson(userData), this.sessionId);
+            updateLastContact();
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -198,6 +203,61 @@ public class ConnectionManager {
         if(!Objects.equals(this.sessionId, "")) {
 
             String response = this.requestUtil.deleteUser(userData, this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SuccessResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum erstellen einer Benutzergruppe an den Server
+     *
+     * @param userGroupData Benutzergruppe Daten
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public SuccessResponse addUserGroup(UserGroupData userGroupData) throws IOException {
+
+        if(!Objects.equals(this.sessionId, "")) {
+
+            String response = this.requestUtil.addUserGroup(gson.toJson(userGroupData), this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SuccessResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum bearbeiten einer Benutzergruppe an den Server
+     *
+     * @param userGroupData Benutzergruppe Daten
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public SuccessResponse editUserGroup(UserGroupData userGroupData) throws IOException {
+
+        if(!Objects.equals(this.sessionId, "")) {
+
+            String response = this.requestUtil.editUserGroup(gson.toJson(userGroupData), this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SuccessResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum löschen eines Benutzers an den Server
+     *
+     * @param userGroupData Benutzergruppe Daten
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public SuccessResponse deleteUserGroup(UserGroupData userGroupData) throws IOException {
+
+        if(!Objects.equals(this.sessionId, "")) {
+
+            String response = this.requestUtil.deleteUserGroup(userGroupData, this.sessionId);
+            updateLastContact();
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -219,6 +279,17 @@ public class ConnectionManager {
      */
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    /**
+     * setzt die Session ID auf den Status ungültig
+     */
+    public void setSessionidInvalid() {
+
+        sessionId = "";
+        lastContact = null;
+        //TODO in Überwachungsthread auslagern
+        MainViewLoader.loadLoginView();
     }
 
     /**

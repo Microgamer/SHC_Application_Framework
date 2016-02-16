@@ -411,7 +411,7 @@ public abstract class SerializerUtil {
         for(int i = 0; i < array.size(); i++) {
 
             String userGroupHash = array.get(i).getAsString();
-            UserGroup userGroup = userEditor.getUserGroup(userGroupHash);
+            UserGroup userGroup = userEditor.getUserGroupByHash(userGroupHash);
             abstractViewElement.addAllowedUserGroup(userGroup);
         }
     }
