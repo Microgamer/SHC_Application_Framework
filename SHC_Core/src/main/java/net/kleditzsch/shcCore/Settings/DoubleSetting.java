@@ -1,13 +1,15 @@
 package net.kleditzsch.shcCore.Settings;
 
+import net.kleditzsch.shcCore.Settings.Interface.Setting;
+
 /**
- * Einstellung
+ * Double Einstellung
  *
  * @author Oliver Kleditzsch
- * @copyright Copyright (c) 2015, Oliver Kleditzsch
+ * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class Setting<T> {
+public class DoubleSetting implements Setting {
 
     /**
      * Name der Einstellung
@@ -17,21 +19,21 @@ public class Setting<T> {
     /**
      * Wert der Einstellung
      */
-    private T value;
+    private double value;
 
     /**
      * Standard der Einstellung
      */
-    private T defaultValue;
+    private double defaultValue;
 
-    public Setting() {}
+    public DoubleSetting() {}
 
     /**
      * @param name
      * @param value
      * @param defaultValue
      */
-    public Setting(String name, T value, T defaultValue) {
+    public DoubleSetting(String name, double value, double defaultValue) {
         this.name = name;
         this.value = value;
         this.defaultValue = defaultValue;
@@ -60,7 +62,7 @@ public class Setting<T> {
      *
      * @return Wert
      */
-    public T getValue() {
+    public double getValue() {
         return value;
     }
 
@@ -69,7 +71,7 @@ public class Setting<T> {
      *
      * @param value Wert
      */
-    public void setValue(T value) {
+    public void setValue(double value) {
         this.value = value;
     }
 
@@ -78,7 +80,7 @@ public class Setting<T> {
      *
      * @return Standardwert
      */
-    public T getDefaultValue() {
+    public double getDefaultValue() {
         return defaultValue;
     }
 
@@ -87,7 +89,17 @@ public class Setting<T> {
      *
      * @param defaultValue Standardwert
      */
-    public void setDefaultValue(T defaultValue) {
+    public void setDefaultValue(double defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    /**
+     * gibt den Typ der Einstellung zurück
+     *
+     * @return Typ
+     */
+    @Override
+    public int getType() {
+        return TYPE_DOUBLE;
     }
 }

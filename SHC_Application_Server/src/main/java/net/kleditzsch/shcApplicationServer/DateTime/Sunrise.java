@@ -4,6 +4,7 @@ import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 import com.luckycatlabs.sunrisesunset.dto.Location;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
+import net.kleditzsch.shcCore.Settings.DoubleSetting;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,8 +25,8 @@ public class Sunrise {
         Settings settings = ShcApplicationServer.getInstance().getSettings();
 
         //Längen/Breitengrad
-        String latitude = Double.toString((Double) settings.getSetting(Settings.SETTING_LATITUDE).getValue());
-        String longitude = Double.toString((Double) settings.getSetting(Settings.SETTING_LONGITUDE).getValue());
+        double latitude = settings.getDoubleSetting(Settings.SETTING_LATITUDE).getValue();
+        double longitude = settings.getDoubleSetting(Settings.SETTING_LONGITUDE).getValue();
 
         //LocalTime erstellen
         Location location = new Location(latitude, longitude);
@@ -34,7 +35,7 @@ public class Sunrise {
         LocalTime sunrise = LocalDateTime.ofInstant(officialSunrise.toInstant(), ZoneId.of("Europe/Berlin")).toLocalTime();
 
         //Offset
-        Double offset = (Double) settings.getSetting(Settings.SETTING_SUNRISE_OFFSET).getValue();
-        return sunrise.plusMinutes(offset.intValue());
+        int offset = settings.getIntegerSetting(Settings.SETTING_SUNRISE_OFFSET).getValue();
+        return sunrise.plusMinutes(offset);
     }
 }

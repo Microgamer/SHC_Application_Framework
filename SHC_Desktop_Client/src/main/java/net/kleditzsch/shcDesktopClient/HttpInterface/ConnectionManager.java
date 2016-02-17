@@ -115,10 +115,10 @@ public class ConnectionManager {
     public boolean autoLogin() {
 
         Settings settings = ShcDesktopClient.getInstance().getSettings();
-        String serverAddress = (String) settings.getSetting(Settings.SETTING_SERVER_ADDRESS).getValue();
-        String clientHash = (String) settings.getSetting(Settings.SETTING_SERVER_CLIENT_HASH).getValue();
-        String userName = (String) settings.getSetting(Settings.SETTING_SERVER_USER).getValue();
-        String userHash = (String) settings.getSetting(Settings.SETTING_SERVER_IDENTIFIER).getValue();
+        String serverAddress = settings.getStringSetting(Settings.SETTING_SERVER_ADDRESS).getValue();
+        String clientHash = settings.getStringSetting(Settings.SETTING_SERVER_CLIENT_HASH).getValue();
+        String userName = settings.getStringSetting(Settings.SETTING_SERVER_USER).getValue();
+        String userHash = settings.getStringSetting(Settings.SETTING_SERVER_IDENTIFIER).getValue();
 
         if(!Objects.equals(serverAddress, "") && !Objects.equals(clientHash, "") && !Objects.equals(userName, "") && !Objects.equals(userHash, "")) {
 

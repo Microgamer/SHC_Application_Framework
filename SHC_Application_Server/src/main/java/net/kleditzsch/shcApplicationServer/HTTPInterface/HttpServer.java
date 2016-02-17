@@ -25,7 +25,7 @@ public class HttpServer extends NanoHTTPD {
     public HttpServer() throws IOException {
 
         //Port
-        super(Double.valueOf((double) ShcApplicationServer.getInstance().getSettings().getSetting(Settings.SETTING_SERVER_PORT).getValue()).intValue());
+        super(ShcApplicationServer.getInstance().getSettings().getIntegerSetting(Settings.SETTING_SERVER_PORT).getValue());
 
         //TODO HTTPs support
         //SSL

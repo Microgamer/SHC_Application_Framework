@@ -71,10 +71,10 @@ public class LoginController {
 
         //Einstellungen laden
         Settings settings = ShcDesktopClient.getInstance().getSettings();
-        String serverAddress = (String) settings.getSetting(Settings.SETTING_SERVER_ADDRESS).getValue();
-        int serverPort = Double.valueOf((double) settings.getSetting(Settings.SETTING_SERVER_PORT).getValue()).intValue();
-        String userName = (String) settings.getSetting(Settings.SETTING_SERVER_USER).getValue();
-        String userHash = (String) settings.getSetting(Settings.SETTING_SERVER_IDENTIFIER).getValue();
+        String serverAddress = settings.getStringSetting(Settings.SETTING_SERVER_ADDRESS).getValue();
+        int serverPort = settings.getIntegerSetting(Settings.SETTING_SERVER_PORT).getValue();
+        String userName = settings.getStringSetting(Settings.SETTING_SERVER_USER).getValue();
+        String userHash = settings.getStringSetting(Settings.SETTING_SERVER_IDENTIFIER).getValue();
 
         //Formularfelder Initalisieren
         inputServerAddress.setText(serverAddress);
@@ -125,7 +125,7 @@ public class LoginController {
         ConnectionManager cm = new ConnectionManager(serverAddress, serverPort);
 
         Settings settings = ShcDesktopClient.getInstance().getSettings();
-        String clientHash = (String) settings.getSetting(Settings.SETTING_SERVER_CLIENT_HASH).getValue();
+        String clientHash = settings.getStringSetting(Settings.SETTING_SERVER_CLIENT_HASH).getValue();
         if(clientHash != null && clientHash.length() < 20) {
 
             //Handshake senden
@@ -139,9 +139,9 @@ public class LoginController {
                     //erfolgreich gesendet
 
                     //ClientHash Speichern
-                    settings.getSetting(Settings.SETTING_SERVER_ADDRESS).setValue(serverAddress);
-                    settings.getSetting(Settings.SETTING_SERVER_PORT).setValue(serverPort);
-                    settings.getSetting(Settings.SETTING_SERVER_CLIENT_HASH).setValue(clientHash);
+                    settings.getStringSetting(Settings.SETTING_SERVER_ADDRESS).setValue(serverAddress);
+                    settings.getIntegerSetting(Settings.SETTING_SERVER_PORT).setValue(serverPort);
+                    settings.getStringSetting(Settings.SETTING_SERVER_CLIENT_HASH).setValue(clientHash);
                     settings.dump();
 
                     //Meldung
@@ -179,8 +179,8 @@ public class LoginController {
                 maskerPane.setVisible(false);
 
                 //Benutzerdaten sichern
-                settings.getSetting(Settings.SETTING_SERVER_USER).setValue(userName);
-                settings.getSetting(Settings.SETTING_SERVER_IDENTIFIER).setValue(userHash);
+                settings.getStringSetting(Settings.SETTING_SERVER_USER).setValue(userName);
+                settings.getStringSetting(Settings.SETTING_SERVER_IDENTIFIER).setValue(userHash);
                 settings.dump();
 
                 //Status auf Verbunden ändern

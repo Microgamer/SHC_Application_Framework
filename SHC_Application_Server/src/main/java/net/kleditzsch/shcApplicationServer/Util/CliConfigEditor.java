@@ -6,7 +6,9 @@ import com.google.gson.JsonParser;
 import net.kleditzsch.Util.CliUtil;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
-import net.kleditzsch.shcCore.Settings.Setting;
+import net.kleditzsch.shcCore.Settings.IntegerSetting;
+import net.kleditzsch.shcCore.Settings.Interface.Setting;
+import net.kleditzsch.shcCore.Settings.StringSetting;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -120,25 +122,25 @@ public abstract class CliConfigEditor {
         try {
 
             //Server Port
-            Setting<Double> serverPort = settings.getSetting(Settings.SETTING_SERVER_PORT);
-            Optional<Integer> port = CliUtil.inputIntegerOption("Server Port", serverPort.getValue().intValue(), 0, 65535, 5);
+            IntegerSetting serverPort = settings.getIntegerSetting(Settings.SETTING_SERVER_PORT);
+            Optional<Integer> port = CliUtil.inputIntegerOption("Server Port", serverPort.getValue(), 0, 65535, 5);
             if(port.isPresent()) {
 
-                serverPort.setValue((double) port.get());
+                serverPort.setValue(port.get());
             }
 
-            Setting<String> certificatePassword = settings.getSetting(Settings.SETTING_SERVER_CERTIFICATE_PASSWORD);
+            StringSetting certificatePassword = settings.getStringSetting(Settings.SETTING_SERVER_CERTIFICATE_PASSWORD);
             Optional<String> password = CliUtil.inputStringOption("Passwort des SSL Zertifikates: ", certificatePassword.getValue());
             if(password.isPresent()) {
 
-                certificatePassword.setValue((String) password.get());
+                certificatePassword.setValue(password.get());
             }
 
-            Setting<Double> serverStateLed = settings.getSetting(Settings.SETTING_SERVER_STATELED_PIN);
-            Optional<Integer> pin = CliUtil.inputIntegerOption("Pin Nummer [wiringpi] für die Status LED", serverStateLed.getValue().intValue(), 0, 35, 5);
+            IntegerSetting serverStateLed = settings.getIntegerSetting(Settings.SETTING_SERVER_STATELED_PIN);
+            Optional<Integer> pin = CliUtil.inputIntegerOption("Pin Nummer [wiringpi] für die Status LED", serverStateLed.getValue(), 0, 35, 5);
             if(pin.isPresent()) {
 
-                serverStateLed.setValue((double) pin.get());
+                serverStateLed.setValue(pin.get());
             }
 
             //EInstellungen speichern

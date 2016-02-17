@@ -78,8 +78,8 @@ public class ShcDesktopClient extends Application {
         this.initApp();
 
         //Verbindungs Manager initalisieren
-        String serverAddress = (String) settings.getSetting(Settings.SETTING_SERVER_ADDRESS).getValue();
-        int serverPort = Double.valueOf((double) settings.getSetting(Settings.SETTING_SERVER_PORT).getValue()).intValue();
+        String serverAddress = settings.getStringSetting(Settings.SETTING_SERVER_ADDRESS).getValue();
+        int serverPort = settings.getIntegerSetting(Settings.SETTING_SERVER_PORT).getValue();
         this.connectionManager = new ConnectionManager(serverAddress, serverPort);
 
         //Hauptfenster initalisieren
@@ -88,11 +88,12 @@ public class ShcDesktopClient extends Application {
         try {
 
             //Einstellungen laden
-            double width = (double) settings.getSetting(Settings.SETTING_WINDOW_WIDTH).getValue();
-            double height = (double) settings.getSetting(Settings.SETTING_WINDOW_HEIGHT).getValue();
-            double posX = (double) settings.getSetting(Settings.SETTING_WINDOW_POS_X).getValue();
-            double posY = (double) settings.getSetting(Settings.SETTING_WINDOW_POS_Y).getValue();
-            double maximized = (double) settings.getSetting(Settings.SETTING_WINDOW_MAXIMIZED).getValue();
+            double width = settings.getDoubleSetting(Settings.SETTING_WINDOW_WIDTH).getValue();
+            double height = settings.getDoubleSetting(Settings.SETTING_WINDOW_HEIGHT).getValue();
+            double posX = settings.getDoubleSetting(Settings.SETTING_WINDOW_POS_X).getValue();
+            double posY = settings.getDoubleSetting(Settings.SETTING_WINDOW_POS_Y).getValue();
+            boolean maximized = settings.getBooleanSetting(Settings.SETTING_WINDOW_MAXIMIZED).getValue();
+            boolean fullscreen = settings.getBooleanSetting(Settings.SETTING_WINDOW_FULLSCREEN).getValue();
 
             root = loader.load();
             mainViewController = loader.getController();
@@ -105,16 +106,16 @@ public class ShcDesktopClient extends Application {
                 primaryStage.setX(posX);
                 primaryStage.setY(posY);
             }
-            if(maximized == 1) {
+            if(maximized) {
 
                 //Maximiert
                 primaryStage.setMaximized(true);
-            } else if(maximized == 2) {
+            } else if(fullscreen) {
 
                 //Maximiert
                 primaryStage.setFullScreen(true);
             }
-            primaryStage.setTitle("SHC Desktop ClientData");
+            primaryStage.setTitle("SHC Desktop Client");
             primaryStage.setScene(scene);
 
             //Fenster Anzeigen
@@ -196,19 +197,20 @@ public class ShcDesktopClient extends Application {
 
         if(primaryStage != null) {
 
-            settings.getSetting(Settings.SETTING_WINDOW_POS_X).setValue(primaryStage.getX());
-            settings.getSetting(Settings.SETTING_WINDOW_POS_Y).setValue(primaryStage.getY());
+            settings.getDoubleSetting(Settings.SETTING_WINDOW_POS_X).setValue(primaryStage.getX());
+            settings.getDoubleSetting(Settings.SETTING_WINDOW_POS_Y).setValue(primaryStage.getY());
             if(primaryStage.isMaximized()) {
 
-                settings.getSetting(Settings.SETTING_WINDOW_MAXIMIZED).setValue(1d);
+                settings.getBooleanSetting(Settings.SETTING_WINDOW_MAXIMIZED).setValue(true);
             } else if(primaryStage.isFullScreen()) {
 
-                settings.getSetting(Settings.SETTING_WINDOW_MAXIMIZED).setValue(2d);
+                settings.getBooleanSetting(Settings.SETTING_WINDOW_FULLSCREEN).setValue(true);
             } else {
 
-                settings.getSetting(Settings.SETTING_WINDOW_MAXIMIZED).setValue(0d);
-                settings.getSetting(Settings.SETTING_WINDOW_WIDTH).setValue(primaryStage.getWidth());
-                settings.getSetting(Settings.SETTING_WINDOW_HEIGHT).setValue(primaryStage.getHeight());
+                settings.getBooleanSetting(Settings.SETTING_WINDOW_MAXIMIZED).setValue(false);
+                settings.getBooleanSetting(Settings.SETTING_WINDOW_FULLSCREEN).setValue(false);
+                settings.getDoubleSetting(Settings.SETTING_WINDOW_WIDTH).setValue(primaryStage.getWidth());
+                settings.getDoubleSetting(Settings.SETTING_WINDOW_HEIGHT).setValue(primaryStage.getHeight());
             }
 
             try {

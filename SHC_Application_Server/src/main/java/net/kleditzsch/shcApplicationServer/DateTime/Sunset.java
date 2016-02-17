@@ -24,8 +24,8 @@ public class Sunset {
         Settings settings = ShcApplicationServer.getInstance().getSettings();
 
         //Längen/Breitengrad
-        String latitude = Double.toString((Double) settings.getSetting(Settings.SETTING_LATITUDE).getValue());
-        String longitude = Double.toString((Double) settings.getSetting(Settings.SETTING_LONGITUDE).getValue());
+        double latitude = settings.getDoubleSetting(Settings.SETTING_LATITUDE).getValue();
+        double longitude = settings.getDoubleSetting(Settings.SETTING_LONGITUDE).getValue();
 
         //LocalTime erstellen
         Location location = new Location(latitude, longitude);
@@ -34,7 +34,7 @@ public class Sunset {
         LocalTime sunset = LocalDateTime.ofInstant(officialSunset.toInstant(), ZoneId.of("Europe/Berlin")).toLocalTime();
 
         //Offset
-        Double offset = (Double) settings.getSetting(Settings.SETTING_SUNSET_OFFSET).getValue();
-        return sunset.plusMinutes(offset.intValue());
+        int offset = settings.getIntegerSetting(Settings.SETTING_SUNSET_OFFSET).getValue();
+        return sunset.plusMinutes(offset);
     }
 }

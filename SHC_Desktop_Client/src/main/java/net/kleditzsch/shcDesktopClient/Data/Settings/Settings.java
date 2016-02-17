@@ -4,11 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import net.kleditzsch.shcCore.Core.BasicElement;
-import net.kleditzsch.shcCore.Settings.Setting;
+import net.kleditzsch.shcCore.Settings.BooleanSetting;
+import net.kleditzsch.shcCore.Settings.DoubleSetting;
+import net.kleditzsch.shcCore.Settings.IntegerSetting;
+import net.kleditzsch.shcCore.Settings.Interface.Setting;
+import net.kleditzsch.shcCore.Settings.StringSetting;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -36,6 +38,7 @@ public class Settings {
     public static final String SETTING_WINDOW_HEIGHT = "setting.window.height";
     public static final String SETTING_WINDOW_WIDTH = "setting.window.width";
     public static final String SETTING_WINDOW_MAXIMIZED = "setting.window.maximized";
+    public static final String SETTING_WINDOW_FULLSCREEN = "setting.window.fullscreen";
 
     public static final String SETTING_SERVER_ADDRESS = "setting.server.address";
     public static final String SETTING_SERVER_PORT = "setting.server.port";
@@ -59,31 +62,33 @@ public class Settings {
     public Settings() {
 
         //Fensterposition
-        Setting<Double> posX = new Setting<>(SETTING_WINDOW_POS_X, 0d, 0d);
+        DoubleSetting posX = new DoubleSetting(SETTING_WINDOW_POS_X, 0, 0);
         knownSettings.put(posX.getName(), posX);
-        Setting<Double> posY = new Setting<>(SETTING_WINDOW_POS_Y, 0d, 0d);
+        DoubleSetting posY = new DoubleSetting(SETTING_WINDOW_POS_Y, 0, 0);
         knownSettings.put(posY.getName(), posY);
 
         //Fenstergröße
-        Setting<Double> width = new Setting<>(SETTING_WINDOW_WIDTH, 800d, 800d);
+        DoubleSetting width = new DoubleSetting(SETTING_WINDOW_WIDTH, 800, 800);
         knownSettings.put(width.getName(), width);
-        Setting<Double> height = new Setting<>(SETTING_WINDOW_HEIGHT, 600d, 600d);
+        DoubleSetting height = new DoubleSetting(SETTING_WINDOW_HEIGHT, 600, 600);
         knownSettings.put(height.getName(), height);
 
-        //Maximiert
-        Setting<Double> maximized = new Setting<>(SETTING_WINDOW_MAXIMIZED, 0d, 0d);
+        //Maximiert/Vollbild
+        BooleanSetting maximized = new BooleanSetting(SETTING_WINDOW_MAXIMIZED, false, false);
         knownSettings.put(maximized.getName(), maximized);
+        BooleanSetting fullscreen = new BooleanSetting(SETTING_WINDOW_FULLSCREEN, false, false);
+        knownSettings.put(fullscreen.getName(), fullscreen);
 
         //Verbindungsdaten
-        Setting<String> address = new Setting<>(SETTING_SERVER_ADDRESS, "127.0.0.1", "127.0.0.1");
+        StringSetting address = new StringSetting(SETTING_SERVER_ADDRESS, "127.0.0.1", "127.0.0.1");
         knownSettings.put(address.getName(), address);
-        Setting<Double> port = new Setting<>(SETTING_SERVER_PORT, 443d, 443d);
+        IntegerSetting port = new IntegerSetting(SETTING_SERVER_PORT, 8080, 8080);
         knownSettings.put(port.getName(), port);
-        Setting<String> clientHash = new Setting<>(SETTING_SERVER_CLIENT_HASH, "", "");
+        StringSetting clientHash = new StringSetting(SETTING_SERVER_CLIENT_HASH, "", "");
         knownSettings.put(clientHash.getName(), clientHash);
-        Setting<String> user = new Setting<>(SETTING_SERVER_USER, "", "");
+        StringSetting user = new StringSetting(SETTING_SERVER_USER, "", "");
         knownSettings.put(user.getName(), user);
-        Setting<String> identifier = new Setting<>(SETTING_SERVER_IDENTIFIER, "", "");
+        StringSetting identifier = new StringSetting(SETTING_SERVER_IDENTIFIER, "", "");
         knownSettings.put(identifier.getName(), identifier);
     }
 
@@ -101,9 +106,28 @@ public class Settings {
             Gson gson = ShcDesktopClient.getInstance().getGson();
             JsonElement je = new JsonParser().parse(Files.newBufferedReader(userHome, StandardCharsets.UTF_8));
             JsonArray ja = je.getAsJsonArray();
-            for (JsonElement settingJson : ja) {
+            JsonArray stringSettings = ja.get(0).getAsJsonArray();
+            for (JsonElement settingJson : stringSettings) {
 
-                Setting setting = gson.fromJson(settingJson.getAsString(), Setting.class);
+                Setting setting = gson.fromJson(settingJson.getAsString(), StringSetting.class);
+                settings.put(setting.getName(), setting);
+            }
+            JsonArray integerSettings = ja.get(1).getAsJsonArray();
+            for (JsonElement settingJson : integerSettings) {
+
+                Setting setting = gson.fromJson(settingJson.getAsString(), IntegerSetting.class);
+                settings.put(setting.getName(), setting);
+            }
+            JsonArray doubleSettings = ja.get(2).getAsJsonArray();
+            for (JsonElement settingJson : doubleSettings) {
+
+                Setting setting = gson.fromJson(settingJson.getAsString(), DoubleSetting.class);
+                settings.put(setting.getName(), setting);
+            }
+            JsonArray booleanSettings = ja.get(3).getAsJsonArray();
+            for (JsonElement settingJson : booleanSettings) {
+
+                Setting setting = gson.fromJson(settingJson.getAsString(), BooleanSetting.class);
                 settings.put(setting.getName(), setting);
             }
         }
@@ -131,6 +155,70 @@ public class Settings {
     }
 
     /**
+     * gibt eine Einstellung zurück
+     *
+     * @param name Name der Einstellung
+     * @return Einstellung
+     */
+    public StringSetting getStringSetting(String name) {
+
+        Setting setting =  settings.get(name);
+        if(setting instanceof StringSetting) {
+
+            return (StringSetting) setting;
+        }
+        return null;
+    }
+
+    /**
+     * gibt eine Einstellung zurück
+     *
+     * @param name Name der Einstellung
+     * @return Einstellung
+     */
+    public IntegerSetting getIntegerSetting(String name) {
+
+        Setting setting =  settings.get(name);
+        if(setting instanceof IntegerSetting) {
+
+            return (IntegerSetting) setting;
+        }
+        return null;
+    }
+
+    /**
+     * gibt eine Einstellung zurück
+     *
+     * @param name Name der Einstellung
+     * @return Einstellung
+     */
+    public DoubleSetting getDoubleSetting(String name) {
+
+        Setting setting =  settings.get(name);
+        if(setting instanceof DoubleSetting) {
+
+            return (DoubleSetting) setting;
+        }
+        return null;
+    }
+
+    /**
+     * gibt eine Einstellung zurück
+     *
+     * @param name Name der Einstellung
+     * @return Einstellung
+     */
+    public BooleanSetting getBooleanSetting(String name) {
+
+        Setting setting =  settings.get(name);
+        if(setting instanceof BooleanSetting) {
+
+            return (BooleanSetting) setting;
+        }
+        return null;
+    }
+
+    /**
      * speichert die Einstellungen
      *
      * @throws IOException
@@ -146,12 +234,34 @@ public class Settings {
 
         //JSON serialisieren
         Gson gson = ShcDesktopClient.getInstance().getGson();
-        JsonArray ja = new JsonArray();
+        JsonArray stringSettings = new JsonArray();
+        JsonArray integerSettings = new JsonArray();
+        JsonArray doubleSettings = new JsonArray();
+        JsonArray booleanSettings = new JsonArray();
         for (String settingName : settings.keySet()) {
 
             Setting setting = settings.get(settingName);
-            ja.add(gson.toJson(setting));
+            if(setting instanceof StringSetting) {
+
+                stringSettings.add(gson.toJson(setting));
+            } else if(setting instanceof IntegerSetting) {
+
+                integerSettings.add(gson.toJson(setting));
+            } else if(setting instanceof DoubleSetting) {
+
+                doubleSettings.add(gson.toJson(setting));
+            } else if(setting instanceof BooleanSetting) {
+
+                booleanSettings.add(gson.toJson(setting));
+            }
         }
+
+        JsonArray ja = new JsonArray();
+        ja.add(stringSettings);
+        ja.add(integerSettings);
+        ja.add(doubleSettings);
+        ja.add(booleanSettings);
+        System.out.println(integerSettings);
 
         BufferedWriter out = Files.newBufferedWriter(userHome, StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING);
         out.write(ja.toString());
