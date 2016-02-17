@@ -18,7 +18,7 @@ import net.kleditzsch.shcCore.ClientData.Login.LoginResponse;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
-import net.kleditzsch.shcDesktopClient.Data.Settings.Settings;
+import net.kleditzsch.shcDesktopClient.Settings.Settings;
 import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
 import org.controlsfx.control.MaskerPane;
 import org.controlsfx.validation.ValidationSupport;
@@ -130,7 +130,7 @@ public class LoginController {
 
             //Handshake senden
             clientHash = BasicElement.createHash();
-            String userAgent = "SHC Desktop Client von " + System.getProperty("user.name") + " unter " + System.getProperty("os.name") + " " + System.getProperty("os.version");
+            String userAgent = ShcDesktopClient.getInstance().getUserAgent();
             try {
 
                 Handshake handshake = cm.sendHandshake(clientHash, userAgent);
@@ -187,8 +187,10 @@ public class LoginController {
                 ShcDesktopClient.getInstance().getMainViewController().setState(true);
 
                 //Connectionmanager über die Session ID informieren
-                ShcDesktopClient.getInstance().getConnectionManager().setSessionId(loginResponse.getSessionId());
-                ShcDesktopClient.getInstance().getConnectionManager().updateLastContact();
+                ConnectionManager connectionManager = ShcDesktopClient.getInstance().getConnectionManager();
+                connectionManager.setSessionId(loginResponse.getSessionId());
+                connectionManager.updateLastContact();
+                connectionManager.getUserPermissions().addAll(loginResponse.getPermissions());
                 UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Login erfolgreich");
                 return;
             } else {

@@ -3,11 +3,15 @@ package net.kleditzsch.shcDesktopClient.View.Admin;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
@@ -28,71 +32,47 @@ public class AdminMenuController {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
+    @FXML // fx:id="rootBorderPane"
+    private BorderPane rootBorderPane; // Value injected by FXMLLoader
+
     @FXML // fx:id="buttonUser"
-    private FlowPane buttonUser; // Value injected by FXMLLoader
+    private Button buttonUser; // Value injected by FXMLLoader
+
+    @FXML // fx:id="buttonDevices"
+    private Button buttonDevices; // Value injected by FXMLLoader
 
     @FXML // fx:id="buttonSettings"
-    private FlowPane buttonSettings; // Value injected by FXMLLoader
+    private Button buttonSettings; // Value injected by FXMLLoader
 
     @FXML
-    void openDeviceAdministration(MouseEvent event) {
+    void openDeviceAdministration(ActionEvent event) {
 
-        this.openDeviceAdminstration();
+        //TODO Rechte prüfen
+        MainViewLoader.loadDeviceAdministartionView();
     }
 
     @FXML
-    void openDeviceAdministrationTouch(TouchEvent event) {
+    void openSettingAdministration(ActionEvent event) {
 
-        this.openDeviceAdminstration();
+        //TODO Rechte prüfen
+        MainViewLoader.loadSettingsAdministartionView();
     }
 
     @FXML
-    void openSettingsAdministration(MouseEvent event) {
+    void openUserAdministration(ActionEvent event) {
 
-        this.openSettingsAdminstration();
-    }
-
-    @FXML
-    void openSettingsAdministrationTouch(TouchEvent event) {
-
-        this.openSettingsAdminstration();
-    }
-
-    @FXML
-    void openUserAdministration(MouseEvent event) {
-
-        this.openUserAdminstration();
-    }
-
-    @FXML
-    void openUserAdministrationTouch(TouchEvent event) {
-
-        this.openUserAdminstration();
+        //TODO Rechte prüfen
+        MainViewLoader.loadUserAdministartionView();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        assert rootBorderPane != null : "fx:id=\"rootBorderPane\" was not injected: check your FXML file 'Menu.fxml'.";
         assert buttonUser != null : "fx:id=\"buttonUser\" was not injected: check your FXML file 'Menu.fxml'.";
+        assert buttonDevices != null : "fx:id=\"buttonDevices\" was not injected: check your FXML file 'Menu.fxml'.";
         assert buttonSettings != null : "fx:id=\"buttonSettings\" was not injected: check your FXML file 'Menu.fxml'.";
 
-    }
-
-    /**
-     * lädt die Benutzerverwaltung
-     */
-    protected void openUserAdminstration() {
-
-        MainViewLoader.loadUserAdministartionView();
-    }
-
-    protected void openDeviceAdminstration() {
-
-        MainViewLoader.loadDeviceAdministartionView();
-    }
-
-    protected void openSettingsAdminstration() {
-
-
+        //TODO Rechte prüfen und Buttons für nicht Berechtigte Funktionen ausblenden
     }
 }
 

@@ -1,4 +1,4 @@
-package net.kleditzsch.shcDesktopClient.Data.Settings;
+package net.kleditzsch.shcDesktopClient.Settings;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -261,7 +261,6 @@ public class Settings {
         ja.add(integerSettings);
         ja.add(doubleSettings);
         ja.add(booleanSettings);
-        System.out.println(integerSettings);
 
         BufferedWriter out = Files.newBufferedWriter(userHome, StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING);
         out.write(ja.toString());

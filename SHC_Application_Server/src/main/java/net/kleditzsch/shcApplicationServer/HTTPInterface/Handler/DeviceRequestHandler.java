@@ -79,7 +79,7 @@ public class DeviceRequestHandler extends AbstractRequestHandler {
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
-                        if(checkUserPermission(sessionUser, Permissions.USER_ADMINISTRATION)) {
+                        if(checkUserPermission(sessionUser, Permissions.DEVICE_ADMINISTRATION)) {
 
                             //Befehl ausführen
                             if(params.containsKey("hash")) {

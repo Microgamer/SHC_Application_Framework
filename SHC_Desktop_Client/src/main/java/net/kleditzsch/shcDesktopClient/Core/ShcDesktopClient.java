@@ -21,13 +21,14 @@ import net.kleditzsch.shcCore.Json.LocalDateSerializer;
 import net.kleditzsch.shcCore.Json.LocalDateTimeSerializer;
 import net.kleditzsch.shcCore.Json.LocalTimeSerializer;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
-import net.kleditzsch.shcDesktopClient.Data.Settings.Settings;
+import net.kleditzsch.shcDesktopClient.Settings.Settings;
 import net.kleditzsch.shcDesktopClient.View.MainViewController;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Set;
 
 public class ShcDesktopClient extends Application {
 
@@ -209,8 +210,8 @@ public class ShcDesktopClient extends Application {
 
                 settings.getBooleanSetting(Settings.SETTING_WINDOW_MAXIMIZED).setValue(false);
                 settings.getBooleanSetting(Settings.SETTING_WINDOW_FULLSCREEN).setValue(false);
-                settings.getDoubleSetting(Settings.SETTING_WINDOW_WIDTH).setValue(primaryStage.getWidth());
-                settings.getDoubleSetting(Settings.SETTING_WINDOW_HEIGHT).setValue(primaryStage.getHeight());
+                settings.getDoubleSetting(Settings.SETTING_WINDOW_WIDTH).setValue(primaryStage.getScene().getWidth());
+                settings.getDoubleSetting(Settings.SETTING_WINDOW_HEIGHT).setValue(primaryStage.getScene().getHeight());
             }
 
             try {
@@ -221,6 +222,16 @@ public class ShcDesktopClient extends Application {
                 UiDialogHelper.showExceptionDialog(primaryStage, e1);
             }
         }
+    }
+
+    /**
+     * gibt die Benutzerkennung zurück
+     *
+     * @return Benutzerkennung
+     */
+    public String getUserAgent() {
+
+        return "SHC Desktop Client von " + System.getProperty("user.name") + " unter " + System.getProperty("os.name") + " " + System.getProperty("os.version");
     }
 
     /**

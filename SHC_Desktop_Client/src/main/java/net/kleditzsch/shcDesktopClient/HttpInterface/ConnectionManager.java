@@ -6,19 +6,22 @@ import net.kleditzsch.shcCore.ClientData.Device.DeviceResponse;
 import net.kleditzsch.shcCore.ClientData.Login.Handshake;
 import net.kleditzsch.shcCore.ClientData.Login.LoginResponse;
 import net.kleditzsch.shcCore.ClientData.HttpRequestUtil;
+import net.kleditzsch.shcCore.ClientData.SettingsResponse;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserAdministrationResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserData;
 import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
-import net.kleditzsch.shcDesktopClient.Data.Settings.Settings;
+import net.kleditzsch.shcDesktopClient.Settings.Settings;
 import net.kleditzsch.shcDesktopClient.View.MainViewLoader;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Verbindungsmanager
@@ -44,6 +47,14 @@ public class ConnectionManager {
      */
     protected LocalDateTime lastContact;
 
+    /**
+     * Benutzerrechte
+     */
+    protected Set<String> userPermissions = new HashSet<>();
+
+    /**
+     * Gson Objekt
+     */
     protected Gson gson;
 
     /**
@@ -64,6 +75,30 @@ public class ConnectionManager {
     public boolean isConnected() {
 
         if(sessionId != "" && lastContact != null && lastContact.isAfter(LocalDateTime.now().minusMinutes(9))) {
+
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * gibt die Berechtigungen des Benutzers der Session zurück
+     *
+     * @return Berechtigungen
+     */
+    public Set<String> getUserPermissions() {
+        return userPermissions;
+    }
+
+    /**
+     * prüft ob eine Berechtigung vorhanden ist
+     *
+     * @param permission Berechtigung
+     * @return true wenn vorhanden
+     */
+    public boolean checkPermission(String permission) {
+
+        if(userPermissions.contains(permission)) {
 
             return true;
         }
@@ -131,6 +166,7 @@ public class ConnectionManager {
 
                     this.setSessionId(loginResponse.getSessionId());
                     this.updateLastContact();
+                    this.getUserPermissions().addAll(loginResponse.getPermissions());
                     return true;
                 }
             } catch (IOException | NoSuchAlgorithmException e) {
@@ -337,6 +373,41 @@ public class ConnectionManager {
     }
 
     /**
+     * sendet eine Anfrage zum auflisten der Einstellungen an den Server
+     *
+     * @return Einstellungen
+     * @throws IOException
+     */
+    public SettingsResponse getSettings() throws IOException {
+
+        if(!Objects.equals(this.sessionId, "")) {
+
+            String response = this.requestUtil.getSettings(this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SettingsResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum speichern der Einstellungen an den Server
+     *
+     * @param settingsRequest Einstellungsanfrage
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public SuccessResponse setSettings(SettingsResponse settingsRequest) throws IOException {
+
+        if(!Objects.equals(this.sessionId, "")) {
+
+            String response = this.requestUtil.setSettings(gson.toJson(settingsRequest), this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SuccessResponse.class);
+        }
+        return null;
+    }
+
+    /**
      * gibt die Session ID zurück
      *
      * @return Session ID
@@ -359,8 +430,7 @@ public class ConnectionManager {
      */
     public void setSessionidInvalid() {
 
-        sessionId = "";
-        lastContact = null;
+        disconnect();
         //TODO in Überwachungsthread auslagern
         MainViewLoader.loadLoginView();
     }
@@ -380,5 +450,6 @@ public class ConnectionManager {
 
         sessionId = "";
         lastContact = null;
+        userPermissions.clear();
     }
 }

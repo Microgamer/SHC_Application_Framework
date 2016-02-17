@@ -3,10 +3,7 @@ package net.kleditzsch.shcApplicationServer.HTTPInterface;
 import com.google.gson.Gson;
 import fi.iki.elonen.NanoHTTPD;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
-import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.DeviceRequestHandler;
-import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.HandshakeRequestHandler;
-import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.LoginRequestHandler;
-import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.UserAdministartionRequestHandler;
+import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.*;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
 
 import java.io.IOException;
@@ -54,6 +51,10 @@ public class HttpServer extends NanoHTTPD {
             case "/deviceadmin":
 
                 requestHandler = new DeviceRequestHandler();
+                break;
+            case "/settings":
+
+                requestHandler = new SettingsRequestHandler();
                 break;
             default:
 

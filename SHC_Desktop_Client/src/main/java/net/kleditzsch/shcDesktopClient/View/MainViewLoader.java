@@ -57,6 +57,14 @@ public abstract class MainViewLoader {
     }
 
     /**
+     * lädt die Einstellungs Adminstration
+     */
+    public static void loadSettingsAdministartionView() {
+
+        MainViewLoader.load("FXML/Admin/Settings/SettingsAdministration.fxml");
+    }
+
+    /**
      * lädt eine FXML Datei als View
      *
      * @param loaction Speicherort
@@ -71,6 +79,7 @@ public abstract class MainViewLoader {
             ShcDesktopClient.getInstance().getMainViewController().getMainPane().setCenter(pane);
         } catch (IOException e1) {
 
+            e1.printStackTrace();
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
     }

@@ -39,8 +39,9 @@ public class Settings implements DatabaseEditor {
     public static final String SETTING_SUNSET_OFFSET = "setting.sunset.offset";
 
     public static final String SETTING_LATITUDE = "setting.location.latitude";
-    public static final String SETTING_LONGITUDE = "setting.server.longitude";
+    public static final String SETTING_LONGITUDE = "setting.location.longitude";
 
+    public static final String SETTING_FRITZBOX_ACTIVE = "setting.fritzbox.active";
     public static final String SETTING_FRITZBOX_ADDRESS = "setting.fritzbox.address";
     public static final String SETTING_FRITZBOX_USER = "setting.fritzbox.user";
     public static final String SETTING_FRITZBOX_PASSWORD = "setting.fritzbox.password";
@@ -89,6 +90,10 @@ public class Settings implements DatabaseEditor {
         //Breitengrad
         DoubleSetting longitude = new DoubleSetting(SETTING_LONGITUDE, 12.0, 12.0);
         knownSettings.put(longitude.getName(), longitude);
+
+        //Fritz!Box Addresse
+        BooleanSetting fritzboxActive = new BooleanSetting(SETTING_FRITZBOX_ACTIVE, false, false);
+        knownSettings.put(fritzboxActive.getName(), fritzboxActive);
 
         //Fritz!Box Addresse
         StringSetting fritzboxAddress = new StringSetting(SETTING_FRITZBOX_ADDRESS, "fritz.box", "fritz.box");

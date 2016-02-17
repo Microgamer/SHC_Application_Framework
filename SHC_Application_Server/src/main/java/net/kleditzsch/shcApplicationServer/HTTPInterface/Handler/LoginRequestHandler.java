@@ -8,6 +8,7 @@ import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
 import net.kleditzsch.shcCore.Core.BasicElement;
 import net.kleditzsch.shcCore.ClientData.Login.LoginResponse;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
+import net.kleditzsch.shcCore.User.Permissions;
 import net.kleditzsch.shcCore.User.User;
 
 import java.security.NoSuchAlgorithmException;
@@ -70,7 +71,6 @@ public class LoginRequestHandler implements RequestHandler {
 
                                     //Gerät gefunden
                                     ClientDevice device = devices.get(deviceHash);
-
                                     if(device != null) {
 
                                         if(device.isAllowed()) {
@@ -79,7 +79,17 @@ public class LoginRequestHandler implements RequestHandler {
                                             String sessionId = sessionEditor.login(user);
                                             sessionEditor.getChallenges().remove(challange);
 
+                                            //Update letzrer Login
                                             device.setLastLogin(LocalDateTime.now());
+
+                                            //Berechtigungen für den benutzer mit senden
+                                            for(String permission : Permissions.listPermissions()) {
+
+                                                if(user.checkPermission(permission)) {
+
+                                                    loginResponse.getPermissions().add(permission);
+                                                }
+                                            }
 
                                             loginResponse.setSuccess(true);
                                             loginResponse.setSessionId(sessionId);
@@ -93,6 +103,10 @@ public class LoginRequestHandler implements RequestHandler {
                                             return gson.toJson(loginResponse);
                                         }
                                     }
+                                    loginResponse.setSuccess(false);
+                                    loginResponse.setMessage("ungültiges Gerät");
+                                    sessionEditor.getChallenges().remove(challange);
+                                    return gson.toJson(loginResponse);
                                 }
                             } catch (NoSuchAlgorithmException e) {
 
@@ -119,6 +133,9 @@ public class LoginRequestHandler implements RequestHandler {
                     }
                 }
             }
+            //Fehler Unbekannter Benutzer
+            loginResponse.setSuccess(false);
+            loginResponse.setMessage("ungültige Challange");
             return gson.toJson(loginResponse);
         }
     }

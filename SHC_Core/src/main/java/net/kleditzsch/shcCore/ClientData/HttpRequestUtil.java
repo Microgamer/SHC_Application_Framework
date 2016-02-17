@@ -267,6 +267,39 @@ public class HttpRequestUtil {
         return sendHttpRequest("deviceadmin", params, null);
     }
 
+    /**
+     * sendet eine Anfrage zum auflisten der Einstellungen an den Server
+     *
+     * @param sid Session ID
+     * @return Einstellungen
+     * @throws IOException
+     */
+    public String getSettings(String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "listsettings");
+        return sendHttpRequest("settings", params, null);
+    }
+
+    /**
+     * sendet eine Anfrage zum speichern der Einstellungen an den Server
+     *
+     * @param settingsRequest EInstellungen
+     * @param sid Session ID
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String setSettings(String settingsRequest, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "setsettings");
+        Map<String, String> post = new HashMap<>();
+        post.put("data", settingsRequest);
+        return sendHttpRequest("settings", params, post);
+    }
+
     protected String sendHttpRequest(String request, Map<String, String> getParams, Map<String, String> postParams) throws IOException {
 
         /*

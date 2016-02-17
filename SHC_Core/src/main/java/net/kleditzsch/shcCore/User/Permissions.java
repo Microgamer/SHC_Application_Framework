@@ -1,7 +1,9 @@
 package net.kleditzsch.shcCore.User;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Schnittstelle welche die Berechtigungen definiert
@@ -18,16 +20,20 @@ public interface Permissions {
     //Geräte verwalten
     String DEVICE_ADMINISTRATION = "shc.permission.device.administration";
 
+    //Einstellungen verwalten
+    String SETTINGS_ADMINISTRATION = "shc.permission.settings.administration";
+
     /**
      * gibt eine Liste mit allen Berechtigungen zurück
      *
      * @return Liste mit Berechtigungen
      */
-    static List<String> listPermissions() {
+    static Set<String> listPermissions() {
 
-        List<String> permissions = new ArrayList<>();
+        Set<String> permissions = new HashSet<>();
         permissions.add(USER_ADMINISTRATION);
         permissions.add(DEVICE_ADMINISTRATION);
+        permissions.add(SETTINGS_ADMINISTRATION);
         return permissions;
     }
 }
