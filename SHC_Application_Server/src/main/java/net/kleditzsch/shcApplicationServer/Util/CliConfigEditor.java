@@ -70,7 +70,7 @@ public abstract class CliConfigEditor {
 
             //Passwort
             Optional<String> pass = CliUtil.inputIpAddressOption("Redis Server Passwort", config.get("pass").getAsString(), 5);
-            if(ip.isPresent()) {
+            if(pass.isPresent()) {
 
                 config.addProperty("pass", pass.get());
             }
