@@ -52,6 +52,17 @@ public class MainViewController {
         assert stateBar != null : "fx:id=\"stateBar\" was not injected: check your FXML file 'MainView.fxml'.";
         assert mainBorderPane != null : "fx:id=\"mainBorderPane\" was not injected: check your FXML file 'MainView.fxml'.";
 
+        //Button Verwaltung
+        Button adminButton = new Button("Verwaltung");
+        adminButton.setBackground(new Background(new BackgroundFill(Color.BLUE, new CornerRadii(5), new Insets(5))));
+        adminButton.setTextFill(Color.WHITE);
+        stateBar.getRightItems().add(adminButton);
+
+        adminButton.setOnAction(e -> {
+
+            MainViewLoader.loadAdminMenueView();
+        });
+
         //Prüfen ob eingeloggt
         ConnectionManager cm = ShcDesktopClient.getInstance().getConnectionManager();
         if(!cm.isConnected()) {
@@ -80,23 +91,11 @@ public class MainViewController {
 
         if (cm.isConnected()) {
 
-            //Admin Menü Button
-            //TODO Rechte überprüfen
-            if(true) {
-
-                Button adminButton = new Button("Administration");
-                adminButton.setBackground(new Background(new BackgroundFill(Color.BLUE, new CornerRadii(5), new Insets(5))));
-                adminButton.setTextFill(Color.WHITE);
-                stateBar.getRightItems().add(adminButton);
-
-                adminButton.setOnAction(e -> {
-
-                    MainViewLoader.loadAdminMenueView();
-                });
-            }
-
             //Dashboard lasen
             System.out.println("Dash Laden");
+        } else {
+
+            //TODO Fehler Hilfeseite
         }
     }
 
