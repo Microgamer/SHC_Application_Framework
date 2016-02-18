@@ -92,23 +92,25 @@ public class SwitchServerEditor implements DatabaseEditor {
         Gson gson = ShcApplicationServer.getInstance().getGson();
         pipeline.del(KEY_SWICTH_SERVERS + ":" + SwitchServer.SWITCH_SERVER_RASPBERRY_PI, KEY_SWICTH_SERVERS + ":" + SwitchServer.SWITCH_SERVER_MICRO_CONTROLLER);
 
-        for(String hash : this.switchServers.keySet()) {
+        synchronized (this) {
 
-            SwitchServer switchServer = this.switchServers.get(hash);
-            String switchServerJson = gson.toJson(switchServer);
-            switch(switchServer.getType()) {
+            for(String hash : this.switchServers.keySet()) {
 
-                case SwitchServer.SWITCH_SERVER_RASPBERRY_PI:
+                SwitchServer switchServer = this.switchServers.get(hash);
+                String switchServerJson = gson.toJson(switchServer);
+                switch(switchServer.getType()) {
 
-                    pipeline.hset(KEY_SWICTH_SERVERS + ":" + SwitchServer.SWITCH_SERVER_RASPBERRY_PI, switchServer.getHash(), switchServerJson);
-                    break;
-                case SwitchServer.SWITCH_SERVER_MICRO_CONTROLLER:
+                    case SwitchServer.SWITCH_SERVER_RASPBERRY_PI:
 
-                    pipeline.hset(KEY_SWICTH_SERVERS + ":" + SwitchServer.SWITCH_SERVER_MICRO_CONTROLLER, switchServer.getHash(), switchServerJson);
-                    break;
+                        pipeline.hset(KEY_SWICTH_SERVERS + ":" + SwitchServer.SWITCH_SERVER_RASPBERRY_PI, switchServer.getHash(), switchServerJson);
+                        break;
+                    case SwitchServer.SWITCH_SERVER_MICRO_CONTROLLER:
+
+                        pipeline.hset(KEY_SWICTH_SERVERS + ":" + SwitchServer.SWITCH_SERVER_MICRO_CONTROLLER, switchServer.getHash(), switchServerJson);
+                        break;
+                }
             }
         }
-
         pipeline.sync();
     }
 }

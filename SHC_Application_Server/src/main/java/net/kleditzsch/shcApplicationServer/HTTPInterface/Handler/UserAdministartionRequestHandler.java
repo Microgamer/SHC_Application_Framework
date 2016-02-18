@@ -50,45 +50,49 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                         if(checkUserPermission(sessionUser, Permissions.USER_ADMINISTRATION)) {
 
                             //Benutzer auflisten
-                            Set<User> users = ShcApplicationServer.getInstance().getUserEditor().getUsers();
-                            Set<UserGroup> groups = ShcApplicationServer.getInstance().getUserEditor().getUserGroups();
+                            UserEditor userEditor = ShcApplicationServer.getInstance().getUserEditor();
+                            synchronized (userEditor) {
 
-                            //Daten zum senden Vorbereiten
-                            //Benutzer
-                            for (User user1 : users) {
+                                Set<User> users = userEditor.getUsers();
+                                Set<UserGroup> groups = userEditor.getUserGroups();
 
-                                UserData userData = new UserData();
-                                userData.setHash(user1.getHash());
-                                userData.setName(user1.getName());
-                                userData.setPasswordHash(user1.getPasswordHash());
-                                userData.setOriginator(user1.isOriginator());
-                                for (UserGroup userGroup : user1.getUserGroups()) {
+                                //Daten zum senden Vorbereiten
+                                //Benutzer
+                                for (User user1 : users) {
 
-                                    userData.getUserGroups().add(userGroup.getHash());
+                                    UserData userData = new UserData();
+                                    userData.setHash(user1.getHash());
+                                    userData.setName(user1.getName());
+                                    userData.setPasswordHash(user1.getPasswordHash());
+                                    userData.setOriginator(user1.isOriginator());
+                                    for (UserGroup userGroup : user1.getUserGroups()) {
+
+                                        userData.getUserGroups().add(userGroup.getHash());
+                                    }
+
+                                    userAdministrationResponse.getUserDataList().add(userData);
                                 }
 
-                                userAdministrationResponse.getUserDataList().add(userData);
+                                //Benutzergruppen
+                                for (UserGroup userGroup : groups) {
+
+                                    UserGroupData groupData = new UserGroupData();
+                                    groupData.setHash(userGroup.getHash());
+                                    groupData.setName(userGroup.getName());
+                                    groupData.setDescripion(userGroup.getDescripion());
+                                    groupData.setSystemGroup(userGroup.isSystemGroup());
+                                    groupData.getPermissions().addAll(userGroup.getPermissions());
+
+                                    userAdministrationResponse.getGroupDataList().add(groupData);
+                                }
+
+                                //Berechtigungen
+                                userAdministrationResponse.getPermissions().addAll(Permissions.listPermissions());
+
+                                //Antwort
+                                userAdministrationResponse.setSuccess(true);
+                                return gson.toJson(userAdministrationResponse);
                             }
-
-                            //Benutzergruppen
-                            for (UserGroup userGroup : groups) {
-
-                                UserGroupData groupData = new UserGroupData();
-                                groupData.setHash(userGroup.getHash());
-                                groupData.setName(userGroup.getName());
-                                groupData.setDescripion(userGroup.getDescripion());
-                                groupData.setSystemGroup(userGroup.isSystemGroup());
-                                groupData.getPermissions().addAll(userGroup.getPermissions());
-
-                                userAdministrationResponse.getGroupDataList().add(groupData);
-                            }
-
-                            //Berechtigungen
-                            userAdministrationResponse.getPermissions().addAll(Permissions.listPermissions());
-
-                            //Antwort
-                            userAdministrationResponse.setSuccess(true);
-                            return gson.toJson(userAdministrationResponse);
 
                         }
                         //nicht Berechtigt
@@ -116,36 +120,39 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 if(userData != null) {
 
                                     UserEditor userEditor = ShcApplicationServer.getInstance().getUserEditor();
-                                    if(userEditor.getUserByHash(userData.getHash()) == null && userEditor.getUserByName(userData.getName()) == null) {
+                                    synchronized (userEditor) {
 
-                                        User user2 = new User();
-                                        user2.setHash(userData.getHash());
-                                        user2.setName(userData.getName());
-                                        user2.setPasswordHash(userData.getPasswordHash());
-                                        for(String groupHash : userData.getUserGroups()) {
+                                        if(userEditor.getUserByHash(userData.getHash()) == null && userEditor.getUserByName(userData.getName()) == null) {
 
-                                            UserGroup userGroup = userEditor.getUserGroupByHash(groupHash);
-                                            if(userGroup != null) {
+                                            User user2 = new User();
+                                            user2.setHash(userData.getHash());
+                                            user2.setName(userData.getName());
+                                            user2.setPasswordHash(userData.getPasswordHash());
+                                            for(String groupHash : userData.getUserGroups()) {
 
-                                                user2.getUserGroups().add(userGroup);
+                                                UserGroup userGroup = userEditor.getUserGroupByHash(groupHash);
+                                                if(userGroup != null) {
+
+                                                    user2.getUserGroups().add(userGroup);
+                                                }
                                             }
-                                        }
 
-                                        if(userEditor.addUser(user2)) {
+                                            if(userEditor.addUser(user2)) {
 
-                                            //erfolgreich
-                                            successResponse.setSuccess(true);
+                                                //erfolgreich
+                                                successResponse.setSuccess(true);
+                                            } else {
+
+                                                //fehler
+                                                successResponse.setSuccess(false);
+                                                successResponse.setMessage("der Benutzer konnte nicht erstellt werden");
+                                            }
                                         } else {
 
-                                            //fehler
+                                            //benutzer existiert bereits
                                             successResponse.setSuccess(false);
-                                            successResponse.setMessage("der Benutzer konnte nicht erstellt werden");
+                                            successResponse.setMessage("der Benutzer existiert bereits");
                                         }
-                                    } else {
-
-                                        //benutzer existiert bereits
-                                        successResponse.setSuccess(false);
-                                        successResponse.setMessage("der Benutzer existiert bereits");
                                     }
                                 } else {
 
@@ -187,26 +194,29 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 if(userData != null) {
 
                                     UserEditor userEditor = ShcApplicationServer.getInstance().getUserEditor();
-                                    if(userEditor.getUserByHash(userData.getHash()) != null) {
+                                    synchronized (userEditor) {
 
-                                        User user2 = userEditor.getUserByHash(userData.getHash());
-                                        user2.setName(userData.getName());
-                                        user2.setPasswordHash(userData.getPasswordHash());
-                                        user2.getUserGroups().clear();
-                                        for(String groupHash : userData.getUserGroups()) {
+                                        if(userEditor.getUserByHash(userData.getHash()) != null) {
 
-                                            UserGroup userGroup = userEditor.getUserGroupByHash(groupHash);
-                                            if(userGroup != null) {
+                                            User user2 = userEditor.getUserByHash(userData.getHash());
+                                            user2.setName(userData.getName());
+                                            user2.setPasswordHash(userData.getPasswordHash());
+                                            user2.getUserGroups().clear();
+                                            for(String groupHash : userData.getUserGroups()) {
 
-                                                user2.getUserGroups().add(userGroup);
+                                                UserGroup userGroup = userEditor.getUserGroupByHash(groupHash);
+                                                if(userGroup != null) {
+
+                                                    user2.getUserGroups().add(userGroup);
+                                                }
                                             }
-                                        }
-                                        successResponse.setSuccess(true);
-                                    } else {
+                                            successResponse.setSuccess(true);
+                                        } else {
 
-                                        //benutzer existiert nicht
-                                        successResponse.setSuccess(false);
-                                        successResponse.setMessage("der Benutzer existiert nicht");
+                                            //benutzer existiert nicht
+                                            successResponse.setSuccess(false);
+                                            successResponse.setMessage("der Benutzer existiert nicht");
+                                        }
                                     }
                                 } else {
 
@@ -248,32 +258,35 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 if(hash.length() > 10) {
 
                                     UserEditor userEditor = ShcApplicationServer.getInstance().getUserEditor();
-                                    User user2 = userEditor.getUserByHash(hash);
-                                    if(user2 != null) {
+                                    synchronized (userEditor) {
 
-                                        if(!user2.isOriginator()) {
+                                        User user2 = userEditor.getUserByHash(hash);
+                                        if(user2 != null) {
 
-                                            if(userEditor.removeUser(user2)) {
+                                            if(!user2.isOriginator()) {
 
-                                                //erfolgreich
-                                                successResponse.setSuccess(true);
+                                                if(userEditor.removeUser(user2)) {
+
+                                                    //erfolgreich
+                                                    successResponse.setSuccess(true);
+                                                } else {
+
+                                                    //fehler beim löschen
+                                                    successResponse.setSuccess(false);
+                                                    successResponse.setMessage("");
+                                                }
                                             } else {
 
-                                                //fehler beim löschen
+                                                //Systembenutzer
                                                 successResponse.setSuccess(false);
-                                                successResponse.setMessage("");
+                                                successResponse.setMessage("Der Benutzer kann nicht gelöscht werden");
                                             }
                                         } else {
 
-                                            //Systembenutzer
+                                            //ungültiger Benutzer
                                             successResponse.setSuccess(false);
-                                            successResponse.setMessage("Der Benutzer kann nicht gelöscht werden");
+                                            successResponse.setMessage("ungültiger Benutzer");
                                         }
-                                    } else {
-
-                                        //ungültiger Benutzer
-                                        successResponse.setSuccess(false);
-                                        successResponse.setMessage("ungültiger Benutzer");
                                     }
                                 } else {
 
@@ -316,29 +329,32 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 if(userGroupData != null) {
 
                                     UserEditor userEditor = ShcApplicationServer.getInstance().getUserEditor();
-                                    if(userEditor.getUserGroupByHash(userGroupData.getHash()) == null && userEditor.getUserGroupByName(userGroupData.getName()) == null) {
+                                    synchronized (userEditor) {
 
-                                        UserGroup userGroup = new UserGroup();
-                                        userGroup.setHash(userGroupData.getHash());
-                                        userGroup.setName(userGroupData.getName());
-                                        userGroup.setDescripion(userGroupData.getDescripion());
-                                        userGroup.getPermissions().addAll(userGroupData.getPermissions());
+                                        if(userEditor.getUserGroupByHash(userGroupData.getHash()) == null && userEditor.getUserGroupByName(userGroupData.getName()) == null) {
 
-                                        if(userEditor.addUserGroup(userGroup)) {
+                                            UserGroup userGroup = new UserGroup();
+                                            userGroup.setHash(userGroupData.getHash());
+                                            userGroup.setName(userGroupData.getName());
+                                            userGroup.setDescripion(userGroupData.getDescripion());
+                                            userGroup.getPermissions().addAll(userGroupData.getPermissions());
 
-                                            //erfolgreich
-                                            successResponse.setSuccess(true);
+                                            if(userEditor.addUserGroup(userGroup)) {
+
+                                                //erfolgreich
+                                                successResponse.setSuccess(true);
+                                            } else {
+
+                                                //fehler
+                                                successResponse.setSuccess(false);
+                                                successResponse.setMessage("die Benutzergruppe konnte nicht erstellt werden");
+                                            }
                                         } else {
 
-                                            //fehler
+                                            //benutzer existiert bereits
                                             successResponse.setSuccess(false);
-                                            successResponse.setMessage("die Benutzergruppe konnte nicht erstellt werden");
+                                            successResponse.setMessage("die Benutzergruppe existiert bereits");
                                         }
-                                    } else {
-
-                                        //benutzer existiert bereits
-                                        successResponse.setSuccess(false);
-                                        successResponse.setMessage("die Benutzergruppe existiert bereits");
                                     }
                                 } else {
 
@@ -380,21 +396,24 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 if(userGroupData != null) {
 
                                     UserEditor userEditor = ShcApplicationServer.getInstance().getUserEditor();
-                                    if(userEditor.getUserGroupByHash(userGroupData.getHash()) != null) {
+                                    synchronized (userEditor) {
 
-                                        UserGroup userGroup = userEditor.getUserGroupByHash(userGroupData.getHash());
-                                        userGroup.setHash(userGroupData.getHash());
-                                        userGroup.setName(userGroupData.getName());
-                                        userGroup.setDescripion(userGroupData.getDescripion());
-                                        userGroup.getPermissions().clear();
-                                        userGroup.getPermissions().addAll(userGroupData.getPermissions());
+                                        if(userEditor.getUserGroupByHash(userGroupData.getHash()) != null) {
 
-                                        successResponse.setSuccess(true);
-                                    } else {
+                                            UserGroup userGroup = userEditor.getUserGroupByHash(userGroupData.getHash());
+                                            userGroup.setHash(userGroupData.getHash());
+                                            userGroup.setName(userGroupData.getName());
+                                            userGroup.setDescripion(userGroupData.getDescripion());
+                                            userGroup.getPermissions().clear();
+                                            userGroup.getPermissions().addAll(userGroupData.getPermissions());
 
-                                        //benutzer existiert bereits
-                                        successResponse.setSuccess(false);
-                                        successResponse.setMessage("die Benutzergruppe existiert nicht");
+                                            successResponse.setSuccess(true);
+                                        } else {
+
+                                            //benutzer existiert bereits
+                                            successResponse.setSuccess(false);
+                                            successResponse.setMessage("die Benutzergruppe existiert nicht");
+                                        }
                                     }
                                 } else {
 
@@ -436,32 +455,35 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 if(hash.length() > 10) {
 
                                     UserEditor userEditor = ShcApplicationServer.getInstance().getUserEditor();
-                                    UserGroup userGroup = userEditor.getUserGroupByHash(hash);
-                                    if(userGroup != null) {
+                                    synchronized (userEditor) {
 
-                                        if(!userGroup.isSystemGroup()) {
+                                        UserGroup userGroup = userEditor.getUserGroupByHash(hash);
+                                        if(userGroup != null) {
 
-                                            if(userEditor.removeUserGroup(userGroup)) {
+                                            if(!userGroup.isSystemGroup()) {
 
-                                                //erfolgreich
-                                                successResponse.setSuccess(true);
+                                                if(userEditor.removeUserGroup(userGroup)) {
+
+                                                    //erfolgreich
+                                                    successResponse.setSuccess(true);
+                                                } else {
+
+                                                    //fehler beim löschen
+                                                    successResponse.setSuccess(false);
+                                                    successResponse.setMessage("");
+                                                }
                                             } else {
 
-                                                //fehler beim löschen
+                                                //Systemgruppe
                                                 successResponse.setSuccess(false);
-                                                successResponse.setMessage("");
+                                                successResponse.setMessage("Die Benutzergruppe kann nicht gelöscht werden");
                                             }
                                         } else {
 
-                                            //Systemgruppe
+                                            //ungültiger Benutzer
                                             successResponse.setSuccess(false);
-                                            successResponse.setMessage("Die Benutzergruppe kann nicht gelöscht werden");
+                                            successResponse.setMessage("ungültige Benutzergruppe");
                                         }
-                                    } else {
-
-                                        //ungültiger Benutzer
-                                        successResponse.setSuccess(false);
-                                        successResponse.setMessage("ungültige Benutzergruppe");
                                     }
                                 } else {
 

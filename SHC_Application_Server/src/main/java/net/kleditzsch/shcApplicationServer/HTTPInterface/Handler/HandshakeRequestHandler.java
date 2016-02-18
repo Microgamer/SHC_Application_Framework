@@ -35,26 +35,29 @@ public class HandshakeRequestHandler implements RequestHandler {
         if(handshake.getClientHash() != null && handshake.getClientHash().length() > 20 && handshake.getUserAgent() != null) {
 
             DeviceManager deviceManager = ShcApplicationServer.getInstance().getDeviceManager();
-            if(!deviceManager.getDevices().containsKey(handshake.getClientHash())) {
+            synchronized (deviceManager) {
 
-                //Neues Gerät
-                ClientDevice clientDevice = new ClientDevice();
-                clientDevice.setClientHash(handshake.getClientHash());
-                clientDevice.setUserAgend(handshake.getUserAgent());
-                if(deviceManager.getDevices().size() == 0) {
+                if(!deviceManager.getDevices().containsKey(handshake.getClientHash())) {
 
-                    clientDevice.setAllowed(true);
+                    //Neues Gerät
+                    ClientDevice clientDevice = new ClientDevice();
+                    clientDevice.setClientHash(handshake.getClientHash());
+                    clientDevice.setUserAgend(handshake.getUserAgent());
+                    if(deviceManager.getDevices().size() == 0) {
+
+                        clientDevice.setAllowed(true);
+                    }
+                    deviceManager.getDevices().put(clientDevice.getClientHash(), clientDevice);
+
+                    handshake.setSuccess(true);
+                    handshake.setKnown(false);
+                } else {
+
+                    //bekanntes Gerät
+                    handshake.setSuccess(false);
+                    handshake.setKnown(true);
+                    handshake.setMessage("Das Gerät ist bereits bekannt");
                 }
-                deviceManager.getDevices().put(clientDevice.getClientHash(), clientDevice);
-
-                handshake.setSuccess(true);
-                handshake.setKnown(false);
-            } else {
-
-                //bekanntes Gerät
-                handshake.setSuccess(false);
-                handshake.setKnown(true);
-                handshake.setMessage("Das Gerät ist bereits bekannt");
             }
         } else {
 

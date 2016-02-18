@@ -70,14 +70,16 @@ public class DeviceManager implements DatabaseEditor {
         Gson gson = ShcApplicationServer.getInstance().getGson();
         pipeline.del(KEY_DEVICES);
 
-        for(String sid : devices.keySet()) {
+        synchronized (this) {
 
-            ClientDevice device = devices.get(sid);
-            String deviceJson = gson.toJson(device);
+            for(String sid : devices.keySet()) {
 
-            pipeline.hset(KEY_DEVICES, device.getClientHash(), deviceJson);
+                ClientDevice device = devices.get(sid);
+                String deviceJson = gson.toJson(device);
+
+                pipeline.hset(KEY_DEVICES, device.getClientHash(), deviceJson);
+            }
         }
-
         pipeline.sync();
     }
 }

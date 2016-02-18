@@ -50,20 +50,22 @@ public class SettingsRequestHandler extends AbstractRequestHandler {
 
                             //Einstellungen zusammenstellen
                             Settings settings = ShcApplicationServer.getInstance().getSettings();
+                            synchronized (settings) {
 
-                            settingsResponse.getIntegerSettings().put(Settings.SETTING_SUNRISE_OFFSET, settings.getIntegerSetting(Settings.SETTING_SUNRISE_OFFSET));
-                            settingsResponse.getIntegerSettings().put(Settings.SETTING_SUNSET_OFFSET, settings.getIntegerSetting(Settings.SETTING_SUNSET_OFFSET));
-                            settingsResponse.getDoubleSettings().put(Settings.SETTING_LATITUDE, settings.getDoubleSetting(Settings.SETTING_LATITUDE));
-                            settingsResponse.getDoubleSettings().put(Settings.SETTING_LONGITUDE, settings.getDoubleSetting(Settings.SETTING_LONGITUDE));
+                                settingsResponse.getIntegerSettings().put(Settings.SETTING_SUNRISE_OFFSET, settings.getIntegerSetting(Settings.SETTING_SUNRISE_OFFSET));
+                                settingsResponse.getIntegerSettings().put(Settings.SETTING_SUNSET_OFFSET, settings.getIntegerSetting(Settings.SETTING_SUNSET_OFFSET));
+                                settingsResponse.getDoubleSettings().put(Settings.SETTING_LATITUDE, settings.getDoubleSetting(Settings.SETTING_LATITUDE));
+                                settingsResponse.getDoubleSettings().put(Settings.SETTING_LONGITUDE, settings.getDoubleSetting(Settings.SETTING_LONGITUDE));
 
-                            settingsResponse.getBooleanSettings().put(Settings.SETTING_FRITZBOX_ACTIVE, settings.getBooleanSetting(Settings.SETTING_FRITZBOX_ACTIVE));
-                            settingsResponse.getStringSettings().put(Settings.SETTING_FRITZBOX_ADDRESS, settings.getStringSetting(Settings.SETTING_FRITZBOX_ADDRESS));
-                            settingsResponse.getStringSettings().put(Settings.SETTING_FRITZBOX_USER, settings.getStringSetting(Settings.SETTING_FRITZBOX_USER));
-                            settingsResponse.getStringSettings().put(Settings.SETTING_FRITZBOX_PASSWORD, settings.getStringSetting(Settings.SETTING_FRITZBOX_PASSWORD));
+                                settingsResponse.getBooleanSettings().put(Settings.SETTING_FRITZBOX_ACTIVE, settings.getBooleanSetting(Settings.SETTING_FRITZBOX_ACTIVE));
+                                settingsResponse.getStringSettings().put(Settings.SETTING_FRITZBOX_ADDRESS, settings.getStringSetting(Settings.SETTING_FRITZBOX_ADDRESS));
+                                settingsResponse.getStringSettings().put(Settings.SETTING_FRITZBOX_USER, settings.getStringSetting(Settings.SETTING_FRITZBOX_USER));
+                                settingsResponse.getStringSettings().put(Settings.SETTING_FRITZBOX_PASSWORD, settings.getStringSetting(Settings.SETTING_FRITZBOX_PASSWORD));
 
-                            settingsResponse.getDoubleSettings().put(Settings.SETTING_ENERGY_ELECTRIC_PRICE, settings.getDoubleSetting(Settings.SETTING_ENERGY_ELECTRIC_PRICE));
-                            settingsResponse.getDoubleSettings().put(Settings.SETTING_ENERGY_WATER_PRICE, settings.getDoubleSetting(Settings.SETTING_ENERGY_WATER_PRICE));
-                            settingsResponse.getDoubleSettings().put(Settings.SETTING_ENERGY_GAS_PRICE, settings.getDoubleSetting(Settings.SETTING_ENERGY_GAS_PRICE));
+                                settingsResponse.getDoubleSettings().put(Settings.SETTING_ENERGY_ELECTRIC_PRICE, settings.getDoubleSetting(Settings.SETTING_ENERGY_ELECTRIC_PRICE));
+                                settingsResponse.getDoubleSettings().put(Settings.SETTING_ENERGY_WATER_PRICE, settings.getDoubleSetting(Settings.SETTING_ENERGY_WATER_PRICE));
+                                settingsResponse.getDoubleSettings().put(Settings.SETTING_ENERGY_GAS_PRICE, settings.getDoubleSetting(Settings.SETTING_ENERGY_GAS_PRICE));
+                            }
 
                             //Antwort
                             settingsResponse.setSuccess(true);
@@ -94,19 +96,22 @@ public class SettingsRequestHandler extends AbstractRequestHandler {
                                 if(settingsResponse1 != null) {
 
                                     Settings settings = ShcApplicationServer.getInstance().getSettings();
-                                    settings.getIntegerSetting(Settings.SETTING_SUNRISE_OFFSET).setValue(settingsResponse1.getIntegerSettings().get(Settings.SETTING_SUNRISE_OFFSET).getValue());
-                                    settings.getIntegerSetting(Settings.SETTING_SUNSET_OFFSET).setValue(settingsResponse1.getIntegerSettings().get(Settings.SETTING_SUNSET_OFFSET).getValue());
-                                    settings.getDoubleSetting(Settings.SETTING_LATITUDE).setValue(settingsResponse1.getDoubleSettings().get(Settings.SETTING_LATITUDE).getValue());
-                                    settings.getDoubleSetting(Settings.SETTING_LONGITUDE).setValue(settingsResponse1.getDoubleSettings().get(Settings.SETTING_LONGITUDE).getValue());
+                                    synchronized (settings) {
 
-                                    settings.getBooleanSetting(Settings.SETTING_FRITZBOX_ACTIVE).setValue(settingsResponse1.getBooleanSettings().get(Settings.SETTING_FRITZBOX_ACTIVE).getValue());
-                                    settings.getStringSetting(Settings.SETTING_FRITZBOX_ADDRESS).setValue(settingsResponse1.getStringSettings().get(Settings.SETTING_FRITZBOX_ADDRESS).getValue());
-                                    settings.getStringSetting(Settings.SETTING_FRITZBOX_USER).setValue(settingsResponse1.getStringSettings().get(Settings.SETTING_FRITZBOX_USER).getValue());
-                                    settings.getStringSetting(Settings.SETTING_FRITZBOX_PASSWORD).setValue(settingsResponse1.getStringSettings().get(Settings.SETTING_FRITZBOX_PASSWORD).getValue());
+                                        settings.getIntegerSetting(Settings.SETTING_SUNRISE_OFFSET).setValue(settingsResponse1.getIntegerSettings().get(Settings.SETTING_SUNRISE_OFFSET).getValue());
+                                        settings.getIntegerSetting(Settings.SETTING_SUNSET_OFFSET).setValue(settingsResponse1.getIntegerSettings().get(Settings.SETTING_SUNSET_OFFSET).getValue());
+                                        settings.getDoubleSetting(Settings.SETTING_LATITUDE).setValue(settingsResponse1.getDoubleSettings().get(Settings.SETTING_LATITUDE).getValue());
+                                        settings.getDoubleSetting(Settings.SETTING_LONGITUDE).setValue(settingsResponse1.getDoubleSettings().get(Settings.SETTING_LONGITUDE).getValue());
 
-                                    settings.getDoubleSetting(Settings.SETTING_ENERGY_ELECTRIC_PRICE).setValue(settingsResponse1.getDoubleSettings().get(Settings.SETTING_ENERGY_ELECTRIC_PRICE).getValue());
-                                    settings.getDoubleSetting(Settings.SETTING_ENERGY_WATER_PRICE).setValue(settingsResponse1.getDoubleSettings().get(Settings.SETTING_ENERGY_WATER_PRICE).getValue());
-                                    settings.getDoubleSetting(Settings.SETTING_ENERGY_GAS_PRICE).setValue(settingsResponse1.getDoubleSettings().get(Settings.SETTING_ENERGY_GAS_PRICE).getValue());
+                                        settings.getBooleanSetting(Settings.SETTING_FRITZBOX_ACTIVE).setValue(settingsResponse1.getBooleanSettings().get(Settings.SETTING_FRITZBOX_ACTIVE).getValue());
+                                        settings.getStringSetting(Settings.SETTING_FRITZBOX_ADDRESS).setValue(settingsResponse1.getStringSettings().get(Settings.SETTING_FRITZBOX_ADDRESS).getValue());
+                                        settings.getStringSetting(Settings.SETTING_FRITZBOX_USER).setValue(settingsResponse1.getStringSettings().get(Settings.SETTING_FRITZBOX_USER).getValue());
+                                        settings.getStringSetting(Settings.SETTING_FRITZBOX_PASSWORD).setValue(settingsResponse1.getStringSettings().get(Settings.SETTING_FRITZBOX_PASSWORD).getValue());
+
+                                        settings.getDoubleSetting(Settings.SETTING_ENERGY_ELECTRIC_PRICE).setValue(settingsResponse1.getDoubleSettings().get(Settings.SETTING_ENERGY_ELECTRIC_PRICE).getValue());
+                                        settings.getDoubleSetting(Settings.SETTING_ENERGY_WATER_PRICE).setValue(settingsResponse1.getDoubleSettings().get(Settings.SETTING_ENERGY_WATER_PRICE).getValue());
+                                        settings.getDoubleSetting(Settings.SETTING_ENERGY_GAS_PRICE).setValue(settingsResponse1.getDoubleSettings().get(Settings.SETTING_ENERGY_GAS_PRICE).getValue());
+                                    }
 
                                     successResponse.setSuccess(true);
                                 } else {

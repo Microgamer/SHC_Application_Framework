@@ -257,11 +257,11 @@ public class Settings implements DatabaseEditor {
      */
     public void saveData() {
 
-        synchronized (this) {
+        Pipeline pipeline = ShcApplicationServer.getInstance().getRedis().pipelined();
+        Gson gson = ShcApplicationServer.getInstance().getGson();
+        pipeline.del(KEY_SETTINGS);
 
-            Pipeline pipeline = ShcApplicationServer.getInstance().getRedis().pipelined();
-            Gson gson = ShcApplicationServer.getInstance().getGson();
-            pipeline.del(KEY_SETTINGS);
+        synchronized (this) {
 
             for(String name : settings.keySet()) {
 
@@ -271,7 +271,7 @@ public class Settings implements DatabaseEditor {
                 pipeline.hset(KEY_SETTINGS + ":" + setting.getType(), setting.getName(), settingJson);
             }
 
-            pipeline.sync();
         }
+        pipeline.sync();
     }
 }

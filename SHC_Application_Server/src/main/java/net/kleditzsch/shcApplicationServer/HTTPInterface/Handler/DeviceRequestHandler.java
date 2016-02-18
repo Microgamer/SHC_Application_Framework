@@ -48,15 +48,18 @@ public class DeviceRequestHandler extends AbstractRequestHandler {
 
                             //Geräte auflisten
                             DeviceManager deviceManager = ShcApplicationServer.getInstance().getDeviceManager();
-                            for(String clientHash : deviceManager.getDevices().keySet()) {
+                            synchronized (deviceManager) {
 
-                                ClientDevice clientDevice = deviceManager.getDevices().get(clientHash);
-                                DeviceData deviceData = new DeviceData();
-                                deviceData.setClientHash(clientDevice.getClientHash());
-                                deviceData.setUserAgend(clientDevice.getUserAgend());
-                                deviceData.setAllowed(clientDevice.isAllowed());
-                                deviceData.setLastLogin(clientDevice.getLastLogin());
-                                deviceResponse.getDeviceDataList().add(deviceData);
+                                for(String clientHash : deviceManager.getDevices().keySet()) {
+
+                                    ClientDevice clientDevice = deviceManager.getDevices().get(clientHash);
+                                    DeviceData deviceData = new DeviceData();
+                                    deviceData.setClientHash(clientDevice.getClientHash());
+                                    deviceData.setUserAgend(clientDevice.getUserAgend());
+                                    deviceData.setAllowed(clientDevice.isAllowed());
+                                    deviceData.setLastLogin(clientDevice.getLastLogin());
+                                    deviceResponse.getDeviceDataList().add(deviceData);
+                                }
                             }
 
                             //Antwort
@@ -85,16 +88,19 @@ public class DeviceRequestHandler extends AbstractRequestHandler {
                             if(params.containsKey("hash")) {
 
                                 DeviceManager deviceManager = ShcApplicationServer.getInstance().getDeviceManager();
-                                ClientDevice clientDevice = deviceManager.getDevices().get(params.get("hash"));
-                                if (clientDevice != null) {
+                                synchronized (deviceManager) {
 
-                                    clientDevice.setAllowed(true);
-                                    successResponse.setSuccess(true);
-                                } else {
+                                    ClientDevice clientDevice = deviceManager.getDevices().get(params.get("hash"));
+                                    if (clientDevice != null) {
 
-                                    //ungültige Daten
-                                    successResponse.setSuccess(false);
-                                    successResponse.setMessage("ungültige Daten");
+                                        clientDevice.setAllowed(true);
+                                        successResponse.setSuccess(true);
+                                    } else {
+
+                                        //ungültige Daten
+                                        successResponse.setSuccess(false);
+                                        successResponse.setMessage("ungültige Daten");
+                                    }
                                 }
                             } else {
 
@@ -127,16 +133,19 @@ public class DeviceRequestHandler extends AbstractRequestHandler {
                             if(params.containsKey("hash")) {
 
                                 DeviceManager deviceManager = ShcApplicationServer.getInstance().getDeviceManager();
-                                ClientDevice clientDevice = deviceManager.getDevices().get(params.get("hash"));
-                                if (clientDevice != null) {
+                                synchronized (deviceManager) {
 
-                                    clientDevice.setAllowed(false);
-                                    successResponse.setSuccess(true);
-                                } else {
+                                    ClientDevice clientDevice = deviceManager.getDevices().get(params.get("hash"));
+                                    if (clientDevice != null) {
 
-                                    //ungültige Daten
-                                    successResponse.setSuccess(false);
-                                    successResponse.setMessage("ungültige Daten");
+                                        clientDevice.setAllowed(false);
+                                        successResponse.setSuccess(true);
+                                    } else {
+
+                                        //ungültige Daten
+                                        successResponse.setSuccess(false);
+                                        successResponse.setMessage("ungültige Daten");
+                                    }
                                 }
                             } else {
 
@@ -169,16 +178,19 @@ public class DeviceRequestHandler extends AbstractRequestHandler {
                             if(params.containsKey("hash")) {
 
                                 DeviceManager deviceManager = ShcApplicationServer.getInstance().getDeviceManager();
-                                ClientDevice clientDevice = deviceManager.getDevices().get(params.get("hash"));
-                                if (clientDevice != null) {
+                                synchronized (deviceManager) {
 
-                                    deviceManager.getDevices().remove(clientDevice.getClientHash());
-                                    successResponse.setSuccess(true);
-                                } else {
+                                    ClientDevice clientDevice = deviceManager.getDevices().get(params.get("hash"));
+                                    if (clientDevice != null) {
 
-                                    //ungültige Daten
-                                    successResponse.setSuccess(false);
-                                    successResponse.setMessage("ungültige Daten");
+                                        deviceManager.getDevices().remove(clientDevice.getClientHash());
+                                        successResponse.setSuccess(true);
+                                    } else {
+
+                                        //ungültige Daten
+                                        successResponse.setSuccess(false);
+                                        successResponse.setMessage("ungültige Daten");
+                                    }
                                 }
                             } else {
 

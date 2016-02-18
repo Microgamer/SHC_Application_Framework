@@ -170,7 +170,6 @@ public class ShcApplicationServer {
         scheduledExecutorService.scheduleAtFixedRate((Runnable) () -> {
 
             ShcApplicationServer.getInstance().saveApplicationData();
-            System.out.println("dump");
         },
                 30, //Startverzögerung
                 30, //Intervall

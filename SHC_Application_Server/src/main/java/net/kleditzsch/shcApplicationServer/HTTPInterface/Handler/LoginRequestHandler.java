@@ -62,59 +62,62 @@ public class LoginRequestHandler implements RequestHandler {
 
                         String passwordHash = user.getPasswordHash();
                         Map<String, ClientDevice> devices = ShcApplicationServer.getInstance().getDeviceManager().getDevices();
-                        for(String deviceHash : devices.keySet()) {
+                        synchronized (devices) {
 
-                            try {
+                            for(String deviceHash : devices.keySet()) {
 
-                                String testResponse = ChallangeResponseUtil.computeChallangeResponse(challange, userName, passwordHash, deviceHash);
-                                if(testResponse.equals(challangeResponse)) {
+                                try {
 
-                                    //Gerät gefunden
-                                    ClientDevice device = devices.get(deviceHash);
-                                    if(device != null) {
+                                    String testResponse = ChallangeResponseUtil.computeChallangeResponse(challange, userName, passwordHash, deviceHash);
+                                    if(testResponse.equals(challangeResponse)) {
 
-                                        if(device.isAllowed()) {
+                                        //Gerät gefunden
+                                        ClientDevice device = devices.get(deviceHash);
+                                        if(device != null) {
 
-                                            //zutritt für dieses Gerät erlaubt
-                                            String sessionId = sessionEditor.login(user);
-                                            sessionEditor.getChallenges().remove(challange);
+                                            if(device.isAllowed()) {
 
-                                            //Update letzrer Login
-                                            device.setLastLogin(LocalDateTime.now());
+                                                //zutritt für dieses Gerät erlaubt
+                                                String sessionId = sessionEditor.login(user);
+                                                sessionEditor.getChallenges().remove(challange);
 
-                                            //Berechtigungen für den benutzer mit senden
-                                            for(String permission : Permissions.listPermissions()) {
+                                                //Update letzrer Login
+                                                device.setLastLogin(LocalDateTime.now());
 
-                                                if(user.checkPermission(permission)) {
+                                                //Berechtigungen für den benutzer mit senden
+                                                for(String permission : Permissions.listPermissions()) {
 
-                                                    loginResponse.getPermissions().add(permission);
+                                                    if(user.checkPermission(permission)) {
+
+                                                        loginResponse.getPermissions().add(permission);
+                                                    }
                                                 }
+
+                                                loginResponse.setSuccess(true);
+                                                loginResponse.setSessionId(sessionId);
+                                                return gson.toJson(loginResponse);
+                                            } else {
+
+                                                //Zutritt für dieses Gerät verweigert
+                                                loginResponse.setSuccess(false);
+                                                loginResponse.setMessage("Zutritt verweigert");
+                                                sessionEditor.getChallenges().remove(challange);
+                                                return gson.toJson(loginResponse);
                                             }
-
-                                            loginResponse.setSuccess(true);
-                                            loginResponse.setSessionId(sessionId);
-                                            return gson.toJson(loginResponse);
-                                        } else {
-
-                                            //Zutritt für dieses Gerät verweigert
-                                            loginResponse.setSuccess(false);
-                                            loginResponse.setMessage("Zutritt verweigert");
-                                            sessionEditor.getChallenges().remove(challange);
-                                            return gson.toJson(loginResponse);
                                         }
+                                        loginResponse.setSuccess(false);
+                                        loginResponse.setMessage("ungültiges Gerät");
+                                        sessionEditor.getChallenges().remove(challange);
+                                        return gson.toJson(loginResponse);
                                     }
+                                } catch (NoSuchAlgorithmException e) {
+
+                                    //Server Fehler
                                     loginResponse.setSuccess(false);
-                                    loginResponse.setMessage("ungültiges Gerät");
+                                    loginResponse.setMessage("Server Fehler");
                                     sessionEditor.getChallenges().remove(challange);
                                     return gson.toJson(loginResponse);
                                 }
-                            } catch (NoSuchAlgorithmException e) {
-
-                                //Server Fehler
-                                loginResponse.setSuccess(false);
-                                loginResponse.setMessage("Server Fehler");
-                                sessionEditor.getChallenges().remove(challange);
-                                return gson.toJson(loginResponse);
                             }
                         }
 

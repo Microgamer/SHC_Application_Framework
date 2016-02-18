@@ -275,18 +275,21 @@ public class UserEditor implements DatabaseEditor {
         Pipeline pipeline = ShcApplicationServer.getInstance().getRedis().pipelined();
         pipeline.del(KEY_USER_GROUPS, KEY_USERS);
 
-        //Benutzergruppen
-        for (String userGroupHash : userGroups.keySet()) {
+        synchronized (this) {
 
-            UserGroup userGroup = userGroups.get(userGroupHash);
-            pipeline.hset(KEY_USER_GROUPS, userGroup.getHash(), gson.toJson(userGroup));
-        }
+            //Benutzergruppen
+            for (String userGroupHash : userGroups.keySet()) {
 
-        //Benutzer
-        for (String usersHash : users.keySet()) {
+                UserGroup userGroup = userGroups.get(userGroupHash);
+                pipeline.hset(KEY_USER_GROUPS, userGroup.getHash(), gson.toJson(userGroup));
+            }
 
-            User user = users.get(usersHash);
-            pipeline.hset(KEY_USERS, user.getHash(), gson.toJson(user));
+            //Benutzer
+            for (String usersHash : users.keySet()) {
+
+                User user = users.get(usersHash);
+                pipeline.hset(KEY_USERS, user.getHash(), gson.toJson(user));
+            }
         }
         pipeline.sync();
     }
