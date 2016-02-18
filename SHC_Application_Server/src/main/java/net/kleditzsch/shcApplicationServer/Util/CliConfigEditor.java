@@ -103,6 +103,7 @@ public abstract class CliConfigEditor {
         } catch (IOException e) {
 
             System.err.println("Die Datenbank Konfiguration konnte nicht gespeichert werden!");
+            System.err.println("Grund: " + e.getLocalizedMessage());
 
             //Debug Ausgabe
             if(ShcApplicationServer.isDebug()) {
