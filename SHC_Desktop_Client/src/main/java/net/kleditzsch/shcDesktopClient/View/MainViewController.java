@@ -45,23 +45,23 @@ public class MainViewController {
     /**
      * Verbindungsstatus
      */
-    protected boolean state = false;
+    protected boolean state = true;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert stateBar != null : "fx:id=\"stateBar\" was not injected: check your FXML file 'MainView.fxml'.";
         assert mainBorderPane != null : "fx:id=\"mainBorderPane\" was not injected: check your FXML file 'MainView.fxml'.";
 
-        //Button Verwaltung
+        //Statusbar initaliseren
         Button adminButton = new Button("Verwaltung");
         adminButton.setBackground(new Background(new BackgroundFill(Color.BLUE, new CornerRadii(5), new Insets(5))));
         adminButton.setTextFill(Color.WHITE);
         stateBar.getRightItems().add(adminButton);
-
         adminButton.setOnAction(e -> {
 
             MainViewLoader.loadAdminMenueView();
         });
+        setState(false);
 
         //Prüfen ob eingeloggt
         ConnectionManager cm = ShcDesktopClient.getInstance().getConnectionManager();
