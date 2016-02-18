@@ -60,20 +60,20 @@
                                        <GridPane.margin>
                                           <Insets right="10.0" />
                                        </GridPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="IP oder Host Adresse der Application Servers" />
+                                       </tooltip>
                                     </Label>
                                     <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Port" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets right="10.0" />
                                        </GridPane.margin>
-                                    </Label>
-                                    <TextField fx:id="inputServerAddress" GridPane.columnIndex="1">
-                                       <tooltip>
-                                          <Tooltip text="IP oder Host Adresse der Application Servers" />
-                                       </tooltip></TextField>
-                                    <Spinner fx:id="inputPort" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <tooltip>
                                           <Tooltip text="Port des Application Servers" />
-                                       </tooltip></Spinner>
+                                       </tooltip>
+                                    </Label>
+                                    <TextField fx:id="inputServerAddress" GridPane.columnIndex="1" />
+                                    <Spinner fx:id="inputPort" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                               <Label text="Anmeldedaten">
@@ -104,38 +104,38 @@
                                        <GridPane.margin>
                                           <Insets right="10.0" />
                                        </GridPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="Eindeutige Identifizierung des Clients für den Server" />
+                                       </tooltip>
                                     </Label>
                                     <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Gerätekennung" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets right="10.0" />
                                        </GridPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="Diese Kennung bekommt der Administrator zu deinem Client angezeigt" />
+                                       </tooltip>
                                     </Label>
                                     <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Benutzername" GridPane.rowIndex="2">
                                        <GridPane.margin>
                                           <Insets right="10.0" />
                                        </GridPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="Benutzername mit dem du dich am Server anmelden kannst" />
+                                       </tooltip>
                                     </Label>
                                     <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Benutzerhash" GridPane.rowIndex="3">
                                        <GridPane.margin>
                                           <Insets right="10.0" />
                                        </GridPane.margin>
-                                    </Label>
-                                    <TextField fx:id="inputClientHash" editable="false" GridPane.columnIndex="1">
-                                       <tooltip>
-                                          <Tooltip text="Eindeutige Identifizierung des Clients für den Server" />
-                                       </tooltip></TextField>
-                                    <TextField fx:id="inputUserAgent" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <tooltip>
-                                          <Tooltip text="Diese Kennung bekommt der Administrator zu deinem Client angezeigt" />
-                                       </tooltip></TextField>
-                                    <TextField fx:id="inputUserName" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <tooltip>
-                                          <Tooltip text="Benutzername mit dem du dich am Server anmelden kannst" />
-                                       </tooltip></TextField>
-                                    <TextField fx:id="inputUserHash" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <tooltip>
                                           <Tooltip text="Benuterhash mit dem du dich am Server anmelden kannst" />
-                                       </tooltip></TextField>
+                                       </tooltip>
+                                    </Label>
+                                    <TextField fx:id="inputClientHash" editable="false" GridPane.columnIndex="1" />
+                                    <TextField fx:id="inputUserAgent" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="inputUserName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="inputUserHash" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                  </children>
                               </GridPane>
                            </children>
@@ -177,38 +177,38 @@
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
+                                             <tooltip>
+                                                <Tooltip text="Zeitanpassung des Sonnenaufgangs in Minuten" />
+                                             </tooltip>
                                           </Label>
                                           <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Sonnenuntergang Offset" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
+                                             <tooltip>
+                                                <Tooltip text="Zeitanpassung des Sonnenuntergangs in Minuten" />
+                                             </tooltip>
                                           </Label>
                                           <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Breitengrad" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
+                                             <tooltip>
+                                                <Tooltip text="Geoloaction Breitengrad" />
+                                             </tooltip>
                                           </Label>
                                           <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Längengrad" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
-                                          </Label>
-                                          <Spinner fx:id="inputSunriseOffset" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
-                                             <tooltip>
-                                                <Tooltip text="Zeitanpassung des Sonnenaufgangs in Minuten" />
-                                             </tooltip></Spinner>
-                                          <Spinner fx:id="inputSunsetOffset" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <tooltip>
-                                                <Tooltip text="Zeitanpassung des Sonnenuntergangs in Minuten" />
-                                             </tooltip></Spinner>
-                                          <Spinner fx:id="inputLatitude" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <tooltip>
-                                                <Tooltip text="Geoloaction Breitengrad" />
-                                             </tooltip></Spinner>
-                                          <Spinner fx:id="inputLogitude" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                              <tooltip>
                                                 <Tooltip text="Geoloaction Längengrad" />
-                                             </tooltip></Spinner>
+                                             </tooltip>
+                                          </Label>
+                                          <Spinner fx:id="inputSunriseOffset" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+                                          <Spinner fx:id="inputSunsetOffset" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Spinner fx:id="inputLatitude" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Spinner fx:id="inputLogitude" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                        </children>
                                        <VBox.margin>
                                           <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
@@ -239,38 +239,38 @@
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
+                                             <tooltip>
+                                                <Tooltip text="IP oder Host Adresse der Fritz!Box" />
+                                             </tooltip>
                                           </Label>
                                           <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Benutzername" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
+                                             <tooltip>
+                                                <Tooltip text="Fritz!Box Benutzer" />
+                                             </tooltip>
                                           </Label>
                                           <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Passwort" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
+                                             <tooltip>
+                                                <Tooltip text="Fritz!Box Passwort" />
+                                             </tooltip>
                                           </Label>
                                           <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Intigration aktivieren">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
-                                          </Label>
-                                          <TextField fx:id="inputFritzBoxAddress" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <tooltip>
-                                                <Tooltip text="IP oder Host Adresse der Fritz!Box" />
-                                             </tooltip></TextField>
-                                          <TextField fx:id="inputFritzBoxUser" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <tooltip>
-                                                <Tooltip text="Fritz!Box Benutzer" />
-                                             </tooltip></TextField>
-                                          <CheckBox fx:id="inputFritzBoxActive" mnemonicParsing="false" GridPane.columnIndex="1">
                                              <tooltip>
                                                 <Tooltip text="Fritz!Box Intigration im SHC" />
-                                             </tooltip></CheckBox>
-                                          <PasswordField fx:id="inputFritzBoxPassword" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <tooltip>
-                                                <Tooltip text="Fritz!Box Passwort" />
-                                             </tooltip></PasswordField>
+                                             </tooltip>
+                                          </Label>
+                                          <TextField fx:id="inputFritzBoxAddress" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="inputFritzBoxUser" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <CheckBox fx:id="inputFritzBoxActive" mnemonicParsing="false" GridPane.columnIndex="1" />
+                                          <PasswordField fx:id="inputFritzBoxPassword" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                        </children>
                                        <VBox.margin>
                                           <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
