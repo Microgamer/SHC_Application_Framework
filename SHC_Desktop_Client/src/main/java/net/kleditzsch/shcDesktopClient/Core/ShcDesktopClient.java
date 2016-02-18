@@ -134,8 +134,11 @@ public class ShcDesktopClient extends Application {
             //Listener für das Schliesen
             primaryStage.setOnCloseRequest(e -> {
 
-                saveAndExit();
-                Platform.exit();
+                if(UiDialogHelper.showConfirmDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Beenden", null, "Willst du die App wirklich beenden?")) {
+
+                    saveAndExit();
+                    Platform.exit();
+                }
             });
 
         } catch (IOException e) {
