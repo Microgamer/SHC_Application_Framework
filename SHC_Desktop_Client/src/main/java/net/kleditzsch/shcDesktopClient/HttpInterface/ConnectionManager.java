@@ -14,6 +14,7 @@ import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Settings.Settings;
+import net.kleditzsch.shcDesktopClient.View.MainViewController;
 import net.kleditzsch.shcDesktopClient.View.MainViewLoader;
 
 import java.io.IOException;
@@ -79,6 +80,20 @@ public class ConnectionManager {
             return true;
         }
         return false;
+    }
+
+    /**
+     * prüft ob die Session aktiv ist und versucht falls abgelaufen einen Autologin
+     *
+     * @return true wenn Session aktiv oder erfolgreich erneuert
+     */
+    protected boolean checkSession() {
+
+        if(!isConnected() && !autoLogin()) {
+
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -184,7 +199,7 @@ public class ConnectionManager {
      */
     public UserAdministrationResponse getUsersAndGroups() throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.getUsersAndGroups(this.sessionId);
             updateLastContact();
@@ -202,7 +217,7 @@ public class ConnectionManager {
      */
     public SuccessResponse addUser(UserData userData) throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.addUser(gson.toJson(userData), this.sessionId);
             updateLastContact();
@@ -220,7 +235,7 @@ public class ConnectionManager {
      */
     public SuccessResponse editUser(UserData userData) throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.editUser(gson.toJson(userData), this.sessionId);
             updateLastContact();
@@ -238,7 +253,7 @@ public class ConnectionManager {
      */
     public SuccessResponse deleteUser(UserData userData) throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.deleteUser(userData, this.sessionId);
             updateLastContact();
@@ -256,7 +271,7 @@ public class ConnectionManager {
      */
     public SuccessResponse addUserGroup(UserGroupData userGroupData) throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.addUserGroup(gson.toJson(userGroupData), this.sessionId);
             updateLastContact();
@@ -274,7 +289,7 @@ public class ConnectionManager {
      */
     public SuccessResponse editUserGroup(UserGroupData userGroupData) throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.editUserGroup(gson.toJson(userGroupData), this.sessionId);
             updateLastContact();
@@ -292,7 +307,7 @@ public class ConnectionManager {
      */
     public SuccessResponse deleteUserGroup(UserGroupData userGroupData) throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.deleteUserGroup(userGroupData, this.sessionId);
             updateLastContact();
@@ -309,7 +324,7 @@ public class ConnectionManager {
      */
     public DeviceResponse getDevices() throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.getDevices(this.sessionId);
             updateLastContact();
@@ -327,7 +342,7 @@ public class ConnectionManager {
      */
     public SuccessResponse allowDevice(DeviceData deviceData) throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.allowDevice(deviceData, this.sessionId);
             updateLastContact();
@@ -345,7 +360,7 @@ public class ConnectionManager {
      */
     public SuccessResponse denyDevice(DeviceData deviceData) throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.denyDevice(deviceData, this.sessionId);
             updateLastContact();
@@ -363,7 +378,7 @@ public class ConnectionManager {
      */
     public SuccessResponse deleteDevice(DeviceData deviceData) throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.deleteDevice(deviceData, this.sessionId);
             updateLastContact();
@@ -380,7 +395,7 @@ public class ConnectionManager {
      */
     public SettingsResponse getSettings() throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.getSettings(this.sessionId);
             updateLastContact();
@@ -398,7 +413,7 @@ public class ConnectionManager {
      */
     public SuccessResponse setSettings(SettingsResponse settingsRequest) throws IOException {
 
-        if(!Objects.equals(this.sessionId, "")) {
+        if(checkSession()) {
 
             String response = this.requestUtil.setSettings(gson.toJson(settingsRequest), this.sessionId);
             updateLastContact();
@@ -431,8 +446,6 @@ public class ConnectionManager {
     public void setSessionidInvalid() {
 
         disconnect();
-        //TODO in Überwachungsthread auslagern
-        MainViewLoader.loadLoginView();
     }
 
     /**

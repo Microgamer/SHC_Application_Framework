@@ -140,17 +140,23 @@ public class UserGroupAdminstration {
             task.setOnSucceeded((WorkerStateEvent e) -> {
 
                 SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
-                if(successResponse.isSuccess()) {
+                if(successResponse != null) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich erstellt");
-                    update();
+                    if(successResponse.isSuccess()) {
+
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich erstellt");
+                        update();
+                    } else {
+
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe erstellen fehlgeschlagen", successResponse.getMessage());
+                        if(successResponse.getErrorCode() == 100) {
+
+                            ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                        }
+                    }
                 } else {
 
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe erstellen fehlgeschlagen", successResponse.getMessage());
-                    if(successResponse.getErrorCode() == 100) {
-
-                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                    }
+                    MainViewLoader.loadLoginView();
                 }
             });
             Thread thread = new Thread(task);
@@ -186,17 +192,23 @@ public class UserGroupAdminstration {
             task.setOnSucceeded((WorkerStateEvent e) -> {
 
                 SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
-                if(successResponse.isSuccess()) {
+                if(successResponse != null) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich gelöscht");
-                    update();
+                    if(successResponse.isSuccess()) {
+
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich gelöscht");
+                        update();
+                    } else {
+
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe löschen fehlgeschlagen", successResponse.getMessage());
+                        if(successResponse.getErrorCode() == 100) {
+
+                            ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                        }
+                    }
                 } else {
 
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe löschen fehlgeschlagen", successResponse.getMessage());
-                    if(successResponse.getErrorCode() == 100) {
-
-                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                    }
+                    MainViewLoader.loadLoginView();
                 }
             });
             Thread thread = new Thread(task);
@@ -233,17 +245,23 @@ public class UserGroupAdminstration {
             task.setOnSucceeded((WorkerStateEvent e) -> {
 
                 SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
-                if(successResponse.isSuccess()) {
+                if(successResponse != null) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich bearbeitet");
-                    update();
+                    if(successResponse.isSuccess()) {
+
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich bearbeitet");
+                        update();
+                    } else {
+
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe bearbeiten fehlgeschlagen", successResponse.getMessage());
+                        if(successResponse.getErrorCode() == 100) {
+
+                            ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                        }
+                    }
                 } else {
 
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe bearbeiten fehlgeschlagen", successResponse.getMessage());
-                    if(successResponse.getErrorCode() == 100) {
-
-                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                    }
+                    MainViewLoader.loadLoginView();
                 }
             });
             Thread thread = new Thread(task);
@@ -322,25 +340,29 @@ public class UserGroupAdminstration {
         task.setOnSucceeded((WorkerStateEvent event) -> {
 
             userAdministrationResponse = (UserAdministrationResponse) event.getSource().getValue();
-            if(userAdministrationResponse.isSuccess()) {
+            if(userAdministrationResponse != null) {
 
-                //Daten
-                if(userAdministrationResponse != null) {
+                if(userAdministrationResponse.isSuccess()) {
 
+                    //Daten
                     groupTable.getItems().clear();
                     groupTable.getItems().addAll(FXCollections.observableList(userAdministrationResponse.getGroupDataList()));
                     maskerPane.setVisible(false);
                     menuButtonCreateGroup.setDisable(false);
                     menuButtonEditGroup.setDisable(false);
                     menuButtonDeleteGroup.setDisable(false);
+
+                } else {
+
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", userAdministrationResponse.getMessage());
+                    if(userAdministrationResponse.getErrorCode() == 100) {
+
+                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                    }
                 }
             } else {
 
-                UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", userAdministrationResponse.getMessage());
-                if(userAdministrationResponse.getErrorCode() == 100) {
-
-                    ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                }
+                MainViewLoader.loadLoginView();
             }
         });
         Thread thread = new Thread(task);

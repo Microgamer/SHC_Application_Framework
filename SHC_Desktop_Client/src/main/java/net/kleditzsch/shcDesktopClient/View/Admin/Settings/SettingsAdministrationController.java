@@ -471,10 +471,9 @@ public class SettingsAdministrationController {
         task.setOnSucceeded((WorkerStateEvent event) -> {
 
             settingsResponse = (SettingsResponse) event.getSource().getValue();
-            if(settingsResponse.isSuccess()) {
+            if(settingsResponse != null) {
 
-                //Daten
-                if(settingsResponse != null) {
+                if(settingsResponse.isSuccess()) {
 
                     //Eingabefelder initalisieren
                     inputSunriseOffset.getValueFactory().setValue(settingsResponse.getIntegerSettings().get("setting.sunrise.offset").getValue());
@@ -493,14 +492,18 @@ public class SettingsAdministrationController {
 
                     maskerPane.setVisible(false);
                     buttonSave.setDisable(false);
+
+                } else {
+
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", settingsResponse.getMessage());
+                    if(settingsResponse.getErrorCode() == 100) {
+
+                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                    }
                 }
             } else {
 
-                UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", settingsResponse.getMessage());
-                if(settingsResponse.getErrorCode() == 100) {
-
-                    ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                }
+                MainViewLoader.loadLoginView();
             }
         });
         Thread thread = new Thread(task);
@@ -577,24 +580,27 @@ public class SettingsAdministrationController {
         task.setOnSucceeded((WorkerStateEvent event) -> {
 
             SuccessResponse successResponse = (SuccessResponse) event.getSource().getValue();
-            if(successResponse.isSuccess()) {
+            if(successResponse != null) {
 
-                //Daten
-                if(successResponse != null) {
+                if(successResponse.isSuccess()) {
 
+                    //Daten
                     maskerPane.setVisible(false);
                     buttonSave.setDisable(false);
 
                     //Erfolgsmeldung
                     UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "App Einstellungen", "Die Server Einstellungen wurden erfolgreich gespeichert");
+                } else {
+
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "App Einstellungen", "Die Server Einstellungen konnten nicht gespeichert werden");
+                    if(successResponse.getErrorCode() == 100) {
+
+                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                    }
                 }
             } else {
 
-                UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "App Einstellungen", "Die Server Einstellungen konnten nicht gespeichert werden");
-                if(successResponse.getErrorCode() == 100) {
-
-                    ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                }
+                MainViewLoader.loadLoginView();
             }
         });
         Thread thread = new Thread(task);

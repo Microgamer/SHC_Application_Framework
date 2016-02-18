@@ -42,6 +42,11 @@ public class MainViewController {
     @FXML // fx:id="mainBorderPane"
     private BorderPane mainBorderPane; // Value injected by FXMLLoader
 
+    /**
+     * Verbindungsstatus
+     */
+    protected boolean state = false;
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert stateBar != null : "fx:id=\"stateBar\" was not injected: check your FXML file 'MainView.fxml'.";
@@ -102,18 +107,22 @@ public class MainViewController {
      */
     public void setState(boolean connected) {
 
-        Button state = new Button(" ");
-        stateBar.getLeftItems().clear();
-        stateBar.getLeftItems().add(state);
+        if(connected != this.state) {
 
-        if(connected) {
+            Button state = new Button(" ");
+            stateBar.getLeftItems().clear();
+            stateBar.getLeftItems().add(state);
 
-            state.setBackground(new Background(new BackgroundFill(Color.GREEN, new CornerRadii(5), new Insets(5))));
-            stateBar.setText("verbunden");
-        } else {
+            if(connected) {
 
-            state.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(5), new Insets(5))));
-            stateBar.setText("getrennt");
+                state.setBackground(new Background(new BackgroundFill(Color.GREEN, new CornerRadii(5), new Insets(5))));
+                stateBar.setText("verbunden");
+            } else {
+
+                state.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(5), new Insets(5))));
+                stateBar.setText("getrennt");
+            }
+            this.state = connected;
         }
     }
 

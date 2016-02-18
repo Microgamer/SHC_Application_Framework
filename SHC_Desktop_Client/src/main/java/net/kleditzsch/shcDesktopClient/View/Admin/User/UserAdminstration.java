@@ -149,17 +149,23 @@ public class UserAdminstration {
             task.setOnSucceeded((WorkerStateEvent e) -> {
 
                 SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
-                if(successResponse.isSuccess()) {
+                if(successResponse != null) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich erstellt");
-                    update();
+                    if(successResponse.isSuccess()) {
+
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich erstellt");
+                        update();
+                    } else {
+
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer erstellen fehlgeschlagen", successResponse.getMessage());
+                        if(successResponse.getErrorCode() == 100) {
+
+                            ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                        }
+                    }
                 } else {
 
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer erstellen fehlgeschlagen", successResponse.getMessage());
-                    if(successResponse.getErrorCode() == 100) {
-
-                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                    }
+                    MainViewLoader.loadLoginView();
                 }
             });
             Thread thread = new Thread(task);
@@ -200,17 +206,23 @@ public class UserAdminstration {
             task.setOnSucceeded((WorkerStateEvent e) -> {
 
                 SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
-                if(successResponse.isSuccess()) {
+                if(successResponse != null) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich gelöscht");
-                    update();
+                    if(successResponse.isSuccess()) {
+
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich gelöscht");
+                        update();
+                    } else {
+
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer löschen fehlgeschlagen", successResponse.getMessage());
+                        if(successResponse.getErrorCode() == 100) {
+
+                            ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                        }
+                    }
                 } else {
 
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer löschen fehlgeschlagen", successResponse.getMessage());
-                    if(successResponse.getErrorCode() == 100) {
-
-                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                    }
+                    MainViewLoader.loadLoginView();
                 }
             });
             Thread thread = new Thread(task);
@@ -252,17 +264,23 @@ public class UserAdminstration {
             task.setOnSucceeded((WorkerStateEvent e) -> {
 
                 SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
-                if(successResponse.isSuccess()) {
+                if(successResponse != null) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich bearbeitet");
-                    update();
+                    if(successResponse.isSuccess()) {
+
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich bearbeitet");
+                        update();
+                    } else {
+
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer bearbeiten fehlgeschlagen", successResponse.getMessage());
+                        if(successResponse.getErrorCode() == 100) {
+
+                            ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                        }
+                    }
                 } else {
 
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer bearbeiten fehlgeschlagen", successResponse.getMessage());
-                    if(successResponse.getErrorCode() == 100) {
-
-                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                    }
+                    MainViewLoader.loadLoginView();
                 }
             });
             Thread thread = new Thread(task);
@@ -344,25 +362,29 @@ public class UserAdminstration {
         task.setOnSucceeded((WorkerStateEvent event) -> {
 
             userAdministrationResponse = (UserAdministrationResponse) event.getSource().getValue();
-            if(userAdministrationResponse.isSuccess()) {
+            if(userAdministrationResponse != null) {
 
-                //Daten
-                if(userAdministrationResponse != null) {
+                if(userAdministrationResponse.isSuccess()) {
 
+                    //Daten
                     userTable.getItems().clear();
                     userTable.getItems().addAll(FXCollections.observableList(userAdministrationResponse.getUserDataList()));
                     maskerPane.setVisible(false);
                     menuButtonCreateUser.setDisable(false);
                     menuButtonEditUser.setDisable(false);
                     menuButtonDeleteUser.setDisable(false);
+
+                } else {
+
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", userAdministrationResponse.getMessage());
+                    if(userAdministrationResponse.getErrorCode() == 100) {
+
+                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                    }
                 }
             } else {
 
-                UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", userAdministrationResponse.getMessage());
-                if(userAdministrationResponse.getErrorCode() == 100) {
-
-                    ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                }
+                MainViewLoader.loadLoginView();
             }
         });
         Thread thread = new Thread(task);

@@ -161,17 +161,22 @@ public class DeviceAdministartionController {
             task.setOnSucceeded((WorkerStateEvent e) -> {
 
                 SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
-                if(successResponse.isSuccess()) {
+                if(successResponse != null) {
+                    if (successResponse.isSuccess()) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich aktiviert");
-                    update();
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich aktiviert");
+                        update();
+                    } else {
+
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät aktivieren fehlgeschlagen", successResponse.getMessage());
+                        if (successResponse.getErrorCode() == 100) {
+
+                            ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                        }
+                    }
                 } else {
 
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät aktivieren fehlgeschlagen", successResponse.getMessage());
-                    if(successResponse.getErrorCode() == 100) {
-
-                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                    }
+                    MainViewLoader.loadLoginView();
                 }
             });
             Thread thread = new Thread(task);
@@ -206,17 +211,23 @@ public class DeviceAdministartionController {
             task.setOnSucceeded((WorkerStateEvent e) -> {
 
                 SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
-                if(successResponse.isSuccess()) {
+                if(successResponse != null) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich aktiviert");
-                    update();
+                    if(successResponse.isSuccess()) {
+
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich aktiviert");
+                        update();
+                    } else {
+
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät aktivieren fehlgeschlagen", successResponse.getMessage());
+                        if(successResponse.getErrorCode() == 100) {
+
+                            ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                        }
+                    }
                 } else {
 
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät aktivieren fehlgeschlagen", successResponse.getMessage());
-                    if(successResponse.getErrorCode() == 100) {
-
-                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                    }
+                    MainViewLoader.loadLoginView();
                 }
             });
             Thread thread = new Thread(task);
@@ -251,17 +262,23 @@ public class DeviceAdministartionController {
             task.setOnSucceeded((WorkerStateEvent e) -> {
 
                 SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
-                if(successResponse.isSuccess()) {
+                if(successResponse != null) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich gelöscht");
-                    update();
+                    if(successResponse.isSuccess()) {
+
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich gelöscht");
+                        update();
+                    } else {
+
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät löschen fehlgeschlagen", successResponse.getMessage());
+                        if(successResponse.getErrorCode() == 100) {
+
+                            ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                        }
+                    }
                 } else {
 
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät löschen fehlgeschlagen", successResponse.getMessage());
-                    if(successResponse.getErrorCode() == 100) {
-
-                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                    }
+                    MainViewLoader.loadLoginView();
                 }
             });
             Thread thread = new Thread(task);
@@ -374,25 +391,29 @@ public class DeviceAdministartionController {
         task.setOnSucceeded((WorkerStateEvent event) -> {
 
             deviceResponse = (DeviceResponse) event.getSource().getValue();
-            if(deviceResponse.isSuccess()) {
+            if(deviceResponse != null) {
 
-                //Daten
-                if(deviceResponse != null) {
+                if (deviceResponse.isSuccess()) {
 
+                    //Daten
                     deviceTable.getItems().clear();
                     deviceTable.getItems().addAll(FXCollections.observableList(deviceResponse.getDeviceDataList()));
                     maskerPane.setVisible(false);
                     menuButtonAllow.setDisable(false);
                     menuButtonDenied.setDisable(false);
                     menuButtonDelete.setDisable(false);
+
+                } else {
+
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", deviceResponse.getMessage());
+                    if (deviceResponse.getErrorCode() == 100) {
+
+                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                    }
                 }
             } else {
 
-                UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", deviceResponse.getMessage());
-                if(deviceResponse.getErrorCode() == 100) {
-
-                    ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
-                }
+                MainViewLoader.loadLoginView();
             }
         });
         Thread thread = new Thread(task);

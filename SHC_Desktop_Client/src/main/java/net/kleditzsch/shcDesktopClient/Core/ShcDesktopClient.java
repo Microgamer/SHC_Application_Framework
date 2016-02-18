@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,8 +22,10 @@ import net.kleditzsch.shcCore.Json.LocalDateSerializer;
 import net.kleditzsch.shcCore.Json.LocalDateTimeSerializer;
 import net.kleditzsch.shcCore.Json.LocalTimeSerializer;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
+import net.kleditzsch.shcDesktopClient.Service.ConnectionService;
 import net.kleditzsch.shcDesktopClient.Settings.Settings;
 import net.kleditzsch.shcDesktopClient.View.MainViewController;
+import net.kleditzsch.shcDesktopClient.View.MainViewLoader;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -61,6 +64,11 @@ public class ShcDesktopClient extends Application {
      * Controller der Hauptfensters
      */
     protected MainViewController mainViewController;
+
+    /**
+     * Verbindungsüberwachung
+     */
+    protected ConnectionService connectionService = new ConnectionService();
 
     /**
      * Instance der Main Klasse
@@ -135,6 +143,11 @@ public class ShcDesktopClient extends Application {
             UiDialogHelper.showExceptionDialog(e);
             Platform.exit();
         }
+
+        //Verbindungsüberwachungs Service starten
+        connectionService.setRestartOnFailure(true);
+        connectionService.setMaximumFailureCount(5);
+        connectionService.start();
     }
 
     /**
