@@ -134,7 +134,7 @@ public class ShcDesktopClient extends Application {
             //Listener für das Schliesen
             primaryStage.setOnCloseRequest(e -> {
 
-                saveStageState();
+                saveAndExit();
                 Platform.exit();
             });
 
@@ -205,9 +205,9 @@ public class ShcDesktopClient extends Application {
     }
 
     /**
-     * Speichert den Zustand des Fensters
+     * beendet die Anwendung
      */
-    public void saveStageState() {
+    public void saveAndExit() {
 
         if(primaryStage != null) {
 
