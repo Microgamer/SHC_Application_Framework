@@ -23,6 +23,9 @@ public interface Permissions {
     //Einstellungen verwalten
     String SETTINGS_ADMINISTRATION = "shc.permission.settings.administration";
 
+    //Elements verwalten
+    String ELEMENT_ADMINISTRATION = "shc.permission.elements.administration";
+
     /**
      * gibt eine Liste mit allen Berechtigungen zurück
      *
@@ -34,6 +37,7 @@ public interface Permissions {
         permissions.add(USER_ADMINISTRATION);
         permissions.add(DEVICE_ADMINISTRATION);
         permissions.add(SETTINGS_ADMINISTRATION);
+        permissions.add(ELEMENT_ADMINISTRATION);
         return permissions;
     }
 }

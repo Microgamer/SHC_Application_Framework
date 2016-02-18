@@ -134,7 +134,13 @@ public class AdminMenuController {
     @FXML
     void openElementAdministration(ActionEvent event) {
 
+        if(ShcDesktopClient.getInstance().getConnectionManager().checkPermission(Permissions.ELEMENT_ADMINISTRATION)) {
 
+            MainViewLoader.loadElementsAdministartionView();
+        } else {
+
+            UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehlende Berechtigung", "Du bist nicht Berechtigt diese Aktion aus zu führen");
+        }
     }
 
     @FXML
@@ -207,7 +213,7 @@ public class AdminMenuController {
 
             buttonRooms.setDisable(true);
         }
-        if(true) { //!cm.checkPermission(Permissions.DEVICE_ADMINISTRATION)) {
+        if(!cm.checkPermission(Permissions.ELEMENT_ADMINISTRATION)) {
 
             buttonElements.setDisable(true);
         }

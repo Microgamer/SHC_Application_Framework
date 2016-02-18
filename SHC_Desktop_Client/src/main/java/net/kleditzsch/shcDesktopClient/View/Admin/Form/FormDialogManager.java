@@ -9,8 +9,8 @@ import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcCore.ClientData.User.UserData;
 import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
-import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.UserFormController;
-import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.UserGroupFormController;
+import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.Elements.UserFormController;
+import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.Elements.UserGroupFormController;
 
 import java.io.IOException;
 import java.util.List;
@@ -47,7 +47,7 @@ public abstract class FormDialogManager {
      */
     public static Optional<UserData> showUserDataDialog(UserData userData, List<UserGroupData> userGroupDataList) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/UserForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/User/UserForm.fxml"));
         Parent pane;
         try {
 
@@ -81,7 +81,7 @@ public abstract class FormDialogManager {
      */
     public static Optional<UserGroupData> showUserGroupDataDialog(UserGroupData userGroupData, List<String> permissions) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/UserGroupForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/User/UserGroupForm.fxml"));
         Parent pane;
         try {
 

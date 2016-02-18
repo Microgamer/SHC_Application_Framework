@@ -255,9 +255,12 @@ public class UserEditor implements DatabaseEditor {
         User admin = new User(true);
         admin.setHash(User.createHash());
         admin.setName("admin");
-        admin.setPasswordHash(User.createHash().substring(0, 11));
+        String adminAuthHash = User.createHash().substring(0, 11);
+        admin.setPasswordHash(adminAuthHash);
         admin.getUserGroups().add(admins);
         addUser(admin);
+
+        System.out.println("Authhas admin Benutzer: " + adminAuthHash);
 
         saveData();
     }

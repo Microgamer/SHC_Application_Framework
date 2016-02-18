@@ -1,4 +1,4 @@
-package net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms;
+package net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.Elements;
 
 import java.net.URL;
 import java.util.HashSet;
