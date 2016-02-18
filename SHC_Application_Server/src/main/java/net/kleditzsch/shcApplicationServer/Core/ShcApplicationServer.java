@@ -39,6 +39,9 @@ import java.time.LocalTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Basisklasse
@@ -153,7 +156,7 @@ public class ShcApplicationServer {
             @Override
             public void run() {
 
-                ShcApplicationServer.getInstance().shutdown();
+                ShcApplicationServer.getInstance().saveApplicationData();
             }
         });
 
@@ -161,6 +164,18 @@ public class ShcApplicationServer {
         ServerRunnable httpServer = new ServerRunnable();
         Thread serverThread = new Thread(httpServer);
         serverThread.start();
+
+        //Speicherdienst starten
+        ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(1);
+        scheduledExecutorService.scheduleAtFixedRate((Runnable) () -> {
+
+            ShcApplicationServer.getInstance().saveApplicationData();
+            System.out.println("dump");
+        },
+                30, //Startverzögerung
+                30, //Intervall
+                TimeUnit.SECONDS
+        );
     }
 
     /**
@@ -355,7 +370,7 @@ public class ShcApplicationServer {
     /**
      * bereitet den Server zum herunterfahren vor
      */
-    public void shutdown() {
+    public void saveApplicationData() {
 
         settings.saveData();
         userEditor.saveData();
