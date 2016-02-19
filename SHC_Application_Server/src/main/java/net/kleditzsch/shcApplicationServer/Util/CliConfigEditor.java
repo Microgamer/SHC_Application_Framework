@@ -12,6 +12,7 @@ import net.kleditzsch.shcCore.Settings.StringSetting;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.Optional;
 
@@ -93,17 +94,16 @@ public abstract class CliConfigEditor {
         }
 
         //Einstellungen speichern
-        BufferedWriter out = null;
+        BufferedWriter out;
         try {
 
-            out = Files.newBufferedWriter(dbConfigFile, StandardOpenOption.TRUNCATE_EXISTING);
+            out = Files.newBufferedWriter(dbConfigFile, StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
             out.write(config.toString());
             out.close();
             System.out.println("Die Datenbank Konfiguration wurde erfolgreich gespeichert!");
         } catch (IOException e) {
 
             System.err.println("Die Datenbank Konfiguration konnte nicht gespeichert werden!");
-            System.err.println("Grund: " + e.getLocalizedMessage());
 
             //Debug Ausgabe
             if(ShcApplicationServer.isDebug()) {

@@ -262,7 +262,7 @@ public class Settings {
         ja.add(doubleSettings);
         ja.add(booleanSettings);
 
-        BufferedWriter out = Files.newBufferedWriter(userHome, StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING);
+        BufferedWriter out = Files.newBufferedWriter(userHome, StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
         out.write(ja.toString());
         out.close();
     }
