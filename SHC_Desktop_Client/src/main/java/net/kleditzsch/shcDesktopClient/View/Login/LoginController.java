@@ -144,11 +144,14 @@ public class LoginController {
                     settings.getStringSetting(Settings.SETTING_SERVER_CLIENT_HASH).setValue(clientHash);
                     settings.dump();
 
-                    //Meldung
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät angemeldet", "Das Gerät wurde erfolgreich angemeldet, nach der Freischaltung dur einen Andministrator kannst du das SHC benutzen");
-                    //UiDialogHelper.showInfoDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät angemeldet", null, "Das Gerät wurde erfolgreich angemeldet, nach der Freischaltung dur einen Andministrator kannst du das SHC benutzen");
-                    maskerPane.setVisible(false);
-                    return;
+                    if(!handshake.isAutoActivated()) {
+
+                        //Meldung
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät angemeldet", "Das Gerät wurde erfolgreich angemeldet, nach der Freischaltung dur einen Andministrator kannst du das SHC benutzen");
+                        //UiDialogHelper.showInfoDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät angemeldet", null, "Das Gerät wurde erfolgreich angemeldet, nach der Freischaltung dur einen Andministrator kannst du das SHC benutzen");
+                        maskerPane.setVisible(false);
+                        return;
+                    }
                 } else {
 
                     //Fehler beim senden

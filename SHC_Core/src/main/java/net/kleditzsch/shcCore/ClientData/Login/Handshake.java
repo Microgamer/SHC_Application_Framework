@@ -13,7 +13,8 @@ public class Handshake extends AbstractResponse {
 
     protected String clientHash;
     protected String userAgent;
-    protected boolean isKnown;
+    protected boolean isKnown = false;
+    protected boolean isAutoActivated = false;
 
     public String getClientHash() {
         return clientHash;
@@ -37,5 +38,13 @@ public class Handshake extends AbstractResponse {
 
     public void setKnown(boolean known) {
         isKnown = known;
+    }
+
+    public boolean isAutoActivated() {
+        return isAutoActivated;
+    }
+
+    public void setAutoActivated(boolean autoActivated) {
+        isAutoActivated = autoActivated;
     }
 }

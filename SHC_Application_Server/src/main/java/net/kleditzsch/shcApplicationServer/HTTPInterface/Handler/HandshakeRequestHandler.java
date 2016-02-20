@@ -46,6 +46,7 @@ public class HandshakeRequestHandler implements RequestHandler {
                     if(deviceManager.getDevices().size() == 0) {
 
                         clientDevice.setAllowed(true);
+                        handshake.setAutoActivated(true);
                     }
                     deviceManager.getDevices().put(clientDevice.getClientHash(), clientDevice);
 

@@ -260,7 +260,7 @@ public class UserEditor implements DatabaseEditor {
         admin.getUserGroups().add(admins);
         addUser(admin);
 
-        System.out.println("Authhas admin Benutzer: " + adminAuthHash);
+        System.out.println("Authhash admin Benutzer: " + adminAuthHash);
 
         saveData();
     }
