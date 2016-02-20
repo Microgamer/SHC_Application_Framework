@@ -28,6 +28,48 @@ public interface AutomationElements {
     int USER_AT_HOME_CONDITION = 16;
     int USER_NOT_AT_HOME_CONDITION = 17;
 
+    //Automations Elemente
+
+    //lesbare Elemente
+    int INPUT = 200;
+    int USER_AT_HOME = 201;
+
+    //schaltbare Elemente
+    int AVM_SOCKET = 300;
+    int EDIMAX_SOCKET = 301;
+    int FRITZ_BOX_WLAN = 302;
+    int FRITZ_BOX_REBOOT_RECONNECT = 303;
+    int OUTPUT = 304;
+    int RADIO_SOCKET = 305;
+    int REBOOT_SHUTDOWN = 306;
+    int SCRIPT_SINGLE = 307;
+    int SCRIPT_DOUBLE = 308;
+    int WAKE_ON_LAN = 309;
+
+    //Sensorwerte
+    int ACTUAL_POWER = 400;
+    int AIR_PRESSURE = 401;
+    int ALTITUDE = 402;
+    int BATTERIE_LEVEL = 403;
+    int DISTANCE = 404;
+    int DURATION = 405;
+    int ENERGY = 406;
+    int GAS_AMOUNT = 407;
+    int HUMIDITY = 408;
+    int LIGHT_INTENSITY = 409;
+    int MOISTURE = 410;
+    int STRING = 411;
+    int TEMPERATURE = 412;
+    int WATER_AMOUNT = 413;
+
+    //Virtuelle Sensorwerte
+    int VIRTUAL_ACTUAL_POWER = 500;
+    int VIRTUAL_ENERGY = 500;
+    int VIRTUAL_GAS_AMOUNT = 500;
+    int VIRTUAL_LIGHT_INTENSITY = 500;
+    int VIRTUAL_WATER_AMOUNT = 500;
+    int VIRTUAL_TEMPERATURE = 500;
+
     //Wochentage
     int MONDAY = 1;
     int TUESDAY = 2;

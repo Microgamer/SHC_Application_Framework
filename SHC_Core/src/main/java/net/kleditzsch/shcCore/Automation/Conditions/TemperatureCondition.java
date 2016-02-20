@@ -1,7 +1,7 @@
 package net.kleditzsch.shcCore.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Automation.AbstractCondition;
-import net.kleditzsch.shcCore.Room.Elements.Interface.SensorDataModel.Temperature;
+import net.kleditzsch.shcCore.Automation.Interface.Condition.AbstractCondition;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.TemperatureValue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class TemperatureCondition extends AbstractCondition {
     /**
      * liste mit allen Sensoren die überwacht werden sollen
      */
-    protected final Set<Temperature> sensorList = new HashSet<>();
+    protected final Set<TemperatureValue> sensorList = new HashSet<>();
 
     /**
      * Grenzwert
@@ -53,7 +53,7 @@ public class TemperatureCondition extends AbstractCondition {
      *
      * @return Sensoren Liste
      */
-    public Set<Temperature> getSensorList() {
+    public Set<TemperatureValue> getSensorList() {
         return sensorList;
     }
 

@@ -1,7 +1,7 @@
 package net.kleditzsch.shcCore.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Automation.AbstractCondition;
-import net.kleditzsch.shcCore.Room.Elements.Interface.SensorDataModel.LightIntensity;
+import net.kleditzsch.shcCore.Automation.Interface.Condition.AbstractCondition;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.LightIntensityValue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class LightIntensityCondition extends AbstractCondition {
     /**
      * liste mit allen Sensoren die überwacht werden sollen
      */
-    protected final Set<LightIntensity> sensorList = new HashSet<>();
+    protected final Set<LightIntensityValue> sensorList = new HashSet<>();
 
     /**
      * Grenzwert
@@ -53,7 +53,7 @@ public class LightIntensityCondition extends AbstractCondition {
      *
      * @return Sensoren Liste
      */
-    public Set<LightIntensity> getSensorList() {
+    public Set<LightIntensityValue> getSensorList() {
         return sensorList;
     }
 

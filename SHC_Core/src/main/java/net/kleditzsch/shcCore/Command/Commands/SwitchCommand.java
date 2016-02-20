@@ -1,6 +1,6 @@
 package net.kleditzsch.shcCore.Command.Commands;
 
-import net.kleditzsch.shcCore.Room.Elements.Interface.Switchable;
+import net.kleditzsch.shcCore.Automation.Interface.Switchable.Switchable;
 import net.kleditzsch.shcCore.Util.Constant;
 
 /**
@@ -79,15 +79,15 @@ public class SwitchCommand implements net.kleditzsch.shcCore.Command.Interface.S
 
             case Constant.SWITCH_ON:
 
-                switchable.triggerOn();
+                //switchable.triggerOn();
                 break;
             case Constant.SWITCH_OFF:
 
-                switchable.triggerOff();
+                //switchable.triggerOff();
                 break;
             case Constant.SWITCH_TOGGLE:
 
-                switchable.triggerToggle();
+                //switchable.triggerToggle();
                 break;
         }
     }

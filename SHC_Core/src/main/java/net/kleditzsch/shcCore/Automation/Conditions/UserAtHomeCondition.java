@@ -1,7 +1,7 @@
 package net.kleditzsch.shcCore.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Automation.AbstractCondition;
-import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractUserAtHome;
+import net.kleditzsch.shcCore.Automation.Interface.Condition.AbstractCondition;
+import net.kleditzsch.shcCore.Automation.Devices.Readable.UserAtHome;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,14 +18,14 @@ public class UserAtHomeCondition extends AbstractCondition {
     /**
      * liste mit allen Sensoren die überwacht werden sollen
      */
-    protected final Set<AbstractUserAtHome> userAtHomeList = new HashSet<>();
+    protected final Set<UserAtHome> userAtHomeList = new HashSet<>();
 
     /**
      * gibt die Sensoren Liste zurück
      *
      * @return Sensoren Liste
      */
-    public Set<AbstractUserAtHome> getUserAtHomeList() {
+    public Set<UserAtHome> getUserAtHomeList() {
         return userAtHomeList;
     }
 

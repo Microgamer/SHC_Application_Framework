@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractUserAtHome;
+import net.kleditzsch.shcCore.Automation.Devices.Readable.UserAtHome;
 import net.kleditzsch.shcCore.Util.Constant;
 
 /**
@@ -28,9 +28,15 @@ public class NobodyAtHomeCondition extends net.kleditzsch.shcCore.Automation.Con
 
         if(userAtHomeList.size() > 0) {
 
-            for (AbstractUserAtHome userAtHome : userAtHomeList) {
+            for (UserAtHome userAtHome : userAtHomeList) {
 
-                if(userAtHome.isEnabled() && userAtHome.getState() == Constant.HIGH) {
+                //Deaktivierte überspringen
+                if(userAtHome.isDisabled()) {
+
+                    continue;
+                }
+
+                if(userAtHome.getState() == Constant.HIGH) {
 
                     return false;
                 }

@@ -1,6 +1,6 @@
 package net.kleditzsch.shcCore.Command.Interface;
 
-import net.kleditzsch.shcCore.Room.Elements.Interface.Switchable;
+import net.kleditzsch.shcCore.Automation.Interface.Switchable.Switchable;
 
 /**
  * Schaltbefehl

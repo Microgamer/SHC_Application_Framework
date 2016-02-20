@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Room.Elements.Interface.SensorDataModel.Temperature;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.TemperatureValue;
 
 /**
  * Temperatur Bedingung
@@ -27,19 +27,25 @@ public class TemperatureCondition extends net.kleditzsch.shcCore.Automation.Cond
 
         if(sensorList.size() > 0) {
 
-            for (Temperature sensor : sensorList) {
+            for (TemperatureValue sensor : sensorList) {
+
+                //Deaktivierte überspringen
+                if(sensor.isDisabled()) {
+
+                    continue;
+                }
 
                 if(!invert) {
 
                     //größer als
-                    if((sensor.getTemperature() + sensor.getTemperatureOffset()) > limit) {
+                    if(sensor.getTemperatureWithOffset() > limit) {
 
                         return true;
                     }
                 } else {
 
                     //Kleiner als
-                    if((sensor.getTemperature() + sensor.getTemperatureOffset()) < limit) {
+                    if(sensor.getTemperatureWithOffset() < limit) {
 
                         return true;
                     }

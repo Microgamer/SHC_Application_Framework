@@ -1,7 +1,7 @@
 package net.kleditzsch.shcCore.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Automation.AbstractCondition;
-import net.kleditzsch.shcCore.Room.Elements.Interface.Readable;
+import net.kleditzsch.shcCore.Automation.Interface.Condition.AbstractCondition;
+import net.kleditzsch.shcCore.Automation.Interface.Readable.Readable;
 
 import java.util.HashSet;
 import java.util.Set;

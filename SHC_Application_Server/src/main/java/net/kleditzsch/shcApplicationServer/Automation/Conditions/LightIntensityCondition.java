@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Room.Elements.Interface.SensorDataModel.LightIntensity;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.LightIntensityValue;
 
 /**
  * Lichstärke Bedingung
@@ -27,7 +27,13 @@ public class LightIntensityCondition extends net.kleditzsch.shcCore.Automation.C
 
         if(sensorList.size() > 0) {
 
-            for (LightIntensity sensor : sensorList) {
+            for (LightIntensityValue sensor : sensorList) {
+
+                //Deaktivierte überspringen
+                if(sensor.isDisabled()) {
+
+                    continue;
+                }
 
                 if(!invert) {
 

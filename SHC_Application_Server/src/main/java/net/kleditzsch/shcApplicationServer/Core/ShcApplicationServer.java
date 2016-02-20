@@ -2,22 +2,11 @@ package net.kleditzsch.shcApplicationServer.Core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.kleditzsch.shcApplicationServer.Automation.DeviceEditor;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.DeviceManager.DeviceManager;
 import net.kleditzsch.shcApplicationServer.HTTPInterface.ServerRunnable;
-import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.BoxSerializer;
-import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.*;
-import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.Groups.ActivitySerializer;
-import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.Groups.ButtonSerializer;
-import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.Elements.Groups.CountdownSerializer;
-import net.kleditzsch.shcApplicationServer.Json.Serializer.Room.RoomSerializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.User.UserSerializer;
-import net.kleditzsch.shcApplicationServer.Room.Box;
-import net.kleditzsch.shcApplicationServer.Room.Elements.*;
-import net.kleditzsch.shcApplicationServer.Room.Elements.Groups.Activity;
-import net.kleditzsch.shcApplicationServer.Room.Elements.Groups.Button;
-import net.kleditzsch.shcApplicationServer.Room.Elements.Groups.Countdown;
-import net.kleditzsch.shcApplicationServer.Room.Room;
 import net.kleditzsch.shcApplicationServer.Room.RoomEditor;
 import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
@@ -101,6 +90,11 @@ public class ShcApplicationServer {
      * Gerätemanager
      */
     private DeviceManager deviceManager;
+
+    /**
+     * Verwaltung von schaltbaren,lesbaren Elementen und Sensorwerten
+     */
+    private DeviceEditor deviceEditor;
 
     /**
      * Raum Verwaltung
@@ -210,46 +204,7 @@ public class ShcApplicationServer {
         //User
         builder.registerTypeAdapter(User.class, new UserSerializer());
 
-        //Raum
-        builder.registerTypeAdapter(AvmSocket.class, new AvmSocketSerializer());
-        builder.registerTypeAdapter(Battery.class, new BatterySerializer());
-        builder.registerTypeAdapter(Bmp.class, new BmpSerializer());
-        builder.registerTypeAdapter(DHT.class, new DhtSerializer());
-        builder.registerTypeAdapter(DS18X20.class, new DS18X20Serializer());
-        builder.registerTypeAdapter(EdimaxSocket.class, new EdimaxSocketSerializer());
-        builder.registerTypeAdapter(ElectricMeter.class, new ElectricMeterSerializer());
-        builder.registerTypeAdapter(FritzBox.class, new FritzBoxSerializer());
-        builder.registerTypeAdapter(GasMeter.class, new GasMeterSerializer());
-        builder.registerTypeAdapter(HcSr04.class, new HcSr04Serializer());
-        builder.registerTypeAdapter(Hygrometer.class, new HygrometerSerializer());
-        builder.registerTypeAdapter(Input.class, new InputSerializer());
-        builder.registerTypeAdapter(LDR.class, new LdrSerializer());
-        builder.registerTypeAdapter(Output.class, new OutputSerializer());
-        builder.registerTypeAdapter(RadioSocket.class, new RadioSocketSerializer());
-        builder.registerTypeAdapter(Rain.class, new RainSerializer());
-        builder.registerTypeAdapter(Reboot.class, new RebootSerializer());
-        builder.registerTypeAdapter(Script.class, new ScriptSerializer());
-        builder.registerTypeAdapter(Sct013.class, new Sct013Serializer());
-        builder.registerTypeAdapter(Shutdown.class, new ShutdownSerializer());
-        builder.registerTypeAdapter(UserAtHome.class, new UserAtHomeSerializer());
-        builder.registerTypeAdapter(VirtualActualPower.class, new VirtualActualPowerSerializer());
-        builder.registerTypeAdapter(VirtualAmount.class, new VirtualAmountSerializer());
-        builder.registerTypeAdapter(VirtualEnergy.class, new VirtualEnergySerializer());
-        builder.registerTypeAdapter(VirtualHumidity.class, new VirtualHumiditySerializer());
-        builder.registerTypeAdapter(VirtualHumidity.class, new VirtualLightIntensitySerializer());
-        builder.registerTypeAdapter(VirtualMoisture.class, new VirtualMoistureSerializer());
-        builder.registerTypeAdapter(VirtualSocket.class, new VirtualSocketSerializer());
-        builder.registerTypeAdapter(VirtualTemperature.class, new VirtualTemperatureSerializer());
-        builder.registerTypeAdapter(WakeOnLan.class, new WakeOnLanSerializer());
-        builder.registerTypeAdapter(WaterMeter.class, new WaterMeterSerializer());
-
-        builder.registerTypeAdapter(Activity.class, new ActivitySerializer());
-        builder.registerTypeAdapter(Countdown.class, new CountdownSerializer());
-        builder.registerTypeAdapter(Button.class, new ButtonSerializer());
-
-        builder.registerTypeAdapter(Box.class, new BoxSerializer());
-        builder.registerTypeAdapter(Room.class, new RoomSerializer());
-
+        //Datum und Zeit
         builder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
         builder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
         builder.registerTypeAdapter(LocalTime.class, new LocalTimeSerializer());
@@ -303,13 +258,17 @@ public class ShcApplicationServer {
         switchServerEditor = new SwitchServerEditor();
         switchServerEditor.loadData();
 
-        //Räume laden
-        roomEditor = new RoomEditor();
-        roomEditor.loadData();
-
         //Gerätemanager
         deviceManager = new DeviceManager();
         deviceManager.loadData();
+
+        //Geräteverwaltung laden
+        deviceEditor = new DeviceEditor();
+        deviceEditor.loadData();
+
+        //Räume laden
+        roomEditor = new RoomEditor();
+        roomEditor.loadData();
     }
 
     /**
@@ -355,6 +314,15 @@ public class ShcApplicationServer {
      */
     public SwitchServerEditor getSwitchServerEditor() {
         return switchServerEditor;
+    }
+
+    /**
+     * gibt den Geräte Editor zurück
+     *
+     * @return
+     */
+    public DeviceEditor getDeviceEditor() {
+        return deviceEditor;
     }
 
     /**

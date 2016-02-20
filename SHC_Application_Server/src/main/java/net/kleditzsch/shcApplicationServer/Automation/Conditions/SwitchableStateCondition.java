@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Room.Elements.Interface.Switchable;
+import net.kleditzsch.shcCore.Automation.Interface.Switchable.Switchable;
 import net.kleditzsch.shcCore.Util.Constant;
 
 /**
@@ -31,7 +31,7 @@ public class SwitchableStateCondition extends net.kleditzsch.shcCore.Automation.
             for (Switchable switchable : switchableList) {
 
                 //Deaktivierte überspringen
-                if(!switchable.isEnabled()) {
+                if(switchable.isDisabled()) {
 
                     continue;
                 }

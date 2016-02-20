@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Room.Elements.Elements.AbstractUserAtHome;
+import net.kleditzsch.shcCore.Automation.Devices.Readable.UserAtHome;
 import net.kleditzsch.shcCore.Util.Constant;
 
 /**
@@ -28,10 +28,10 @@ public class UserAtHomeCondition extends net.kleditzsch.shcCore.Automation.Condi
 
         if(userAtHomeList.size() > 0) {
 
-            for (AbstractUserAtHome readable : userAtHomeList) {
+            for (UserAtHome readable : userAtHomeList) {
 
                 //Deaktivierte überspringen
-                if(!readable.isEnabled()) {
+                if(readable.isDisabled()) {
 
                     continue;
                 }

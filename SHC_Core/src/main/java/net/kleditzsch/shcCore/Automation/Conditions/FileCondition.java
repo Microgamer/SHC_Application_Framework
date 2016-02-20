@@ -1,6 +1,6 @@
 package net.kleditzsch.shcCore.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Automation.AbstractCondition;
+import net.kleditzsch.shcCore.Automation.Interface.Condition.AbstractCondition;
 
 /**
  * Datei Bedingung

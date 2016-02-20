@@ -1,7 +1,7 @@
 package net.kleditzsch.shcCore.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Automation.AbstractCondition;
-import net.kleditzsch.shcCore.Room.Elements.Interface.SensorDataModel.Humidity;
+import net.kleditzsch.shcCore.Automation.Interface.Condition.AbstractCondition;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.HumidityValue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class HumidityCondition extends AbstractCondition {
     /**
      * liste mit allen Sensoren die überwacht werden sollen
      */
-    protected final Set<Humidity> sensorList = new HashSet<>();
+    protected final Set<HumidityValue> sensorList = new HashSet<>();
 
     /**
      * Grenzwert
@@ -53,7 +53,7 @@ public class HumidityCondition extends AbstractCondition {
      *
      * @return Sensoren Liste
      */
-    public Set<Humidity> getSensorList() {
+    public Set<HumidityValue> getSensorList() {
         return sensorList;
     }
 

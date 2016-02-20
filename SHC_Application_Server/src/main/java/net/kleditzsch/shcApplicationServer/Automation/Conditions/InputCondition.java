@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Room.Elements.Interface.Readable;
+import net.kleditzsch.shcCore.Automation.Interface.Readable.Readable;
 import net.kleditzsch.shcCore.Util.Constant;
 
 /**
@@ -31,7 +31,7 @@ public class InputCondition extends net.kleditzsch.shcCore.Automation.Conditions
             for (Readable readable : readableList) {
 
                 //Deaktivierte überspringen
-                if(!readable.isEnabled()) {
+                if(readable.isDisabled()) {
 
                     continue;
                 }

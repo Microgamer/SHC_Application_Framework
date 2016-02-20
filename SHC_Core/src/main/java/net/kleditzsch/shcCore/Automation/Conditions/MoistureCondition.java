@@ -1,7 +1,7 @@
 package net.kleditzsch.shcCore.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Automation.AbstractCondition;
-import net.kleditzsch.shcCore.Room.Elements.Interface.SensorDataModel.Moisture;
+import net.kleditzsch.shcCore.Automation.Interface.Condition.AbstractCondition;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.MoistureValue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class MoistureCondition extends AbstractCondition {
     /**
      * liste mit allen Sensoren die überwacht werden sollen
      */
-    protected final Set<Moisture> sensorList = new HashSet<>();
+    protected final Set<MoistureValue> sensorList = new HashSet<>();
 
     /**
      * Grenzwert
@@ -53,7 +53,7 @@ public class MoistureCondition extends AbstractCondition {
      *
      * @return Sensoren Liste
      */
-    public Set<Moisture> getSensorList() {
+    public Set<MoistureValue> getSensorList() {
         return sensorList;
     }
 

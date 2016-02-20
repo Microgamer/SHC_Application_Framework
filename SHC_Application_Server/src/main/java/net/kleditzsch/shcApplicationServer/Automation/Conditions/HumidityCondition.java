@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Room.Elements.Interface.SensorDataModel.Humidity;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.HumidityValue;
 
 /**
  * Luftfeuchte Bedingung
@@ -27,7 +27,13 @@ public class HumidityCondition extends net.kleditzsch.shcCore.Automation.Conditi
 
         if(sensorList.size() > 0) {
 
-            for (Humidity sensor : sensorList) {
+            for (HumidityValue sensor : sensorList) {
+
+                //Deaktivierte überspringen
+                if(sensor.isDisabled()) {
+
+                    continue;
+                }
 
                 if(!invert) {
 

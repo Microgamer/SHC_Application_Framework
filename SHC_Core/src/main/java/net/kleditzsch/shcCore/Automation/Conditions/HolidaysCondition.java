@@ -1,8 +1,6 @@
 package net.kleditzsch.shcCore.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Automation.AbstractCondition;
-
-import java.time.LocalDate;
+import net.kleditzsch.shcCore.Automation.Interface.Condition.AbstractCondition;
 
 /**
  * Feiertage Bedingung

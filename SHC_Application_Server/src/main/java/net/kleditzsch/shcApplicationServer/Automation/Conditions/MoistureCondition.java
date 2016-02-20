@@ -1,6 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Automation.Conditions;
 
-import net.kleditzsch.shcCore.Room.Elements.Interface.SensorDataModel.Moisture;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.MoistureValue;
 
 /**
  * Feuchtigkeits Bedingung
@@ -27,7 +27,13 @@ public class MoistureCondition extends net.kleditzsch.shcCore.Automation.Conditi
 
         if(sensorList.size() > 0) {
 
-            for (Moisture sensor : sensorList) {
+            for (MoistureValue sensor : sensorList) {
+
+                //Deaktivierte überspringen
+                if(sensor.isDisabled()) {
+
+                    continue;
+                }
 
                 if(!invert) {
 
