@@ -1,15 +1,15 @@
-package net.kleditzsch.shcCore.Room.Elements;
+package net.kleditzsch.shcCore.Automation.Devices.Switchable;
 
-import net.kleditzsch.shcCore.Room.Abstract.AbstractRoomElement;
+import net.kleditzsch.shcCore.Automation.Interface.Switchable.AbstractDoubleSwitchable;
 
 /**
- * Sensor
+ * Virtuelle Steckdose
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class RoomSensor extends AbstractRoomElement {
+public class VirtualSocket extends AbstractDoubleSwitchable {
 
     /**
      * gibt den Typ des Elementes zurück
@@ -18,6 +18,6 @@ public class RoomSensor extends AbstractRoomElement {
      */
     @Override
     public int getType() {
-        return SENSOR;
+        return VIRTUAL_SOCKET;
     }
 }

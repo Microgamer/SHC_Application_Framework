@@ -18,7 +18,8 @@ public interface ViewElements {
     /**
      * Elemente
      */
-    int READABLE = 100;
-    int SWITCHABLE = 101;
+    int Button = 100;
+    int INPUT = 101;
     int SENSOR = 102;
+    int VIRTUAL_SENSOR = 103;
 }

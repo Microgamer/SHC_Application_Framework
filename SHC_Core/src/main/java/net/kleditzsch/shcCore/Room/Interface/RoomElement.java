@@ -10,16 +10,16 @@ package net.kleditzsch.shcCore.Room.Interface;
 public interface RoomElement extends ViewElement {
 
     /**
-     * gibt an ob der Raum aktiviert/deaktiviert ist
+     * gibt an ob das Element in umgekehrter Logik schalten soll
      *
-     * @return aktiviert/deaktiviert
+     * @return true wenn umgekehrte Logik
      */
-    boolean isEnabled();
+    boolean isInverse();
 
     /**
-     * aktiviert/deaktiviert den Raum
+     * aktiviert/deaktiviert das umkehren der Logik
      *
-     * @param enabled aktiviert/deaktiviert
+     * @param inverse aktiviert/deaktiviert
      */
-    void setEnabled(boolean enabled);
+    void setInverse(boolean inverse);
 }

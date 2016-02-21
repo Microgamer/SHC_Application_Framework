@@ -45,6 +45,7 @@ public interface AutomationElements {
     int SCRIPT_SINGLE = 307;
     int SCRIPT_DOUBLE = 308;
     int WAKE_ON_LAN = 309;
+    int VIRTUAL_SOCKET = 310;
 
     //Sensorwerte
     int ACTUAL_POWER = 400;

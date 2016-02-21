@@ -1,7 +1,7 @@
-package net.kleditzsch.shcCore.Room;
+package net.kleditzsch.shcCore.Room.Elements;
 
 import net.kleditzsch.shcCore.Room.Abstract.AbstractViewElement;
-import net.kleditzsch.shcCore.Room.Interface.RoomGroupElement;
+import net.kleditzsch.shcCore.Room.Interface.RoomElement;
 import net.kleditzsch.shcCore.Util.Comparator.RoomElementsOrderComparator;
 
 import java.util.HashMap;
@@ -16,48 +16,22 @@ import java.util.TreeSet;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class Box extends AbstractViewElement implements RoomGroupElement {
-
-    /**
-     * aktiviert/deaktiviert
-     */
-    protected boolean enabled = true;
+public class Box extends AbstractViewElement {
 
     /**
      * Liste der Elemente
      */
-    protected Map<Integer, String> elements = new HashMap<>();
-
-    /**
-     * gibt an ob der Raum aktiviert/deaktiviert ist
-     *
-     * @return aktiviert/deaktiviert
-     */
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    /**
-     * aktiviert/deaktiviert den Raum
-     *
-     * @param enabled aktiviert/deaktiviert
-     */
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+    protected Map<Integer, RoomElement> elements = new HashMap<>();
 
     /**
      * fügt dem Raum ein neues Element hinzu
      *
-     * @param roomElementHash Raum Element
+     * @param roomElement Raum Element
      * @return true bei Erfolg
      */
-    @Override
-    public boolean addRoomElement(String roomElementHash) {
+    public boolean addRoomElement(RoomElement roomElement) {
 
-        if(!elements.containsValue(roomElementHash)) {
+        if(!elements.containsValue(roomElement)) {
 
             //höchste Sortingungs ID ermitteln
             int max = 0;
@@ -70,7 +44,7 @@ public class Box extends AbstractViewElement implements RoomGroupElement {
             }
 
             int orderId = max++;
-            addRoomElement(roomElementHash, orderId);
+            addRoomElement(roomElement, orderId);
             return true;
         }
         return false;
@@ -79,16 +53,15 @@ public class Box extends AbstractViewElement implements RoomGroupElement {
     /**
      * fügt dem Raum ein neues Element hinzu
      *
-     * @param roomElementHash Raum Element
+     * @param roomElement Raum Element
      * @param orderId         Sortierungs ID
      * @return true bei Erfolg
      */
-    @Override
-    public boolean addRoomElement(String roomElementHash, int orderId) {
+    public boolean addRoomElement(RoomElement roomElement, int orderId) {
 
-        if(!elements.containsValue(roomElementHash)) {
+        if(!elements.containsValue(roomElement)) {
 
-            elements.put(orderId, roomElementHash);
+            elements.put(orderId, roomElement);
             return true;
         }
         return false;
@@ -97,18 +70,17 @@ public class Box extends AbstractViewElement implements RoomGroupElement {
     /**
      * entfernt ein Raum Element
      *
-     * @param roomElementHash Raum Element
+     * @param roomElement Raum Element
      * @return true bei Erfolg
      */
-    @Override
-    public boolean removeRoomElement(String roomElementHash) {
+    public boolean removeRoomElement(RoomElement roomElement) {
 
-        if(elements.containsValue(roomElementHash)) {
+        if(elements.containsValue(roomElement)) {
 
             for(Integer orderId : elements.keySet()) {
 
-                String knownRoomElement = elements.get(orderId);
-                if(knownRoomElement.equals(roomElementHash)) {
+                RoomElement knownRoomElement = elements.get(orderId);
+                if(roomElement.getHash().equals(knownRoomElement.getHash())) {
 
                     elements.remove(orderId);
                     return true;
@@ -121,22 +93,21 @@ public class Box extends AbstractViewElement implements RoomGroupElement {
     /**
      * setzt für ein Raum Element eine neue Sortierungs ID
      *
-     * @param roomElementHash Raum Element
+     * @param roomElement Raum Element
      * @param orderId         Sortierungs ID
      * @return true bei Erfolg
      */
-    @Override
-    public boolean updateOrderId(String roomElementHash, int orderId) {
+    public boolean updateOrderId(RoomElement roomElement, int orderId) {
 
-        if(elements.containsValue(roomElementHash)) {
+        if(elements.containsValue(roomElement)) {
 
             for(Integer knownOrderId : elements.keySet()) {
 
-                String knownRoomElement = elements.get(knownOrderId);
-                if(knownRoomElement.equals(roomElementHash)) {
+                RoomElement knownRoomElement = elements.get(knownOrderId);
+                if(roomElement.getHash().equals(knownRoomElement.getHash())) {
 
                     elements.remove(orderId);
-                    elements.put(orderId, roomElementHash);
+                    elements.put(orderId, roomElement);
                     return true;
                 }
             }
@@ -147,13 +118,12 @@ public class Box extends AbstractViewElement implements RoomGroupElement {
     /**
      * prüft ob ein Raum Element im Raum vorhanden ist
      *
-     * @param roomElementHash Raum Element
+     * @param roomElement Raum Element
      * @return true wenn vorhanden
      */
-    @Override
-    public boolean containsRoomElement(String roomElementHash) {
+    public boolean containsRoomElement(RoomElement roomElement) {
 
-        return elements.containsValue(roomElementHash);
+        return elements.containsValue(roomElement);
     }
 
     /**
@@ -161,8 +131,7 @@ public class Box extends AbstractViewElement implements RoomGroupElement {
      *
      * @return Raum Elemente
      */
-    @Override
-    public Map<Integer, String> getRoomElements() {
+    public Map<Integer, RoomElement> getRoomElements() {
         return elements;
     }
 
@@ -171,14 +140,13 @@ public class Box extends AbstractViewElement implements RoomGroupElement {
      *
      * @return Raum Elemente
      */
-    @Override
-    public Map<Integer, String> getRoomElementsOrderedByOrderId() {
+    public Map<Integer, RoomElement> getRoomElementsOrderedByOrderId() {
 
-        SortedSet<Map.Entry<Integer, String>> sortedSet = new TreeSet<>(new RoomElementsOrderComparator());
+        SortedSet<Map.Entry<Integer, RoomElement>> sortedSet = new TreeSet<>(new RoomElementsOrderComparator());
         sortedSet.addAll(elements.entrySet());
 
-        Map<Integer, String> output = new HashMap<>();
-        for(Map.Entry<Integer, String> entry : sortedSet) {
+        Map<Integer, RoomElement> output = new HashMap<>();
+        for(Map.Entry<Integer, RoomElement> entry : sortedSet) {
 
             output.put(entry.getKey(), entry.getValue());
         }
