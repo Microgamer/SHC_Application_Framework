@@ -3,7 +3,7 @@ package net.kleditzsch.shcCore.Room.Abstract;
 import net.kleditzsch.shcCore.Room.Interface.RoomElement;
 
 /**
- * Raum Element
+ * Kommentar
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
@@ -12,27 +12,27 @@ import net.kleditzsch.shcCore.Room.Interface.RoomElement;
 public abstract class AbstractRoomElement extends AbstractViewElement implements RoomElement {
 
     /**
-     * aktiviert/deaktiviert
+     * umgekehrte Logik
      */
-    protected boolean enabled = true;
+    protected boolean inverse = false;
 
     /**
-     * gibt an ob der Raum aktiviert/deaktiviert ist
+     * gibt an ob das Element in umgekehrter Logik schalten soll
      *
-     * @return aktiviert/deaktiviert
+     * @return true wenn umgekehrte Logik
      */
     @Override
-    public boolean isEnabled() {
-        return enabled;
+    public boolean isInverse() {
+        return this.inverse;
     }
 
     /**
-     * aktiviert/deaktiviert den Raum
+     * aktiviert/deaktiviert das umkehren der Logik
      *
-     * @param enabled aktiviert/deaktiviert
+     * @param inverse aktiviert/deaktiviert
      */
     @Override
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setInverse(boolean inverse) {
+        this.inverse = inverse;
     }
 }
