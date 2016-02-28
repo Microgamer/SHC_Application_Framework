@@ -54,7 +54,7 @@ public class SwitchServerEditor implements DatabaseEditor {
         }
 
         //Mico Controller
-        for(String key : rasberryPiSwitchServers.keySet()) {
+        for(String key : microControllerSwitchServers.keySet()) {
 
             String switchServerJson = microControllerSwitchServers.get(key);
             MicroControllerSwitchServer swicthServer = gson.fromJson(switchServerJson, MicroControllerSwitchServer.class);

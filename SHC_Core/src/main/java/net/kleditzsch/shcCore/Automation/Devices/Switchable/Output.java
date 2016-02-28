@@ -22,6 +22,11 @@ public class Output extends AbstractDoubleSwitchable {
     protected int pin;
 
     /**
+     * Typ
+     */
+    protected int type = OUTPUT;
+
+    /**
      * gibt den Schaltserver zurück
      *
      * @return Schaltserver
@@ -64,6 +69,6 @@ public class Output extends AbstractDoubleSwitchable {
      */
     @Override
     public int getType() {
-        return OUTPUT;
+        return type;
     }
 }

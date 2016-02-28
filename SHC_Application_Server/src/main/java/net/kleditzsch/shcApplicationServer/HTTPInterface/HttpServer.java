@@ -56,6 +56,10 @@ public class HttpServer extends NanoHTTPD {
 
                 requestHandler = new SettingsRequestHandler();
                 break;
+            case "/automationdevice":
+
+                requestHandler = new AutomationDeviceHandler();
+                break;
             default:
 
                 //Unbekannte Anfrage

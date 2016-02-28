@@ -4,11 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import net.kleditzsch.shcCore.Settings.BooleanSetting;
-import net.kleditzsch.shcCore.Settings.DoubleSetting;
-import net.kleditzsch.shcCore.Settings.IntegerSetting;
+import net.kleditzsch.shcCore.Settings.*;
 import net.kleditzsch.shcCore.Settings.Interface.Setting;
-import net.kleditzsch.shcCore.Settings.StringSetting;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 
 import java.io.BufferedWriter;
@@ -18,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +43,8 @@ public class Settings {
     public static final String SETTING_SERVER_CLIENT_HASH = "setting.server.client.hash";
     public static final String SETTING_SERVER_USER = "setting.server.user";
     public static final String SETTING_SERVER_IDENTIFIER = "setting.server.identifier";
+
+    public static final String SETTING_CLIENT_PROTOCOLS = "setting.client.protocols";
 
     /**
      * Einstellungen
@@ -90,6 +90,53 @@ public class Settings {
         knownSettings.put(user.getName(), user);
         StringSetting identifier = new StringSetting(SETTING_SERVER_IDENTIFIER, "", "");
         knownSettings.put(identifier.getName(), identifier);
+
+        //Client Einstellungen
+        ListSetting protocols = new ListSetting();
+        protocols.setName(SETTING_CLIENT_PROTOCOLS);
+        protocols.getDefaultValue().addAll(Arrays.asList(
+                "rcswitch-pi_elro",
+                "beamish_switch",
+                "byebyestandbye",
+                "brennenstuhl",
+                "clarus_switch",
+                "cleverwatts",
+                "coco_switch",
+                "cogex",
+                "dio_switch",
+                "elro_300",
+                "elro_300_switch",
+                "elro_400",
+                "elro_400_switch",
+                "elro_800_switch",
+                "home_easy_old",
+                "impuls",
+                "intertechno_old",
+                "intertechno_switch",
+                "kaku_switch",
+                "nexa_switch",
+                "kaku_switch_old",
+                "pollin",
+                "quigg_switch",
+                "raw",
+                "rev1_switch",
+                "rev2_switch",
+                "rev3_switch",
+                "selectremote",
+                "silvercrest",
+                "unitech",
+                "silvercrest",
+                "eHome",
+                "rsl366",
+                "promax",
+                "rc101",
+                "rc102",
+                "duwi",
+                "logilink-switch",
+                "techlico_switch"
+        ));
+        protocols.getValue().addAll(protocols.getDefaultValue());
+        knownSettings.put(protocols.getName(), protocols);
     }
 
     /**
@@ -128,6 +175,12 @@ public class Settings {
             for (JsonElement settingJson : booleanSettings) {
 
                 Setting setting = gson.fromJson(settingJson.getAsString(), BooleanSetting.class);
+                settings.put(setting.getName(), setting);
+            }
+            JsonArray listSettings = ja.get(4).getAsJsonArray();
+            for (JsonElement settingJson : listSettings) {
+
+                Setting setting = gson.fromJson(settingJson.getAsString(), ListSetting.class);
                 settings.put(setting.getName(), setting);
             }
         }
@@ -219,6 +272,22 @@ public class Settings {
     }
 
     /**
+     * gibt eine Einstellung zurück
+     *
+     * @param name Name der Einstellung
+     * @return Einstellung
+     */
+    public ListSetting getListSetting(String name) {
+
+        Setting setting =  settings.get(name);
+        if(setting instanceof ListSetting) {
+
+            return (ListSetting) setting;
+        }
+        return null;
+    }
+
+    /**
      * speichert die Einstellungen
      *
      * @throws IOException
@@ -238,6 +307,7 @@ public class Settings {
         JsonArray integerSettings = new JsonArray();
         JsonArray doubleSettings = new JsonArray();
         JsonArray booleanSettings = new JsonArray();
+        JsonArray listSettings = new JsonArray();
         for (String settingName : settings.keySet()) {
 
             Setting setting = settings.get(settingName);
@@ -253,6 +323,9 @@ public class Settings {
             } else if(setting instanceof BooleanSetting) {
 
                 booleanSettings.add(gson.toJson(setting));
+            } else if(setting instanceof ListSetting) {
+
+                listSettings.add(gson.toJson(setting));
             }
         }
 
@@ -261,6 +334,7 @@ public class Settings {
         ja.add(integerSettings);
         ja.add(doubleSettings);
         ja.add(booleanSettings);
+        ja.add(listSettings);
 
         BufferedWriter out = Files.newBufferedWriter(userHome, StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
         out.write(ja.toString());

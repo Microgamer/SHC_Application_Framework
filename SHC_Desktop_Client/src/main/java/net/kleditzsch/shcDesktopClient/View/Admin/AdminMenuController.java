@@ -172,11 +172,12 @@ public class AdminMenuController {
     @FXML
     void exitApp(ActionEvent event) {
 
-        if(UiDialogHelper.showConfirmDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Beenden", null, "Willst du die App wirklich beenden?")) {
+        //TODO Confirm Dialog einbinden
+        //if(UiDialogHelper.showConfirmDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Beenden", null, "Willst du die App wirklich beenden?")) {
 
             ShcDesktopClient.getInstance().saveAndExit();
             Platform.exit();
-        }
+        //}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

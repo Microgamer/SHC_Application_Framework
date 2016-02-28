@@ -87,4 +87,14 @@ public abstract class BasicElement implements Element {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * gibt den Namen des Elements zurück
+     *
+     * @return Name
+     */
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

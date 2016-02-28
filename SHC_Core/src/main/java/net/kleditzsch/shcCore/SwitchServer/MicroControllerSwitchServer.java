@@ -68,6 +68,11 @@ public class MicroControllerSwitchServer extends BasicElement implements SwitchS
     protected boolean shutdownEnabled = true;
 
     /**
+     * Typ
+     */
+    protected int type = SWITCH_SERVER_MICRO_CONTROLLER;
+
+    /**
      * gibt die IP Adresse zurück
      *
      * @return IP Adresse
@@ -272,6 +277,6 @@ public class MicroControllerSwitchServer extends BasicElement implements SwitchS
      */
     @Override
     public int getType() {
-        return SWITCH_SERVER_MICRO_CONTROLLER;
+        return type;
     }
 }

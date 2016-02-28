@@ -3,11 +3,8 @@ package net.kleditzsch.shcApplicationServer.Settings;
 import com.google.gson.Gson;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.Database.DatabaseEditor;
-import net.kleditzsch.shcCore.Settings.BooleanSetting;
-import net.kleditzsch.shcCore.Settings.DoubleSetting;
-import net.kleditzsch.shcCore.Settings.IntegerSetting;
+import net.kleditzsch.shcCore.Settings.*;
 import net.kleditzsch.shcCore.Settings.Interface.Setting;
-import net.kleditzsch.shcCore.Settings.StringSetting;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 
@@ -165,6 +162,14 @@ public class Settings implements DatabaseEditor {
             Setting setting = gson.fromJson(settingJson, BooleanSetting.class);
             this.settings.put(setting.getName(), setting);
         }
+        //List
+        settings = db.hgetAll(KEY_SETTINGS + ":" + Setting.TYPE_LIST);
+        for(String key : settings.keySet()) {
+
+            String settingJson = settings.get(key);
+            Setting setting = gson.fromJson(settingJson, ListSetting.class);
+            this.settings.put(setting.getName(), setting);
+        }
 
         //mit bekannten Einstellungen falls nötig auffüllen
         for(String name : knownSettings.keySet()) {
@@ -248,6 +253,22 @@ public class Settings implements DatabaseEditor {
         if(setting instanceof BooleanSetting) {
 
             return (BooleanSetting) setting;
+        }
+        return null;
+    }
+
+    /**
+     * gibt eine Einstellung zurück
+     *
+     * @param name Name der Einstellung
+     * @return Einstellung
+     */
+    public ListSetting getListSetting(String name) {
+
+        Setting setting =  settings.get(name);
+        if(setting instanceof ListSetting) {
+
+            return (ListSetting) setting;
         }
         return null;
     }

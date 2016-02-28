@@ -12,12 +12,17 @@ import net.kleditzsch.shcCore.Automation.Interface.Switchable.AbstractDoubleSwit
 public class VirtualSocket extends AbstractDoubleSwitchable {
 
     /**
+     * Typ
+     */
+    protected int type = VIRTUAL_SOCKET;
+
+    /**
      * gibt den Typ des Elementes zurück
      *
      * @return Typ ID
      */
     @Override
     public int getType() {
-        return VIRTUAL_SOCKET;
+        return type;
     }
 }

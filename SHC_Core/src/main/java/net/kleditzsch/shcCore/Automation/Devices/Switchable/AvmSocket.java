@@ -17,6 +17,11 @@ public class AvmSocket extends AbstractDoubleSwitchable {
     public String identifier;
 
     /**
+     * Typ
+     */
+    protected int type = AVM_SOCKET;
+
+    /**
      * gibt die Identifizierung der Steckdose zurück
      *
      * @return Identifizierung
@@ -41,6 +46,6 @@ public class AvmSocket extends AbstractDoubleSwitchable {
      */
     @Override
     public int getType() {
-        return AVM_SOCKET;
+        return type;
     }
 }

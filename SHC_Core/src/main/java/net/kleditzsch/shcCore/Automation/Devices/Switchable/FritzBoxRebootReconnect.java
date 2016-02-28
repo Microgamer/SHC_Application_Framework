@@ -23,6 +23,11 @@ public class FritzBoxRebootReconnect extends AbstractSingleSwitchable {
     protected int function = FUNCTION_RECONNETC_WAN;
 
     /**
+     * Typ
+     */
+    protected int type = FRITZ_BOX_REBOOT_RECONNECT;
+
+    /**
      * gibt die Funktion zurück
      *
      * @return Funktion
@@ -47,6 +52,6 @@ public class FritzBoxRebootReconnect extends AbstractSingleSwitchable {
      */
     @Override
     public int getType() {
-        return FRITZ_BOX_REBOOT_RECONNECT;
+        return type;
     }
 }

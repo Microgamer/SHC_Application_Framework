@@ -1,6 +1,6 @@
 package net.kleditzsch.shcCore.Automation.Interface.Sensor;
 
-import net.kleditzsch.shcCore.Core.BasicElement;
+import net.kleditzsch.shcCore.Automation.Interface.AbstractAutomationDevice;
 
 import java.time.LocalDateTime;
 
@@ -11,12 +11,7 @@ import java.time.LocalDateTime;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public abstract class AbstractSensorValue extends BasicElement implements SensorValue {
-
-    /**
-     * deaktiviert
-     */
-    protected boolean disabled = false;
+public abstract class AbstractSensorValue extends AbstractAutomationDevice implements SensorValue {
 
     /**
      * Identifizierer
@@ -32,25 +27,6 @@ public abstract class AbstractSensorValue extends BasicElement implements Sensor
      * Zeitpunkt des letzten Werte Pushes
      */
     protected LocalDateTime lastPushTime;
-
-    /**
-     * gibt an ob das ELement deaktiviert ist
-     *
-     * @return true wenn deaktiviert
-     */
-    public boolean isDisabled() {
-        return this.disabled;
-    }
-
-    /**
-     * aktiviert/deaktiviert das Element
-     *
-     * @param disabled aktiviert/deaktiviert
-     */
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
     /**
      * gibt den Identifizierer zurück
      *

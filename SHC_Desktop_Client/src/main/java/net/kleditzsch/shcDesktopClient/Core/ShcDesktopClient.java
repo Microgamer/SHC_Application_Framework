@@ -12,12 +12,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.kleditzsch.Ui.UiDialogHelper;
+import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceResponse;
+import net.kleditzsch.shcCore.Json.AutomationDeviceResponseSerializer;
 import net.kleditzsch.shcCore.Json.LocalDateSerializer;
 import net.kleditzsch.shcCore.Json.LocalDateTimeSerializer;
 import net.kleditzsch.shcCore.Json.LocalTimeSerializer;
@@ -25,13 +27,11 @@ import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
 import net.kleditzsch.shcDesktopClient.Service.ConnectionService;
 import net.kleditzsch.shcDesktopClient.Settings.Settings;
 import net.kleditzsch.shcDesktopClient.View.MainViewController;
-import net.kleditzsch.shcDesktopClient.View.MainViewLoader;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Set;
 
 public class ShcDesktopClient extends Application {
 
@@ -124,6 +124,7 @@ public class ShcDesktopClient extends Application {
                 //Maximiert
                 primaryStage.setFullScreen(true);
             }
+            primaryStage.getIcons().add(new Image(ShcDesktopClient.class.getResourceAsStream("/Icons/App/appIcon.png")));
             primaryStage.setTitle("SHC Desktop Client");
             primaryStage.setScene(scene);
 
@@ -134,11 +135,12 @@ public class ShcDesktopClient extends Application {
             //Listener für das Schliesen
             primaryStage.setOnCloseRequest(e -> {
 
-                if(UiDialogHelper.showConfirmDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Beenden", null, "Willst du die App wirklich beenden?")) {
+                //TODO Confirm Dialog einbinden
+                //if(UiDialogHelper.showConfirmDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Beenden", null, "Willst du die App wirklich beenden?")) {
 
                     saveAndExit();
                     Platform.exit();
-                }
+                //}
             });
 
         } catch (IOException e) {
@@ -181,6 +183,8 @@ public class ShcDesktopClient extends Application {
     protected void initGson() {
 
         builder = new GsonBuilder();
+
+        builder.registerTypeAdapter(AutomationDeviceResponse.class, new AutomationDeviceResponseSerializer());
 
         //Serialisierer und Deserialisierer anmelden
         builder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());

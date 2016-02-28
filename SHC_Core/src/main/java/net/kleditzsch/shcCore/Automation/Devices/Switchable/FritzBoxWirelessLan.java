@@ -24,6 +24,11 @@ public class FritzBoxWirelessLan extends AbstractDoubleSwitchable {
     protected int function = FUNCTION_SWITCH_GUEST_WLAN;
 
     /**
+     * Typ
+     */
+    protected int type = FRITZ_BOX_WLAN;
+
+    /**
      * gibt die Funktion zurück
      *
      * @return Funktion
@@ -48,6 +53,6 @@ public class FritzBoxWirelessLan extends AbstractDoubleSwitchable {
      */
     @Override
     public int getType() {
-        return FRITZ_BOX_WLAN;
+        return type;
     }
 }

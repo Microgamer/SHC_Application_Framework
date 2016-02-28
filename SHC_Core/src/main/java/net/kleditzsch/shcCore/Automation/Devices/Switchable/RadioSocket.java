@@ -2,6 +2,9 @@ package net.kleditzsch.shcCore.Automation.Devices.Switchable;
 
 import net.kleditzsch.shcCore.Automation.Interface.Switchable.AbstractDoubleSwitchable;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Funksteckdose
  *
@@ -12,29 +15,48 @@ import net.kleditzsch.shcCore.Automation.Interface.Switchable.AbstractDoubleSwit
 public class RadioSocket extends AbstractDoubleSwitchable {
 
     /**
+     * liste der Schaltserverhashes über die der Befehl gesendet werden soll
+     */
+    protected Set<String> switchServers = new HashSet<>();
+
+    /**
      * 433MHz Protokoll
      */
-    protected String protocol;
+    protected String protocol = "";
 
     /**
      * Systemcode
      */
-    protected String systemCode;
+    protected String systemCode = "";
 
     /**
      * Gerätecode
      */
-    protected String deviceCode;
+    protected String deviceCode = "";
 
     /**
      * sende Weiderholungen
      */
-    protected int continues;
+    protected int continues = 1;
 
     /**
      * ID oder Systemcode beim senden verwenden
      */
     protected boolean useID = false;
+
+    /**
+     * Typ
+     */
+    protected int type = RADIO_SOCKET;
+
+    /**
+     * gibt die Liste der Schaltserverhashes zurück
+     *
+     * @return Liste der Schaltserverhashes
+     */
+    public Set<String> getSwitchServers() {
+        return switchServers;
+    }
 
     /**
      * gibt das 433MHz Protokoll zurück
@@ -133,6 +155,6 @@ public class RadioSocket extends AbstractDoubleSwitchable {
      */
     @Override
     public int getType() {
-        return RADIO_SOCKET;
+        return type;
     }
 }

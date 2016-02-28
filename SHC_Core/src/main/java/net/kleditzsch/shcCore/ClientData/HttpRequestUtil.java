@@ -300,6 +300,41 @@ public class HttpRequestUtil {
         return sendHttpRequest("settings", params, post);
     }
 
+    /**
+     * sendet eine Anfrage zum auflisten der Automationsgeräte an den Server
+     *
+     * @param sid Session ID
+     * @return Automationsgeräte Liste
+     * @throws IOException
+     */
+    public String getAutomationDevices(String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "listdevices");
+        return sendHttpRequest("automationdevice", params, null);
+    }
+
+    /**
+     * sendet eine Anfrage zum hinzufügen eines Automationsgeräte an den Server
+     *
+     * @param device Gerät
+     * @param type Typ
+     * @param sid Session ID
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String addAutomationDevice(String device, int type, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "adddevice");
+        params.put("type", Integer.valueOf(type).toString());
+        Map<String, String> postParams = new HashMap<>();
+        postParams.put("data", device);
+        return sendHttpRequest("automationdevice", params, postParams);
+    }
+
     protected String sendHttpRequest(String request, Map<String, String> getParams, Map<String, String> postParams) throws IOException {
 
         /*

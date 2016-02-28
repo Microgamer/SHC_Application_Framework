@@ -27,6 +27,16 @@ public class Input extends AbstractReadable {
     protected boolean inverse = false;
 
     /**
+     * gibt an ob Ping verwendet werden soll oder ob der Status von Außen kommt
+     */
+    protected boolean useExternalData = false;
+
+    /**
+     * Typ
+     */
+    protected int type = INPUT;
+
+    /**
      * gibt den Schaltserver zurück
      *
      * @return Schaltserver
@@ -81,12 +91,30 @@ public class Input extends AbstractReadable {
     }
 
     /**
+     * gibt an ob der Eingang durch externe Daten gesetzt werden soll
+     *
+     * @return true die Daten von außen kommen sollen
+     */
+    public boolean isUseExternalData() {
+        return useExternalData;
+    }
+
+    /**
+     * aktiviert/deaktiviert die interne Abfrage des EIngangs
+     *
+     * @param useExternalData true die Daten von außen kommen sollen
+     */
+    public void setUseExternalData(boolean useExternalData) {
+        this.useExternalData = useExternalData;
+    }
+
+    /**
      * gibt den Typ des Elementes zurück
      *
      * @return Typ ID
      */
     @Override
     public int getType() {
-        return INPUT;
+        return type;
     }
 }

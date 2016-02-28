@@ -28,6 +28,11 @@ public class RebootShutdown extends AbstractSingleSwitchable {
     protected int function = FUNCTION_REBOOT;
 
     /**
+     * Typ
+     */
+    protected int type = REBOOT_SHUTDOWN;
+
+    /**
      * gibt den Schaltserver zurück
      *
      * @return Schaltserver
@@ -70,6 +75,6 @@ public class RebootShutdown extends AbstractSingleSwitchable {
      */
     @Override
     public int getType() {
-        return REBOOT_SHUTDOWN;
+        return type;
     }
 }

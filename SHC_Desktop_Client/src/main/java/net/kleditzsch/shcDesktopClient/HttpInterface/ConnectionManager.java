@@ -1,6 +1,8 @@
 package net.kleditzsch.shcDesktopClient.HttpInterface;
 
 import com.google.gson.Gson;
+import net.kleditzsch.shcCore.Automation.Interface.AutomationDevice;
+import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceResponse;
 import net.kleditzsch.shcCore.ClientData.Device.DeviceData;
 import net.kleditzsch.shcCore.ClientData.Device.DeviceResponse;
 import net.kleditzsch.shcCore.ClientData.Login.Handshake;
@@ -416,6 +418,40 @@ public class ConnectionManager {
         if(checkSession()) {
 
             String response = this.requestUtil.setSettings(gson.toJson(settingsRequest), this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SuccessResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum auflisten der Geräte an den Server
+     *
+     * @return Automationsgeräte Liste
+     * @throws IOException
+     */
+    public AutomationDeviceResponse getAutomationDevices() throws IOException {
+
+        if(checkSession()) {
+
+            String response = this.requestUtil.getAutomationDevices(this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, AutomationDeviceResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum hinzufügen eines Automationsgeräte an den Server
+     *
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public SuccessResponse addAutomationDevice(AutomationDevice automationDevice) throws IOException {
+
+        if(checkSession()) {
+
+            String response = this.requestUtil.addAutomationDevice(gson.toJson(automationDevice), automationDevice.getType(), this.sessionId);
             updateLastContact();
             return gson.fromJson(response, SuccessResponse.class);
         }

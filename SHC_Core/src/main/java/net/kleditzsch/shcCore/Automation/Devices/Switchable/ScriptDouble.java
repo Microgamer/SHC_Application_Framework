@@ -23,6 +23,11 @@ public class ScriptDouble extends AbstractDoubleSwitchable {
     protected String switchServerHash;
 
     /**
+     * Typ
+     */
+    protected int type = SCRIPT_DOUBLE;
+
+    /**
      * gibt den Ausschaltbefehl zurück
      *
      * @return Ausschaltbefehl
@@ -83,6 +88,6 @@ public class ScriptDouble extends AbstractDoubleSwitchable {
      */
     @Override
     public int getType() {
-        return SCRIPT_DOUBLE;
+        return type;
     }
 }

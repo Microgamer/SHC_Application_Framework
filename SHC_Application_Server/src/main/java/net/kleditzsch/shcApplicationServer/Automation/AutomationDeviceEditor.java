@@ -9,6 +9,8 @@ import net.kleditzsch.shcCore.Automation.Devices.Readable.Input;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.UserAtHome;
 import net.kleditzsch.shcCore.Automation.Devices.SensorValue.*;
 import net.kleditzsch.shcCore.Automation.Devices.Switchable.*;
+import net.kleditzsch.shcCore.Automation.Interface.AutomationDevice;
+import net.kleditzsch.shcCore.Automation.Interface.AutomationElement.AutomationElement;
 import net.kleditzsch.shcCore.Automation.Interface.Readable.Readable;
 import net.kleditzsch.shcCore.Automation.Interface.Sensor.SensorValue;
 import net.kleditzsch.shcCore.Automation.Interface.Sensor.VirtualSensorValue;
@@ -28,17 +30,14 @@ import java.util.Set;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class DeviceEditor implements DatabaseEditor {
+public class AutomationDeviceEditor implements DatabaseEditor {
 
     public static final String KEY_DEVICES_ELEMENTS = "shc:device";
 
     /**
      * Elemente
      */
-    Map<String, Readable> readables = new HashMap<>();
-    Map<String, Switchable> switchables = new HashMap<>();
-    Map<String, SensorValue> sensorValues = new HashMap<>();
-    Map<String, VirtualSensorValue> virtualSensorValues = new HashMap<>();
+    Map<String, AutomationDevice> automationDevices = new HashMap<>();
 
     /**
      * lädt die Daten des Editors aus der Datenbank
@@ -59,13 +58,13 @@ public class DeviceEditor implements DatabaseEditor {
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            readables.put(hash, gson.fromJson(elementJson, Input.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, Input.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.USER_AT_HOME);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            readables.put(hash, gson.fromJson(elementJson, UserAtHome.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, UserAtHome.class));
         }
 
         //Schaltbare Elemente
@@ -73,61 +72,61 @@ public class DeviceEditor implements DatabaseEditor {
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            switchables.put(hash, gson.fromJson(elementJson, AvmSocket.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, AvmSocket.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.EDIMAX_SOCKET);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            switchables.put(hash, gson.fromJson(elementJson, EdimaxSocket.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, EdimaxSocket.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.FRITZ_BOX_REBOOT_RECONNECT);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            switchables.put(hash, gson.fromJson(elementJson, FritzBoxRebootReconnect.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, FritzBoxRebootReconnect.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.FRITZ_BOX_WLAN);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            switchables.put(hash, gson.fromJson(elementJson, FritzBoxWirelessLan.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, FritzBoxWirelessLan.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.OUTPUT);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            switchables.put(hash, gson.fromJson(elementJson, Output.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, Output.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.RADIO_SOCKET);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            switchables.put(hash, gson.fromJson(elementJson, RadioSocket.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, RadioSocket.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.REBOOT_SHUTDOWN);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            switchables.put(hash, gson.fromJson(elementJson, RebootShutdown.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, RebootShutdown.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.SCRIPT_DOUBLE);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            switchables.put(hash, gson.fromJson(elementJson, ScriptDouble.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, ScriptDouble.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.SCRIPT_SINGLE);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            switchables.put(hash, gson.fromJson(elementJson, ScriptSingle.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, ScriptSingle.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.WAKE_ON_LAN);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            switchables.put(hash, gson.fromJson(elementJson, WakeOnLan.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, WakeOnLan.class));
         }
 
         //Sensorwerte
@@ -135,85 +134,85 @@ public class DeviceEditor implements DatabaseEditor {
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, ActualPowerValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, ActualPowerValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.AIR_PRESSURE);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, AirPressureValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, AirPressureValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.ALTITUDE);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, AltitudeValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, AltitudeValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.BATTERIE_LEVEL);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, BatteryLevelValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, BatteryLevelValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.DISTANCE);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, DistanceValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, DistanceValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.DURATION);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, DurationValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, DurationValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.ENERGY);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, EnergyValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, EnergyValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.GAS_AMOUNT);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, GasAmountValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, GasAmountValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.HUMIDITY);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, HumidityValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, HumidityValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.LIGHT_INTENSITY);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, LightIntensityValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, LightIntensityValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.MOISTURE);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, MoistureValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, MoistureValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.STRING);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, StringValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, StringValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.TEMPERATURE);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, TemperatureValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, TemperatureValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.WATER_AMOUNT);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            sensorValues.put(hash, gson.fromJson(elementJson, WaterAmountValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, WaterAmountValue.class));
         }
 
         //Virtuele Sensorwerte
@@ -221,37 +220,37 @@ public class DeviceEditor implements DatabaseEditor {
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            virtualSensorValues.put(hash, gson.fromJson(elementJson, VirtualActualPowerValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, VirtualActualPowerValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.VIRTUAL_ENERGY);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            virtualSensorValues.put(hash, gson.fromJson(elementJson, VirtualEnergyValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, VirtualEnergyValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.VIRTUAL_GAS_AMOUNT);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            virtualSensorValues.put(hash, gson.fromJson(elementJson, VirtualGasAmountValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, VirtualGasAmountValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.VIRTUAL_LIGHT_INTENSITY);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            virtualSensorValues.put(hash, gson.fromJson(elementJson, VirtualLightIntensityValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, VirtualLightIntensityValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.VIRTUAL_TEMPERATURE);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            virtualSensorValues.put(hash, gson.fromJson(elementJson, VirtualTemperatureValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, VirtualTemperatureValue.class));
         }
         elements = redis.hgetAll(KEY_DEVICES_ELEMENTS + ":" + AutomationElements.VIRTUAL_WATER_AMOUNT);
         for(String hash : elements.keySet()) {
 
             String elementJson = elements.get(hash);
-            virtualSensorValues.put(hash, gson.fromJson(elementJson, VirtualWaterAmountValue.class));
+            automationDevices.put(hash, gson.fromJson(elementJson, VirtualWaterAmountValue.class));
         }
     }
 
@@ -263,7 +262,12 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public Readable getReadableByHash(String hash) {
 
-        return readables.get(hash);
+        AutomationDevice ad = automationDevices.get(hash);;
+        if(ad instanceof Readable) {
+
+            return (Readable) ad;
+        }
+        return null;
     }
 
     /**
@@ -277,13 +281,32 @@ public class DeviceEditor implements DatabaseEditor {
         Set<Readable> responseSet = new HashSet<>();
         for(String hash : hashs) {
 
-            Readable element = readables.get(hash);
-            if(element != null) {
+            AutomationDevice element = automationDevices.get(hash);
+            if(element != null && element instanceof Readable) {
 
-                responseSet.add(element);
+                responseSet.add((Readable) element);
             }
         }
         return responseSet;
+    }
+
+    /**
+     * gibt die Liste aller lesbaren Elemente zurück
+     *
+     * @return Liste aller lesbaren Elemente
+     */
+    public Map<String, Readable> getReadables() {
+
+        Map<String, Readable> responseMap = new HashMap<>();
+        for(String hash : automationDevices.keySet()) {
+
+            AutomationDevice element = automationDevices.get(hash);
+            if(element != null && element instanceof Readable) {
+
+                responseMap.put(hash, (Readable) element);
+            }
+        }
+        return responseMap;
     }
 
     /**
@@ -294,9 +317,9 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public boolean addReadable(Readable element) {
 
-        if(!readables.containsKey(element.getHash())) {
+        if(!automationDevices.containsKey(element.getHash())) {
 
-            readables.put(element.getHash(), element);
+            automationDevices.put(element.getHash(), element);
             return true;
         }
         return false;
@@ -310,9 +333,9 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public boolean removeReadable(Readable element) {
 
-        if(readables.containsKey(element.getHash())) {
+        if(automationDevices.containsKey(element.getHash())) {
 
-            readables.remove(element.getHash());
+            automationDevices.remove(element.getHash());
             return true;
         }
         return false;
@@ -326,7 +349,12 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public Switchable getSwitchableByHash(String hash) {
 
-        return switchables.get(hash);
+        AutomationDevice ad = automationDevices.get(hash);;
+        if(ad instanceof Switchable) {
+
+            return (Switchable) ad;
+        }
+        return null;
     }
 
     /**
@@ -340,13 +368,32 @@ public class DeviceEditor implements DatabaseEditor {
         Set<Switchable> responseSet = new HashSet<>();
         for(String hash : hashs) {
 
-            Switchable element = switchables.get(hash);
-            if(element != null) {
+            AutomationDevice element = automationDevices.get(hash);
+            if(element != null && element instanceof Readable) {
 
-                responseSet.add(element);
+                responseSet.add((Switchable) element);
             }
         }
         return responseSet;
+    }
+
+    /**
+     * gibt die Liste aller schaltbaren Elemente zurück
+     *
+     * @return Liste aller schaltbaren Elemente
+     */
+    public Map<String, Switchable> getSwitchables() {
+
+        Map<String, Switchable> responseMap = new HashMap<>();
+        for(String hash : automationDevices.keySet()) {
+
+            AutomationDevice element = automationDevices.get(hash);
+            if(element != null && element instanceof Switchable) {
+
+                responseMap.put(hash, (Switchable) element);
+            }
+        }
+        return responseMap;
     }
 
     /**
@@ -357,9 +404,9 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public boolean addSwitchable(Switchable element) {
 
-        if(!switchables.containsKey(element.getHash())) {
+        if(!automationDevices.containsKey(element.getHash())) {
 
-            switchables.put(element.getHash(), element);
+            automationDevices.put(element.getHash(), element);
             return true;
         }
         return false;
@@ -373,9 +420,9 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public boolean removeSwitchable(Switchable element) {
 
-        if(switchables.containsKey(element.getHash())) {
+        if(automationDevices.containsKey(element.getHash())) {
 
-            switchables.remove(element.getHash());
+            automationDevices.remove(element.getHash());
             return true;
         }
         return false;
@@ -389,7 +436,12 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public SensorValue getSensorValueByHash(String hash) {
 
-        return sensorValues.get(hash);
+        AutomationDevice ad = automationDevices.get(hash);;
+        if(ad instanceof SensorValue) {
+
+            return (SensorValue) ad;
+        }
+        return null;
     }
 
     /**
@@ -403,13 +455,32 @@ public class DeviceEditor implements DatabaseEditor {
         Set<SensorValue> responseSet = new HashSet<>();
         for(String hash : hashs) {
 
-            SensorValue element = sensorValues.get(hash);
-            if(element != null) {
+            AutomationDevice element = automationDevices.get(hash);
+            if(element != null && element instanceof SensorValue) {
 
-                responseSet.add(element);
+                responseSet.add((SensorValue) element);
             }
         }
         return responseSet;
+    }
+
+    /**
+     * gibt die Liste aller Sensorwerte zurück
+     *
+     * @return Liste aller Sensorwerte
+     */
+    public Map<String, SensorValue> getSensorValues() {
+
+        Map<String, SensorValue> responseMap = new HashMap<>();
+        for(String hash : automationDevices.keySet()) {
+
+            AutomationDevice element = automationDevices.get(hash);
+            if(element != null && element instanceof SensorValue) {
+
+                responseMap.put(hash, (SensorValue) element);
+            }
+        }
+        return responseMap;
     }
 
     /**
@@ -420,12 +491,12 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public SensorValue getSensorValueFromIdentifier(String identifier) {
 
-        for(String hash : sensorValues.keySet()) {
+        for(String hash : automationDevices.keySet()) {
 
-            SensorValue element = sensorValues.get(hash);
-            if(element != null && element.getIdentifier().equals(identifier)) {
+            AutomationDevice element = automationDevices.get(hash);
+            if(element != null && element instanceof SensorValue && ((SensorValue) element).getIdentifier().equals(identifier)) {
 
-                return element;
+                return (SensorValue) element;
             }
         }
         return null;
@@ -442,12 +513,12 @@ public class DeviceEditor implements DatabaseEditor {
         Set<SensorValue> responseSet = new HashSet<>();
         for(String identifier : identifiers) {
 
-            for(String hash : sensorValues.keySet()) {
+            for(String hash : automationDevices.keySet()) {
 
-                SensorValue element = sensorValues.get(hash);
-                if(element != null && element.getIdentifier().equals(identifier)) {
+                AutomationDevice element = automationDevices.get(hash);
+                if(element != null && element instanceof SensorValue && ((SensorValue) element).getIdentifier().equals(identifier)) {
 
-                    responseSet.add(element);
+                    responseSet.add((SensorValue) element);
                     break;
                 }
             }
@@ -463,19 +534,19 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public boolean addSensorValue(SensorValue element) {
 
-        if(!sensorValues.containsKey(element.getHash())) {
+        if(!automationDevices.containsKey(element.getHash())) {
 
             //prüfen ob Identifizierer doppelt vergeben
-            for(String hash : sensorValues.keySet()) {
+            for(String hash : automationDevices.keySet()) {
 
-                SensorValue sensorValue = sensorValues.get(hash);
-                if(sensorValue.getIdentifier().equals(element.getIdentifier())) {
+                AutomationDevice sensorValue = automationDevices.get(hash);
+                if(element != null && element instanceof SensorValue && ((SensorValue) element).getIdentifier().equals(element.getIdentifier())) {
 
                     return false;
                 }
             }
 
-            sensorValues.put(element.getHash(), element);
+            automationDevices.put(element.getHash(), element);
             return true;
         }
         return false;
@@ -489,9 +560,9 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public boolean removeSensorValue(SensorValue element) {
 
-        if(sensorValues.containsKey(element.getHash()) && !element.isSystemValue()) {
+        if(automationDevices.containsKey(element.getHash())) {
 
-            sensorValues.remove(element.getHash());
+            automationDevices.remove(element.getHash());
             return true;
         }
         return false;
@@ -505,7 +576,12 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public VirtualSensorValue getVirtualSensorValueByHash(String hash) {
 
-        return virtualSensorValues.get(hash);
+        AutomationDevice ad = automationDevices.get(hash);;
+        if(ad instanceof VirtualSensorValue) {
+
+            return (VirtualSensorValue) ad;
+        }
+        return null;
     }
 
     /**
@@ -519,13 +595,32 @@ public class DeviceEditor implements DatabaseEditor {
         Set<VirtualSensorValue> responseSet = new HashSet<>();
         for(String hash : hashs) {
 
-            VirtualSensorValue element = virtualSensorValues.get(hash);
-            if(element != null) {
+            AutomationDevice element = automationDevices.get(hash);
+            if(element != null && element instanceof VirtualSensorValue) {
 
-                responseSet.add(element);
+                responseSet.add((VirtualSensorValue) element);
             }
         }
         return responseSet;
+    }
+
+    /**
+     * gibt die Liste aller Virtuellen Sensorwerte zurück
+     *
+     * @return Liste aller Virtuellen Sensorwerte
+     */
+    public Map<String, VirtualSensorValue> getVirtualSensorValues() {
+
+        Map<String, VirtualSensorValue> responseMap = new HashMap<>();
+        for(String hash : automationDevices.keySet()) {
+
+            AutomationDevice element = automationDevices.get(hash);
+            if(element != null && element instanceof VirtualSensorValue) {
+
+                responseMap.put(hash, (VirtualSensorValue) element);
+            }
+        }
+        return responseMap;
     }
 
     /**
@@ -536,9 +631,9 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public boolean addVirtualSensorValue(VirtualSensorValue element) {
 
-        if(!virtualSensorValues.containsKey(element.getHash())) {
+        if(!automationDevices.containsKey(element.getHash())) {
 
-            virtualSensorValues.put(element.getHash(), element);
+            automationDevices.put(element.getHash(), element);
             return true;
         }
         return false;
@@ -552,12 +647,22 @@ public class DeviceEditor implements DatabaseEditor {
      */
     public boolean removeVirtualSensorValue(VirtualSensorValue element) {
 
-        if(virtualSensorValues.containsKey(element.getHash())) {
+        if(automationDevices.containsKey(element.getHash())) {
 
-            virtualSensorValues.remove(element.getHash());
+            automationDevices.remove(element.getHash());
             return true;
         }
         return false;
+    }
+
+    /**
+     * gibt die Liste mit allen Automationsgeräten zurück
+     *
+     * @return Liste mit allen Automationsgeräten
+     */
+    public Map<String, AutomationDevice> getAutomationDevices() {
+
+        return automationDevices;
     }
 
     /**
@@ -572,9 +677,9 @@ public class DeviceEditor implements DatabaseEditor {
 
         synchronized (this) {
 
-            for(String hash : readables.keySet()) {
+            for(String hash : automationDevices.keySet()) {
 
-                Readable element = readables.get(hash);
+                AutomationDevice element = automationDevices.get(hash);
                 pipeline.hset(KEY_DEVICES_ELEMENTS + ":" + element.getType(), hash, gson.toJson(element));
             }
         }

@@ -1,4 +1,4 @@
-package net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.Elements;
+package net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.User;
 
 import java.net.URL;
 import java.util.HashSet;
@@ -8,10 +8,7 @@ import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import net.kleditzsch.shcCore.ClientData.User.UserData;

@@ -22,6 +22,11 @@ public class ScriptSingle extends AbstractSingleSwitchable {
     protected String switchServerHash;
 
     /**
+     * Typ
+     */
+    protected int type = SCRIPT_SINGLE;
+
+    /**
      * gibt den Einschaltbefehl zurück
      *
      * @return Einschaltbefehl
@@ -64,6 +69,6 @@ public class ScriptSingle extends AbstractSingleSwitchable {
      */
     @Override
     public int getType() {
-        return SCRIPT_SINGLE;
+        return type;
     }
 }

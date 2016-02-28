@@ -68,6 +68,11 @@ public class RaspberryPiSwitchServer extends BasicElement implements SwitchServe
     protected boolean shutdownEnabled = true;
 
     /**
+     * Typ
+     */
+    protected int type = SWITCH_SERVER_RASPBERRY_PI;
+
+    /**
      * gibt die IP Adresse zurück
      *
      * @return IP Adresse
@@ -272,6 +277,6 @@ public class RaspberryPiSwitchServer extends BasicElement implements SwitchServe
      */
     @Override
     public int getType() {
-        return SWITCH_SERVER_RASPBERRY_PI;
+        return type;
     }
 }

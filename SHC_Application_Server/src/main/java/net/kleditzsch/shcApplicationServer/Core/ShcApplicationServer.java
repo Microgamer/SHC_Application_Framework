@@ -2,10 +2,11 @@ package net.kleditzsch.shcApplicationServer.Core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.kleditzsch.shcApplicationServer.Automation.DeviceEditor;
+import net.kleditzsch.shcApplicationServer.Automation.AutomationDeviceEditor;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.DeviceManager.DeviceManager;
 import net.kleditzsch.shcApplicationServer.HTTPInterface.ServerRunnable;
+import net.kleditzsch.shcCore.Json.AutomationDeviceResponseSerializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.User.UserSerializer;
 import net.kleditzsch.shcApplicationServer.Room.RoomEditor;
 import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
@@ -13,9 +14,12 @@ import net.kleditzsch.shcApplicationServer.Settings.Settings;
 import net.kleditzsch.shcApplicationServer.SwitchServer.SwitchServerEditor;
 import net.kleditzsch.shcApplicationServer.User.UserEditor;
 import net.kleditzsch.shcApplicationServer.Util.CliConfigEditor;
+import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceResponse;
 import net.kleditzsch.shcCore.Json.LocalDateSerializer;
 import net.kleditzsch.shcCore.Json.LocalDateTimeSerializer;
 import net.kleditzsch.shcCore.Json.LocalTimeSerializer;
+import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
+import net.kleditzsch.shcCore.SwitchServer.RaspberryPiSwitchServer;
 import net.kleditzsch.shcCore.User.User;
 import redis.clients.jedis.Jedis;
 
@@ -94,7 +98,7 @@ public class ShcApplicationServer {
     /**
      * Verwaltung von schaltbaren,lesbaren Elementen und Sensorwerten
      */
-    private DeviceEditor deviceEditor;
+    private AutomationDeviceEditor automationDeviceEditor;
 
     /**
      * Raum Verwaltung
@@ -204,6 +208,8 @@ public class ShcApplicationServer {
         //User
         builder.registerTypeAdapter(User.class, new UserSerializer());
 
+        builder.registerTypeAdapter(AutomationDeviceResponse.class, new AutomationDeviceResponseSerializer());
+
         //Datum und Zeit
         builder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
         builder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
@@ -263,8 +269,8 @@ public class ShcApplicationServer {
         deviceManager.loadData();
 
         //Geräteverwaltung laden
-        deviceEditor = new DeviceEditor();
-        deviceEditor.loadData();
+        automationDeviceEditor = new AutomationDeviceEditor();
+        automationDeviceEditor.loadData();
 
         //Räume laden
         roomEditor = new RoomEditor();
@@ -321,8 +327,8 @@ public class ShcApplicationServer {
      *
      * @return
      */
-    public DeviceEditor getDeviceEditor() {
-        return deviceEditor;
+    public AutomationDeviceEditor getAutomationDeviceEditor() {
+        return automationDeviceEditor;
     }
 
     /**
@@ -343,6 +349,7 @@ public class ShcApplicationServer {
         userEditor.saveData();
         deviceManager.saveData();
         switchServerEditor.saveData();
+        automationDeviceEditor.saveData();
         roomEditor.saveData();
     }
 

@@ -65,11 +65,11 @@ public interface AutomationElements {
 
     //Virtuelle Sensorwerte
     int VIRTUAL_ACTUAL_POWER = 500;
-    int VIRTUAL_ENERGY = 500;
-    int VIRTUAL_GAS_AMOUNT = 500;
-    int VIRTUAL_LIGHT_INTENSITY = 500;
-    int VIRTUAL_WATER_AMOUNT = 500;
-    int VIRTUAL_TEMPERATURE = 500;
+    int VIRTUAL_ENERGY = 501;
+    int VIRTUAL_GAS_AMOUNT = 502;
+    int VIRTUAL_LIGHT_INTENSITY = 503;
+    int VIRTUAL_WATER_AMOUNT = 504;
+    int VIRTUAL_TEMPERATURE = 505;
 
     //Wochentage
     int MONDAY = 1;

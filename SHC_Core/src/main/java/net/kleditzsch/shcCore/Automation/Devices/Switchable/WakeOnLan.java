@@ -22,6 +22,11 @@ public class WakeOnLan extends AbstractSingleSwitchable {
     protected String ipAddress;
 
     /**
+     * Typ
+     */
+    protected int type = WAKE_ON_LAN;
+
+    /**
      * gibt die MAC Adresse zurück
      *
      * @return MAC Adresse
@@ -64,6 +69,6 @@ public class WakeOnLan extends AbstractSingleSwitchable {
      */
     @Override
     public int getType() {
-        return WAKE_ON_LAN;
+        return type;
     }
 }

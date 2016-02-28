@@ -9,9 +9,9 @@ package net.kleditzsch.shcCore.ClientData;
  */
 public abstract class AbstractResponse {
 
-    protected boolean success;
-    protected String message;
-    protected int errorCode;
+    protected boolean success = false;
+    protected String message = "";
+    protected int errorCode = 0;
 
     public boolean isSuccess() {
         return success;

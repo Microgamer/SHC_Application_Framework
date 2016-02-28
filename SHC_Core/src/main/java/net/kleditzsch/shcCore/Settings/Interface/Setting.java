@@ -16,6 +16,7 @@ public interface Setting {
     int TYPE_INTEGER = 2;
     int TYPE_DOUBLE = 3;
     int TYPE_BOOLEAN = 4;
+    int TYPE_LIST = 5;
 
     /**
      * gibt den Namen der Einstellung zurück

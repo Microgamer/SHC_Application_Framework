@@ -29,9 +29,11 @@ public class UserAtHome extends AbstractReadable {
     protected LocalDateTime lastContact;
 
     /**
-     * gibt an ob Ping verwendet werden soll oder bo der Status von Außen kommt
+     * gibt an ob Ping verwendet werden soll oder ob der Status von Außen kommt
      */
-    protected boolean useInternalAvailabilityCheck;
+    protected boolean useExternalData = false;
+
+    protected int type = USER_AT_HOME;
 
     /**
      * gibt die IP Adresse des Benuzuers zurück
@@ -90,19 +92,19 @@ public class UserAtHome extends AbstractReadable {
     /**
      * gibt an ob Ping verwendet werden soll oder bo der Status von Außen kommt
      *
-     * @return true wenn Ping verwendet werden soll
+     * @return true die Daten von außen kommen sollen
      */
-    public boolean isUseInternalAvailabilityCheck() {
-        return useInternalAvailabilityCheck;
+    public boolean isUseExternalData() {
+        return useExternalData;
     }
 
     /**
      * aktiviert/deaktiviert die interne erkennung ob ein Benutzer zu Hause ist
      *
-     * @param useInternalAvailabilityCheck true wenn Intern geprüft werden soll
+     * @param useExternalData true die Daten von außen kommen sollen
      */
-    public void setUseInternalAvailabilityCheck(boolean useInternalAvailabilityCheck) {
-        this.useInternalAvailabilityCheck = useInternalAvailabilityCheck;
+    public void setUseExternalData(boolean useExternalData) {
+        this.useExternalData = useExternalData;
     }
 
     /**
@@ -137,6 +139,6 @@ public class UserAtHome extends AbstractReadable {
      */
     @Override
     public int getType() {
-        return USER_AT_HOME;
+        return type;
     }
 }

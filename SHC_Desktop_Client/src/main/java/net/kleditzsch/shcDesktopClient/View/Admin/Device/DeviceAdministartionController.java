@@ -351,11 +351,6 @@ public class DeviceAdministartionController {
         columnLastLogin.setCellValueFactory(new PropertyValueFactory<>("lastLogin"));
         columnLastLogin.setCellFactory(param -> new LastLoginCell());
 
-        //Optionen erst einmal deaktivieren
-        menuButtonAllow.setDisable(true);
-        menuButtonDenied.setDisable(true);
-        menuButtonDelete.setDisable(true);
-
         //Ladeanzeige
         rootStackPane.getChildren().add(maskerPane);
         maskerPane.setText("Bitte warten ...");

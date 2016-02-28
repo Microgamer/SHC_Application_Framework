@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<GridPane fx:id="formGridPane" maxWidth="1.7976931348623157E308" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.Elements.UserFormController">
+<GridPane fx:id="formGridPane" maxWidth="1.7976931348623157E308" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.User.UserFormController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="130.0" percentWidth="30.0" />
       <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="200.0" percentWidth="70.0" />

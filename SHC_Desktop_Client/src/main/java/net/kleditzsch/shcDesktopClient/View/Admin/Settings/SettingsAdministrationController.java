@@ -214,7 +214,7 @@ public class SettingsAdministrationController {
         inputSunriseOffset.setEditable(true);
         inputSunriseOffset.getEditor().textProperty().addListener(e -> {
 
-            if(!inputPort.isEditable()) {
+            if(!inputSunriseOffset.isEditable()) {
 
                 return;
             }

@@ -38,6 +38,11 @@ public class EdimaxSocket extends AbstractDoubleSwitchable {
     protected int socketType = TYPE_SP_1101W;
 
     /**
+     * Typ
+     */
+    protected int type = EDIMAX_SOCKET;
+
+    /**
      * gibt die IP Adresse zurück
      *
      * @return IP Adresse
@@ -116,6 +121,6 @@ public class EdimaxSocket extends AbstractDoubleSwitchable {
      */
     @Override
     public int getType() {
-        return EDIMAX_SOCKET;
+        return type;
     }
 }
