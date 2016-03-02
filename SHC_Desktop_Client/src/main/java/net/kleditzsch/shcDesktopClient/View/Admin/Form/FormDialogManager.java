@@ -391,8 +391,142 @@ public abstract class FormDialogManager {
             pane = loader.load();
             Stage dialog = FormDialogManager.createModalDialog();
             dialog.setScene(new Scene(pane));
-            dialog.setTitle("Wake on Lan Formular");
+            dialog.setTitle("Fritz!Box Wlan Formular");
             FritzBoxWlanFormController controller = loader.getController();
+            controller.setElement(element);
+            dialog.showAndWait();
+
+            if(!controller.isCanceld()) {
+
+                return Optional.of(controller.getElement());
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * öffnet den FritzBox Reboot/Reconnect Formular Dialog
+     *
+     * @param element FritzBox Reboot/Reconnect
+     * @return FritzBox Reboot/Reconnect
+     */
+    public static Optional<FritzBoxRebootReconnect> showFritzBoxRebootReconnectDialog(FritzBoxRebootReconnect element) {
+
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/FritzBoxRebootReconnectForm.fxml"));
+        Parent pane;
+        try {
+
+            pane = loader.load();
+            Stage dialog = FormDialogManager.createModalDialog();
+            dialog.setScene(new Scene(pane));
+            dialog.setTitle("Fritz!Box Reboot/Reconnect Formular");
+            FritzBoxRebootReconnectFormController controller = loader.getController();
+            controller.setElement(element);
+            dialog.showAndWait();
+
+            if(!controller.isCanceld()) {
+
+                return Optional.of(controller.getElement());
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * öffnet den Neustart/Herunterfahren Formular Dialog
+     *
+     * @param element Neustart/Herunterfahren
+     * @param switchServers Liste der Schaltserver
+     * @return Neustart/Herunterfahren
+     */
+    public static Optional<RebootShutdown> showRebootShutdownDialog(RebootShutdown element, Map<String, SwitchServer> switchServers) {
+
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/RebootShutdownForm.fxml"));
+        Parent pane;
+        try {
+
+            pane = loader.load();
+            Stage dialog = FormDialogManager.createModalDialog();
+            dialog.setScene(new Scene(pane));
+            dialog.setTitle("Neustart/Herunterfahren Formular");
+            RebootShutdownFormController controller = loader.getController();
+            controller.setSwitchServers(switchServers);
+            controller.setElement(element);
+            dialog.showAndWait();
+
+            if(!controller.isCanceld()) {
+
+                return Optional.of(controller.getElement());
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * öffnet den Script Formular Dialog
+     *
+     * @param element Script
+     * @param switchServers Liste der Schaltserver
+     * @return Script
+     */
+    public static Optional<ScriptSingle> showScriptSingleDialog(ScriptSingle element, Map<String, SwitchServer> switchServers) {
+
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/ScriptSingleForm.fxml"));
+        Parent pane;
+        try {
+
+            pane = loader.load();
+            Stage dialog = FormDialogManager.createModalDialog();
+            dialog.setScene(new Scene(pane));
+            dialog.setTitle("einfaches Script Formular");
+            ScriptSingleFormController controller = loader.getController();
+            controller.setSwitchServers(switchServers);
+            controller.setElement(element);
+            dialog.showAndWait();
+
+            if(!controller.isCanceld()) {
+
+                return Optional.of(controller.getElement());
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * öffnet den Script Formular Dialog
+     *
+     * @param element Script
+     * @param switchServers Liste der Schaltserver
+     * @return Script
+     */
+    public static Optional<ScriptDouble> showScriptDoubleDialog(ScriptDouble element, Map<String, SwitchServer> switchServers) {
+
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/ScriptDoubleForm.fxml"));
+        Parent pane;
+        try {
+
+            pane = loader.load();
+            Stage dialog = FormDialogManager.createModalDialog();
+            dialog.setScene(new Scene(pane));
+            dialog.setTitle("an/aus Script Formular");
+            ScriptDoubleFormController controller = loader.getController();
+            controller.setSwitchServers(switchServers);
             controller.setElement(element);
             dialog.showAndWait();
 

@@ -28,6 +28,7 @@ import net.kleditzsch.shcCore.Settings.BooleanSetting;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
 import net.kleditzsch.shcDesktopClient.View.Admin.Form.FormDialogManager;
+import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.AutomationElements.FritzBoxRebootReconnectFormController;
 import net.kleditzsch.shcDesktopClient.View.MainViewLoader;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.MaskerPane;
@@ -186,7 +187,7 @@ public class ElementAdministrationController {
         choices.add("erweitertes Script");
 
         //Sensorwerte
-        /*choices.add("aktueller Energieverbrauch");
+        choices.add("aktueller Energieverbrauch");
         choices.add("Energieverbrauch");
         choices.add("Luftdruck");
         choices.add("Standorthöhe");
@@ -199,7 +200,7 @@ public class ElementAdministrationController {
         choices.add("Lichtstärke");
         choices.add("Feuchtigkeit");
         choices.add("Zeichenkette");
-        choices.add("Temeratur");*/
+        choices.add("Temeratur");
 
         //Virtuelle Sensorwerte
         choices.add("Virtueller aktueller Energieverbrauch");
@@ -295,9 +296,40 @@ public class ElementAdministrationController {
                     }
                     break;
                 case "Fritz!Box Reboot/Reconnect":
+
+                    Optional<FritzBoxRebootReconnect> fritzBoxRebootReconnect = FormDialogManager.showFritzBoxRebootReconnectDialog(new FritzBoxRebootReconnect());
+                    if(fritzBoxRebootReconnect.isPresent()) {
+
+                        sendCreateRequest(fritzBoxRebootReconnect.get());
+                    }
+                    break;
                 case "Reboot/Shutdown":
+
+                    Optional<RebootShutdown> rebootShutdown = FormDialogManager.showRebootShutdownDialog(new RebootShutdown(), automationDeviceResponse.getSwitchServers());
+                    if(rebootShutdown.isPresent()) {
+
+                        sendCreateRequest(rebootShutdown.get());
+                    }
+                    break;
                 case "einfaches Script":
+
+                    Optional<ScriptSingle> scriptSingle = FormDialogManager.showScriptSingleDialog(new ScriptSingle(), automationDeviceResponse.getSwitchServers());
+                    if(scriptSingle.isPresent()) {
+
+                        sendCreateRequest(scriptSingle.get());
+                    }
+                    break;
                 case "erweitertes Script":
+
+                    Optional<ScriptDouble> scriptDouble = FormDialogManager.showScriptDoubleDialog(new ScriptDouble(), automationDeviceResponse.getSwitchServers());
+                    if(scriptDouble.isPresent()) {
+
+                        sendCreateRequest(scriptDouble.get());
+                    }
+                    break;
+
+                //Sensorwerte
+                case "aktueller Energieverbrauch":
 
                 //Virtuelle Sensorwerte
                 case "Virtueller aktueller Energieverbrauch":
