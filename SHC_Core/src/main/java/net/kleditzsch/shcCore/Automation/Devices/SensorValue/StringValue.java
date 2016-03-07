@@ -19,6 +19,11 @@ public class StringValue extends AbstractSensorValue {
     protected String string = "";
 
     /**
+     * Typ
+     */
+    protected int type = STRING;
+
+    /**
      * setzt die Zeichenkette
      *
      * @return Zeichenkette
@@ -64,6 +69,6 @@ public class StringValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return STRING;
+        return type;
     }
 }

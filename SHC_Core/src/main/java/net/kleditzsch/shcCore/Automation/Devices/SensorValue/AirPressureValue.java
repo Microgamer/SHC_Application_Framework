@@ -20,6 +20,11 @@ public class AirPressureValue extends AbstractSensorValue {
     protected double airPressure = 0.0;
 
     /**
+     * Typ
+     */
+    protected int type = AIR_PRESSURE;
+
+    /**
      * gibt den Luftdruck zurück
      *
      * @return Luftdruck
@@ -67,6 +72,6 @@ public class AirPressureValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return AIR_PRESSURE;
+        return type;
     }
 }

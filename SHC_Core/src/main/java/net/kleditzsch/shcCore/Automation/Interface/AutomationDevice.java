@@ -28,6 +28,20 @@ public interface AutomationDevice extends AutomationElements, Constant, Element 
     void setDisabled(boolean disabled);
 
     /**
+     * gibt den Kommentar zurück
+     *
+     * @return Kommentar
+     */
+    String getComment();
+
+    /**
+     * setzt den Kommentar
+     *
+     * @param comment Kommentar
+     */
+    void setComment(String comment);
+
+    /**
      * gibt den Typ des Elementes zurück
      *
      * @return Typ ID

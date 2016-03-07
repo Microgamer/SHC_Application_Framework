@@ -25,6 +25,11 @@ public class DistanceValue extends AbstractSensorValue {
     protected double offset = 0.0;
 
     /**
+     * Typ
+     */
+    protected int type = DISTANCE;
+
+    /**
      * gibt die Entfernung zurück
      *
      * @return Entfernung
@@ -108,6 +113,6 @@ public class DistanceValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return DISTANCE;
+        return type;
     }
 }

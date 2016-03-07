@@ -21,6 +21,11 @@ public class VirtualLightIntensityValue extends AbstractVirtualSensorValue {
     protected double average = 0.0;
 
     /**
+     * Typ
+     */
+    protected int type = VIRTUAL_LIGHT_INTENSITY;
+
+    /**
      * ermittelt aus den Sensorwerten die Statistischen Werte
      *
      * @param sensorValues Sensorwerte
@@ -101,6 +106,6 @@ public class VirtualLightIntensityValue extends AbstractVirtualSensorValue {
      */
     @Override
     public int getType() {
-        return VIRTUAL_LIGHT_INTENSITY;
+        return type;
     }
 }

@@ -20,6 +20,11 @@ public class ActualPowerValue extends AbstractSensorValue {
     protected double actualPower = 0.0;
 
     /**
+     * Typ
+     */
+    protected int type = ACTUAL_POWER;
+
+    /**
      * gibt den aktuellen Energieverbrauch zurück
      *
      * @return Energieverbrauch in W
@@ -72,6 +77,6 @@ public class ActualPowerValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return ACTUAL_POWER;
+        return type;
     }
 }

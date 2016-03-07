@@ -20,6 +20,11 @@ public class GasAmountValue extends AbstractSensorValue {
     protected double gasAmount = 0.0;
 
     /**
+     * Typ
+     */
+    protected int type = GAS_AMOUNT;
+
+    /**
      * gibt die Gasmenge zurück
      *
      * @return Gasmenge
@@ -72,6 +77,6 @@ public class GasAmountValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return GAS_AMOUNT;
+        return type;
     }
 }

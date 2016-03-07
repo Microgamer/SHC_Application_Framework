@@ -20,6 +20,11 @@ public class AltitudeValue extends AbstractSensorValue {
     protected double altitude = 0.0;
 
     /**
+     * Typ
+     */
+    protected int type = ALTITUDE;
+
+    /**
      * gibt die Standorthöhe zurück
      *
      * @return Standorthöhe
@@ -67,6 +72,6 @@ public class AltitudeValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return ALTITUDE;
+        return type;
     }
 }

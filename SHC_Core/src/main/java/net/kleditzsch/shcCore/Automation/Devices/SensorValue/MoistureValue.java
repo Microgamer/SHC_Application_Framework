@@ -20,6 +20,11 @@ public class MoistureValue extends AbstractSensorValue {
     protected int moisture = 0;
 
     /**
+     * Typ
+     */
+    protected int type = MOISTURE;
+
+    /**
      * gibt die Feuchtigkeit zurück
      *
      * @return Feuchtigkeit
@@ -67,6 +72,6 @@ public class MoistureValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return MOISTURE;
+        return type;
     }
 }

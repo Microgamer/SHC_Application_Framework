@@ -20,6 +20,11 @@ public class DurationValue extends AbstractSensorValue {
     protected long duration = 0;
 
     /**
+     * Typ
+     */
+    protected int type = DURATION;
+
+    /**
      * gibt die Laufzeit zurück
      *
      * @return Laufzeit
@@ -64,6 +69,6 @@ public class DurationValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return DURATION;
+        return type;
     }
 }

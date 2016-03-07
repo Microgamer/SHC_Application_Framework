@@ -20,6 +20,11 @@ public class WaterAmountValue extends AbstractSensorValue {
     protected double waterAmount = 0.0;
 
     /**
+     * Typ
+     */
+    protected int type = WATER_AMOUNT;
+
+    /**
      * gibt die Wassermenge zurück
      *
      * @return Wassermenge
@@ -72,6 +77,6 @@ public class WaterAmountValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return WATER_AMOUNT;
+        return type;
     }
 }

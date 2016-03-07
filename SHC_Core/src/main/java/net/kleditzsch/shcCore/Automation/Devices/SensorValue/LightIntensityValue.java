@@ -20,6 +20,11 @@ public class LightIntensityValue extends AbstractSensorValue {
     protected int lightIntensity = 0;
 
     /**
+     * Typ
+     */
+    protected int type = LIGHT_INTENSITY;
+
+    /**
      * gibt die Lichtstärke zurück
      *
      * @return Lichtstärke
@@ -67,6 +72,6 @@ public class LightIntensityValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return LIGHT_INTENSITY;
+        return type;
     }
 }

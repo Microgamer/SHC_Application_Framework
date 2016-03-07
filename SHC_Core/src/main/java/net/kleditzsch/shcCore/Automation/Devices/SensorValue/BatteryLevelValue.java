@@ -19,6 +19,11 @@ public class BatteryLevelValue extends AbstractSensorValue {
     protected int batteryLevel = 0;
 
     /**
+     * Typ
+     */
+    protected int type = BATTERIE_LEVEL;
+
+    /**
      * gibt den Ladezustand zurück
      *
      * @return Ladezustand
@@ -64,6 +69,6 @@ public class BatteryLevelValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return BATTERIE_LEVEL;
+        return type;
     }
 }

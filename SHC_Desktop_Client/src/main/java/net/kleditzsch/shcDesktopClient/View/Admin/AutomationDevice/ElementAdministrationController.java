@@ -20,8 +20,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.Input;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.UserAtHome;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.*;
 import net.kleditzsch.shcCore.Automation.Devices.Switchable.*;
 import net.kleditzsch.shcCore.Automation.Interface.AutomationDevice;
+import net.kleditzsch.shcCore.Automation.Interface.Sensor.SensorValue;
 import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceResponse;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
 import net.kleditzsch.shcCore.Settings.BooleanSetting;
@@ -331,6 +333,118 @@ public class ElementAdministrationController {
                 //Sensorwerte
                 case "aktueller Energieverbrauch":
 
+                    Optional<SensorValue> actualPowerValue = FormDialogManager.showSensorValueDialog(new ActualPowerValue());
+                    if(actualPowerValue.isPresent()) {
+
+                        sendCreateRequest(actualPowerValue.get());
+                    }
+                    break;
+                case "Energieverbrauch":
+
+                    Optional<SensorValue> energyValue = FormDialogManager.showSensorValueDialog(new EnergyValue());
+                    if(energyValue.isPresent()) {
+
+                        sendCreateRequest(energyValue.get());
+                    }
+                    break;
+                case "Luftdruck":
+
+                    Optional<SensorValue> airPressureValue = FormDialogManager.showSensorValueDialog(new AirPressureValue());
+                    if(airPressureValue.isPresent()) {
+
+                        sendCreateRequest(airPressureValue.get());
+                    }
+                    break;
+                case "Standorthöhe":
+
+                    Optional<SensorValue> altitudeValue = FormDialogManager.showSensorValueDialog(new AltitudeValue());
+                    if(altitudeValue.isPresent()) {
+
+                        sendCreateRequest(altitudeValue.get());
+                    }
+                    break;
+                case "Batterie":
+
+                    Optional<SensorValue> batteryLevelValue = FormDialogManager.showSensorValueDialog(new BatteryLevelValue());
+                    if(batteryLevelValue.isPresent()) {
+
+                        sendCreateRequest(batteryLevelValue.get());
+                    }
+                    break;
+                case "Entfernung":
+
+                    Optional<SensorValue> distanceValue = FormDialogManager.showSensorValueWithOffsetDialog(new DistanceValue());
+                    if(distanceValue.isPresent()) {
+
+                        sendCreateRequest(distanceValue.get());
+                    }
+                    break;
+                case "Betriebszeit":
+
+                    Optional<SensorValue> durationValue = FormDialogManager.showSensorValueDialog(new DurationValue());
+                    if(durationValue.isPresent()) {
+
+                        sendCreateRequest(durationValue.get());
+                    }
+                    break;
+                case "Gas Menge":
+
+                    Optional<SensorValue> gasAmountValue = FormDialogManager.showSensorValueDialog(new GasAmountValue());
+                    if(gasAmountValue.isPresent()) {
+
+                        sendCreateRequest(gasAmountValue.get());
+                    }
+                    break;
+                case "Wasser Menge":
+
+                    Optional<SensorValue> waterAmountValue = FormDialogManager.showSensorValueDialog(new WaterAmountValue());
+                    if(waterAmountValue.isPresent()) {
+
+                        sendCreateRequest(waterAmountValue.get());
+                    }
+                    break;
+                case "Luftfeuchte":
+
+                    Optional<SensorValue> humidityValue = FormDialogManager.showSensorValueDialog(new HumidityValue());
+                    if(humidityValue.isPresent()) {
+
+                        sendCreateRequest(humidityValue.get());
+                    }
+                    break;
+                case "Lichtstärke":
+
+                    Optional<SensorValue> lightIntensityValue = FormDialogManager.showSensorValueDialog(new LightIntensityValue());
+                    if(lightIntensityValue.isPresent()) {
+
+                        sendCreateRequest(lightIntensityValue.get());
+                    }
+                    break;
+                case "Feuchtigkeit":
+
+                    Optional<SensorValue> moistureValue = FormDialogManager.showSensorValueDialog(new MoistureValue());
+                    if(moistureValue.isPresent()) {
+
+                        sendCreateRequest(moistureValue.get());
+                    }
+                    break;
+                case "Zeichenkette":
+
+                    Optional<SensorValue> stringValue = FormDialogManager.showSensorValueDialog(new StringValue());
+                    if(stringValue.isPresent()) {
+
+                        sendCreateRequest(stringValue.get());
+                    }
+                    break;
+                case "Temeratur":
+
+                    Optional<SensorValue> temperatureValue = FormDialogManager.showSensorValueWithOffsetDialog(new TemperatureValue());
+                    if(temperatureValue.isPresent()) {
+
+                        sendCreateRequest(temperatureValue.get());
+                    }
+                    break;
+
+
                 //Virtuelle Sensorwerte
                 case "Virtueller aktueller Energieverbrauch":
                 case "Virtueller Energieverbrauch":
@@ -469,7 +583,6 @@ public class ElementAdministrationController {
         Thread thread = new Thread(task);
         thread.start();
     }
-
     /**
      * sendet die Anfrage zum erstellen eines Gerätes an den Server
      *

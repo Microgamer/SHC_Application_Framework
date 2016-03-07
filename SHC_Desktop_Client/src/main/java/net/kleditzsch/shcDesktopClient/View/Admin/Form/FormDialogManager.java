@@ -10,6 +10,7 @@ import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.Input;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.UserAtHome;
 import net.kleditzsch.shcCore.Automation.Devices.Switchable.*;
+import net.kleditzsch.shcCore.Automation.Interface.Sensor.SensorValue;
 import net.kleditzsch.shcCore.ClientData.User.UserData;
 import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
@@ -527,6 +528,70 @@ public abstract class FormDialogManager {
             dialog.setTitle("an/aus Script Formular");
             ScriptDoubleFormController controller = loader.getController();
             controller.setSwitchServers(switchServers);
+            controller.setElement(element);
+            dialog.showAndWait();
+
+            if(!controller.isCanceld()) {
+
+                return Optional.of(controller.getElement());
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * öffnet den Sensor Werte Formular Dialog
+     *
+     * @param element Sensorwert
+     * @return Sensorwert
+     */
+    public static Optional<SensorValue> showSensorValueDialog(SensorValue element) {
+
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/SensorValueForm.fxml"));
+        Parent pane;
+        try {
+
+            pane = loader.load();
+            Stage dialog = FormDialogManager.createModalDialog();
+            dialog.setScene(new Scene(pane));
+            dialog.setTitle("Sensorwert Formular");
+            SensorValueFormController controller = loader.getController();
+            controller.setElement(element);
+            dialog.showAndWait();
+
+            if(!controller.isCanceld()) {
+
+                return Optional.of(controller.getElement());
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * öffnet den Sensor Werte Formular Dialog
+     *
+     * @param element Sensorwert
+     * @return Sensorwert
+     */
+    public static Optional<SensorValue> showSensorValueWithOffsetDialog(SensorValue element) {
+
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/SensorValueWithOffsetForm.fxml"));
+        Parent pane;
+        try {
+
+            pane = loader.load();
+            Stage dialog = FormDialogManager.createModalDialog();
+            dialog.setScene(new Scene(pane));
+            dialog.setTitle("Sensorwert Formular");
+            SensorValueWithOffsetFormController controller = loader.getController();
             controller.setElement(element);
             dialog.showAndWait();
 

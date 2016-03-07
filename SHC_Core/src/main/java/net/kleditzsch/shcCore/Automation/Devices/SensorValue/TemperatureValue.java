@@ -25,6 +25,11 @@ public class TemperatureValue extends AbstractSensorValue {
     protected double offset = 0.0;
 
     /**
+     * Typ
+     */
+    protected int type = TEMPERATURE;
+
+    /**
      * gibt die Temperatur zurück
      *
      * @return Temperatur
@@ -99,6 +104,6 @@ public class TemperatureValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return TEMPERATURE;
+        return type;
     }
 }

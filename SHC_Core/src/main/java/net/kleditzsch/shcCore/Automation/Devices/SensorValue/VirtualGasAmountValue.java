@@ -21,6 +21,11 @@ public class VirtualGasAmountValue extends AbstractVirtualSensorValue {
     protected double sum = 0.0;
 
     /**
+     * Typ
+     */
+    protected int type = VIRTUAL_GAS_AMOUNT;
+
+    /**
      * ermittelt aus den Sensorwerten die Statistischen Werte
      *
      * @param sensorValues Sensorwerte
@@ -102,6 +107,6 @@ public class VirtualGasAmountValue extends AbstractVirtualSensorValue {
      */
     @Override
     public int getType() {
-        return VIRTUAL_GAS_AMOUNT;
+        return type;
     }
 }

@@ -1,4 +1,5 @@
 /SHC_Desktop_Client/src/main/resources/FXML/Admin/Form/AutomationDevice/outputTpl.fxml
+/SHC_Desktop_Client/src/main/resources/FXML/Admin/Form/AutomationDevice/sensorValueTpl.fxml
 /SHC_Desktop_Client/src/main/resources/FXML/Admin/Form/AutomationDevice/inputTpl.fxml
 /SHC_Desktop_Client/target
 *.class

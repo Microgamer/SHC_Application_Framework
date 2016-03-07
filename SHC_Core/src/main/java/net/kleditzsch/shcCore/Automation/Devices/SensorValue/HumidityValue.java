@@ -20,6 +20,11 @@ public class HumidityValue extends AbstractSensorValue {
     public int humidity = 0;
 
     /**
+     * Typ
+     */
+    protected int type = HUMIDITY;
+
+    /**
      * gibt die Luftfeuchte zurück
      *
      * @return Luftfeuchte
@@ -67,6 +72,6 @@ public class HumidityValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return HUMIDITY;
+        return type;
     }
 }

@@ -20,6 +20,11 @@ public class EnergyValue extends AbstractSensorValue {
     protected double energy = 0.0;
 
     /**
+     * Typ
+     */
+    protected int type = ENERGY;
+
+    /**
      * gibt den Energieverbrauch zurück
      *
      * @return Energieverbrauch
@@ -72,6 +77,6 @@ public class EnergyValue extends AbstractSensorValue {
      */
     @Override
     public int getType() {
-        return ENERGY;
+        return type;
     }
 }

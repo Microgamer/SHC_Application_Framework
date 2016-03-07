@@ -24,6 +24,11 @@ public class VirtualActualPowerValue extends AbstractVirtualSensorValue {
     protected double max = -100000000;
 
     /**
+     * Typ
+     */
+    protected int type = VIRTUAL_ACTUAL_POWER;
+
+    /**
      * ermittelt aus den Sensorwerten die Statistischen Werte
      *
      * @param sensorValues Sensorwerte
@@ -165,6 +170,6 @@ public class VirtualActualPowerValue extends AbstractVirtualSensorValue {
      */
     @Override
     public int getType() {
-        return VIRTUAL_ACTUAL_POWER;
+        return type;
     }
 }

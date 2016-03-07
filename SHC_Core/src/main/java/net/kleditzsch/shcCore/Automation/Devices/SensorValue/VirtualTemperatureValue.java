@@ -24,6 +24,11 @@ public class VirtualTemperatureValue extends AbstractVirtualSensorValue {
     protected double max = -100000000;
 
     /**
+     * Typ
+     */
+    protected int type = VIRTUAL_TEMPERATURE;
+
+    /**
      * ermittelt aus den Sensorwerten die Statistischen Werte
      *
      * @param sensorValues Sensorwerte
@@ -145,6 +150,6 @@ public class VirtualTemperatureValue extends AbstractVirtualSensorValue {
      */
     @Override
     public int getType() {
-        return VIRTUAL_TEMPERATURE;
+        return type;
     }
 }
