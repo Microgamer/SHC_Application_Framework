@@ -9,10 +9,14 @@ import javafx.stage.StageStyle;
 import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.Input;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.UserAtHome;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.*;
 import net.kleditzsch.shcCore.Automation.Devices.Switchable.*;
+import net.kleditzsch.shcCore.Automation.Interface.AutomationDevice;
 import net.kleditzsch.shcCore.Automation.Interface.Sensor.SensorValue;
+import net.kleditzsch.shcCore.Automation.Interface.Sensor.VirtualSensorValue;
 import net.kleditzsch.shcCore.ClientData.User.UserData;
 import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
+import net.kleditzsch.shcCore.Room.Elements.Sensor;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.AutomationElements.*;
@@ -20,6 +24,7 @@ import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.User.UserFormContro
 import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.User.UserGroupFormController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -592,6 +597,67 @@ public abstract class FormDialogManager {
             dialog.setScene(new Scene(pane));
             dialog.setTitle("Sensorwert Formular");
             SensorValueWithOffsetFormController controller = loader.getController();
+            controller.setElement(element);
+            dialog.showAndWait();
+
+            if(!controller.isCanceld()) {
+
+                return Optional.of(controller.getElement());
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * öffnet den Sensor Werte Formular Dialog
+     *
+     * @param element Sensorwert
+     * @return Sensorwert
+     */
+    public static Optional<VirtualSensorValue> showVirtualSensorValueDialog(VirtualSensorValue element, Map<String, AutomationDevice> automationDevices) {
+
+        List<SensorValue> sensorValues = new ArrayList<>();
+        for(AutomationDevice automationDevice : automationDevices.values()) {
+
+            if(automationDevice instanceof SensorValue) {
+
+                sensorValues.add((SensorValue) automationDevice);
+            }
+        }
+
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/VirtualSensorValueForm.fxml"));
+        Parent pane;
+        try {
+
+            pane = loader.load();
+            Stage dialog = FormDialogManager.createModalDialog();
+            dialog.setScene(new Scene(pane));
+            dialog.setTitle("virtueller Sensorwert Formular");
+            VirtualSensorFormController controller = loader.getController();
+            if(element instanceof VirtualActualPowerValue) {
+
+                controller.setVirtualSensorType(VirtualSensorValue.VIRTUAL_ACTUAL_POWER);
+            } else if(element instanceof VirtualEnergyValue) {
+
+                controller.setVirtualSensorType(VirtualSensorValue.VIRTUAL_ENERGY);
+            } else if(element instanceof VirtualLightIntensityValue) {
+
+                controller.setVirtualSensorType(VirtualSensorValue.VIRTUAL_LIGHT_INTENSITY);
+            } else if(element instanceof VirtualGasAmountValue) {
+
+                controller.setVirtualSensorType(VirtualSensorValue.VIRTUAL_GAS_AMOUNT);
+            } else if(element instanceof VirtualWaterAmountValue) {
+
+                controller.setVirtualSensorType(VirtualSensorValue.VIRTUAL_WATER_AMOUNT);
+            } else if(element instanceof VirtualTemperatureValue) {
+
+                controller.setVirtualSensorType(VirtualSensorValue.VIRTUAL_TEMPERATURE);
+            }
+            controller.setSensorValues(sensorValues);
             controller.setElement(element);
             dialog.showAndWait();
 

@@ -72,6 +72,11 @@ public class SensorValueWithOffsetFormController {
     protected SensorValue element;
 
     /**
+     * Initales Offset
+     */
+    protected double initOffset = 0;
+
+    /**
      * Validierung
      */
     protected ValidationSupport validationSupport = new ValidationSupport();
@@ -88,6 +93,14 @@ public class SensorValueWithOffsetFormController {
         Stage stage = (Stage) buttonCancel.getScene().getWindow();
         stage.close();
         canceld = true;
+
+        if(element instanceof DistanceValue) {
+
+            ((DistanceValue) element).setOffset(initOffset);
+        } else if(element instanceof TemperatureValue) {
+
+            ((TemperatureValue) element).setOffset(initOffset);
+        }
     }
 
     @FXML
@@ -154,6 +167,16 @@ public class SensorValueWithOffsetFormController {
                 if(converter != null && text != null) {
 
                     vf.setValue(converter.fromString(text));
+
+                    //Vorschau aktualisieren
+                    if(element instanceof DistanceValue) {
+
+                        ((DistanceValue) element).setOffset(inputOffset.getValue());
+                    } else if(element instanceof TemperatureValue) {
+
+                        ((TemperatureValue) element).setOffset(inputOffset.getValue());
+                    }
+                    inputValue.setText(element.getDisplayValue());
                 }
             }
         });
@@ -181,9 +204,11 @@ public class SensorValueWithOffsetFormController {
         if(element instanceof DistanceValue) {
 
             inputOffset.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(-100000, 100000, 0, 1));
+            initOffset = ((DistanceValue) element).getOffset();
         } else if(element instanceof TemperatureValue) {
 
             inputOffset.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(-10, 10, 0, 0.1));
+            initOffset = ((TemperatureValue) element).getOffset();
         }
 
         //Daten setzen

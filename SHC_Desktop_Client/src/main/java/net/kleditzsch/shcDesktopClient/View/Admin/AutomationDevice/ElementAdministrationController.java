@@ -24,6 +24,7 @@ import net.kleditzsch.shcCore.Automation.Devices.SensorValue.*;
 import net.kleditzsch.shcCore.Automation.Devices.Switchable.*;
 import net.kleditzsch.shcCore.Automation.Interface.AutomationDevice;
 import net.kleditzsch.shcCore.Automation.Interface.Sensor.SensorValue;
+import net.kleditzsch.shcCore.Automation.Interface.Sensor.VirtualSensorValue;
 import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceResponse;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
 import net.kleditzsch.shcCore.Settings.BooleanSetting;
@@ -444,14 +445,55 @@ public class ElementAdministrationController {
                     }
                     break;
 
-
                 //Virtuelle Sensorwerte
                 case "Virtueller aktueller Energieverbrauch":
+
+                    Optional<VirtualSensorValue> virtualActualPower = FormDialogManager.showVirtualSensorValueDialog(new VirtualActualPowerValue(), automationDeviceResponse.getAutomationDevices());
+                    if(virtualActualPower.isPresent()) {
+
+                        sendCreateRequest(virtualActualPower.get());
+                    }
+                    break;
                 case "Virtueller Energieverbrauch":
+
+                    Optional<VirtualSensorValue> virtualEnergy = FormDialogManager.showVirtualSensorValueDialog(new VirtualEnergyValue(), automationDeviceResponse.getAutomationDevices());
+                    if(virtualEnergy.isPresent()) {
+
+                        sendCreateRequest(virtualEnergy.get());
+                    }
+                    break;
                 case "Virtuelle Gas Menge":
+
+                    Optional<VirtualSensorValue> virtualGasAmount = FormDialogManager.showVirtualSensorValueDialog(new VirtualGasAmountValue(), automationDeviceResponse.getAutomationDevices());
+                    if(virtualGasAmount.isPresent()) {
+
+                        sendCreateRequest(virtualGasAmount.get());
+                    }
+                    break;
                 case "Virtuelle Wasser Menge":
+
+                    Optional<VirtualSensorValue> virtualWaterAmount = FormDialogManager.showVirtualSensorValueDialog(new VirtualWaterAmountValue(), automationDeviceResponse.getAutomationDevices());
+                    if(virtualWaterAmount.isPresent()) {
+
+                        sendCreateRequest(virtualWaterAmount.get());
+                    }
+                    break;
                 case "Virtuelle Lichtstärke":
+
+                    Optional<VirtualSensorValue> virtualLightIntensity = FormDialogManager.showVirtualSensorValueDialog(new VirtualLightIntensityValue(), automationDeviceResponse.getAutomationDevices());
+                    if(virtualLightIntensity.isPresent()) {
+
+                        sendCreateRequest(virtualLightIntensity.get());
+                    }
+                    break;
                 case "Virtuelle Temeratur":
+
+                    Optional<VirtualSensorValue> virtualTemerature = FormDialogManager.showVirtualSensorValueDialog(new VirtualTemperatureValue(), automationDeviceResponse.getAutomationDevices());
+                    if(virtualTemerature.isPresent()) {
+
+                        sendCreateRequest(virtualTemerature.get());
+                    }
+                    break;
             }
         }
     }
