@@ -37,7 +37,7 @@
                   <TableColumn fx:id="columnComment" prefWidth="317.0" text="Kommentar" />
               </columns>
                <contextMenu>
-                  <ContextMenu>
+                  <ContextMenu fx:id="tableContextMenu">
                     <items>
                       <MenuItem fx:id="menuButtonCreate" mnemonicParsing="false" onAction="#createElement" text="erstellen" />
                         <MenuItem fx:id="menuButtonEdit" mnemonicParsing="false" onAction="#editElement" text="bearbeiten" />

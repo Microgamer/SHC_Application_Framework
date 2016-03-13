@@ -459,6 +459,40 @@ public class ConnectionManager {
     }
 
     /**
+     * sendet eine Anfrage zum bearbeiten eines Automationsgeräte an den Server
+     *
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public SuccessResponse editAutomationDevice(AutomationDevice automationDevice) throws IOException {
+
+        if(checkSession()) {
+
+            String response = this.requestUtil.editAutomationDevice(gson.toJson(automationDevice), automationDevice.getType(), this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SuccessResponse.class);
+        }
+        return null;
+    }
+
+    /**
+     * sendet eine Anfrage zum löschen eines Automationsgeräte an den Server
+     *
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public SuccessResponse deleteAutomationDevice(AutomationDevice automationDevice) throws IOException {
+
+        if(checkSession()) {
+
+            String response = this.requestUtil.deleteAutomationDevice(automationDevice.getHash(), this.sessionId);
+            updateLastContact();
+            return gson.fromJson(response, SuccessResponse.class);
+        }
+        return null;
+    }
+
+    /**
      * gibt die Session ID zurück
      *
      * @return Session ID

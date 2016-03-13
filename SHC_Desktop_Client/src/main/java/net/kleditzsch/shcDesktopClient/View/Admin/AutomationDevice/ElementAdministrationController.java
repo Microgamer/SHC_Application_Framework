@@ -143,6 +143,9 @@ public class ElementAdministrationController {
     @FXML // fx:id="columnComment"
     private TableColumn<AutomationDevice, String> columnComment; // Value injected by FXMLLoader
 
+    @FXML // fx:id="tableContextMenu"
+    private ContextMenu tableContextMenu; // Value injected by FXMLLoader
+
     @FXML // fx:id="menueButtenCreate"
     private MenuItem menuButtonCreate; // Value injected by FXMLLoader
 
@@ -501,11 +504,124 @@ public class ElementAdministrationController {
     @FXML
     void editElement(ActionEvent event) {
 
+        tableContextMenu.hide();
+        AutomationDevice device = elementsTable.getSelectionModel().getSelectedItem();
+        if(device instanceof Input) {
+
+            Optional<Input> input = FormDialogManager.showInputDialog((Input) device, automationDeviceResponse.getSwitchServers());
+            if(input.isPresent()) {
+
+                sendEditRequest(input.get());
+            }
+        } else if(device instanceof UserAtHome) {
+
+            Optional<UserAtHome> userAtHome = FormDialogManager.showUserAtHomeDialog((UserAtHome) device);
+            if(userAtHome.isPresent()) {
+
+                sendEditRequest(userAtHome.get());
+            }
+        } else if(device instanceof Output) {
+
+            Optional<Output> output = FormDialogManager.showOutputDialog((Output) device, automationDeviceResponse.getSwitchServers());
+            if(output.isPresent()) {
+
+                sendEditRequest(output.get());
+            }
+        } else if(device instanceof AvmSocket) {
+
+            Optional<AvmSocket> avmSocket = FormDialogManager.showAvmSocketDialog((AvmSocket) device);
+            if(avmSocket.isPresent()) {
+
+                sendEditRequest(avmSocket.get());
+            }
+        } else if(device instanceof EdimaxSocket) {
+
+            Optional<EdimaxSocket> edimaxSocket = FormDialogManager.showEdimaxSocketDialog((EdimaxSocket) device);
+            if(edimaxSocket.isPresent()) {
+
+                sendEditRequest(edimaxSocket.get());
+            }
+        } else if(device instanceof RadioSocket) {
+
+            Optional<RadioSocket> radioSocket = FormDialogManager.showRadioSocketDialog((RadioSocket) device, automationDeviceResponse.getSwitchServers());
+            if(radioSocket.isPresent()) {
+
+                sendEditRequest(radioSocket.get());
+            }
+        } else if(device instanceof VirtualSocket) {
+
+            Optional<VirtualSocket> virtualSocket = FormDialogManager.showVirtualSocketDialog((VirtualSocket) device);
+            if(virtualSocket.isPresent()) {
+
+                sendEditRequest(virtualSocket.get());
+            }
+        } else if(device instanceof WakeOnLan) {
+
+            Optional<WakeOnLan> wakeOnLan = FormDialogManager.showWakeOnLanDialog((WakeOnLan) device);
+            if(wakeOnLan.isPresent()) {
+
+                sendEditRequest(wakeOnLan.get());
+            }
+        } else if(device instanceof FritzBoxWirelessLan) {
+
+            Optional<FritzBoxWirelessLan> fritzBoxWirelessLan = FormDialogManager.showFritzBoxWirelessLanDialog((FritzBoxWirelessLan) device);
+            if(fritzBoxWirelessLan.isPresent()) {
+
+                sendEditRequest(fritzBoxWirelessLan.get());
+            }
+        } else if(device instanceof FritzBoxRebootReconnect) {
+
+            Optional<FritzBoxRebootReconnect> fritzBoxRebootReconnect = FormDialogManager.showFritzBoxRebootReconnectDialog((FritzBoxRebootReconnect) device);
+            if(fritzBoxRebootReconnect.isPresent()) {
+
+                sendEditRequest(fritzBoxRebootReconnect.get());
+            }
+        } else if(device instanceof RebootShutdown) {
+
+            Optional<RebootShutdown> rebootShutdown = FormDialogManager.showRebootShutdownDialog((RebootShutdown) device, automationDeviceResponse.getSwitchServers());
+            if(rebootShutdown.isPresent()) {
+
+                sendEditRequest(rebootShutdown.get());
+            }
+        } else if(device instanceof ScriptSingle) {
+
+            Optional<ScriptSingle> scriptSingle = FormDialogManager.showScriptSingleDialog((ScriptSingle) device, automationDeviceResponse.getSwitchServers());
+            if(scriptSingle.isPresent()) {
+
+                sendEditRequest(scriptSingle.get());
+            }
+        } else if(device instanceof ScriptDouble) {
+
+            Optional<ScriptDouble> scriptDouble = FormDialogManager.showScriptDoubleDialog((ScriptDouble) device, automationDeviceResponse.getSwitchServers());
+            if(scriptDouble.isPresent()) {
+
+                sendEditRequest(scriptDouble.get());
+            }
+        } else if(device instanceof VirtualSensorValue) {
+
+            Optional<VirtualSensorValue> virtualSensorValue = FormDialogManager.showVirtualSensorValueDialog((VirtualSensorValue) device, automationDeviceResponse.getAutomationDevices());
+            if(virtualSensorValue.isPresent()) {
+
+                sendEditRequest(virtualSensorValue.get());
+            }
+        }  else if(device instanceof SensorValue) {
+
+            Optional<SensorValue> sensorValue = FormDialogManager.showSensorValueDialog((SensorValue) device);
+            if(sensorValue.isPresent()) {
+
+                sendEditRequest(sensorValue.get());
+            }
+        }
     }
 
     @FXML
     void deleteElement(ActionEvent event) {
 
+        AutomationDevice device = elementsTable.getSelectionModel().getSelectedItem();
+        if(device != null) {
+
+            sendDeleteRequest(device);
+        }
     }
 
     @FXML
@@ -535,6 +651,7 @@ public class ElementAdministrationController {
         assert columnType != null : "fx:id=\"columnType\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
         assert columnActive != null : "fx:id=\"columnActive\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
         assert columnComment != null : "fx:id=\"columnComment\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
+        assert tableContextMenu != null : "fx:id=\"tableContextMenu\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
         assert menuButtonCreate != null : "fx:id=\"menuButtonCreate\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
         assert menuButtonEdit != null : "fx:id=\"menuButtonEdit\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
         assert menuButtonDelete != null : "fx:id=\"menuButtonDelete\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
@@ -625,6 +742,7 @@ public class ElementAdministrationController {
         Thread thread = new Thread(task);
         thread.start();
     }
+
     /**
      * sendet die Anfrage zum erstellen eines Gerätes an den Server
      *
@@ -662,6 +780,108 @@ public class ElementAdministrationController {
 
                     maskerPane.setVisible(false);
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät erstellen fehlgeschlagen", successResponse.getMessage());
+                    if(successResponse.getErrorCode() == 100) {
+
+                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                    }
+                }
+            } else {
+
+                MainViewLoader.loadLoginView();
+            }
+        });
+        Thread thread = new Thread(task);
+        thread.start();
+    }
+
+    /**
+     * sendet die Anfrage zum bearbeiten eines Gerätes an den Server
+     *
+     * @param automationDevice Automatisierungsgerät
+     */
+    protected void sendEditRequest(final AutomationDevice automationDevice) {
+
+        //Daten an Server senden
+        Task<SuccessResponse> task = new Task<SuccessResponse>() {
+            @Override
+            protected SuccessResponse call() throws Exception {
+
+                try {
+
+                    return ShcDesktopClient.getInstance().getConnectionManager().editAutomationDevice(automationDevice);
+                } catch (IOException e) {
+
+                    SuccessResponse sr = new SuccessResponse();
+                    sr.setSuccess(false);
+                    sr.setMessage(e.getLocalizedMessage());
+                    return sr;
+                }
+            }
+        };
+        task.setOnSucceeded((WorkerStateEvent e) -> {
+
+            SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
+            if(successResponse != null) {
+
+                if(successResponse.isSuccess()) {
+
+                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich bearbeitet");
+                    update();
+                } else {
+
+                    maskerPane.setVisible(false);
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät bearbeiten fehlgeschlagen", successResponse.getMessage());
+                    if(successResponse.getErrorCode() == 100) {
+
+                        ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
+                    }
+                }
+            } else {
+
+                MainViewLoader.loadLoginView();
+            }
+        });
+        Thread thread = new Thread(task);
+        thread.start();
+    }
+
+    /**
+     * sendet die Anfrage zum löschen eines Gerätes an den Server
+     *
+     * @param automationDevice Automatisierungsgerät
+     */
+    protected void sendDeleteRequest(final AutomationDevice automationDevice) {
+
+        //Daten an Server senden
+        Task<SuccessResponse> task = new Task<SuccessResponse>() {
+            @Override
+            protected SuccessResponse call() throws Exception {
+
+                try {
+
+                    return ShcDesktopClient.getInstance().getConnectionManager().deleteAutomationDevice(automationDevice);
+                } catch (IOException e) {
+
+                    SuccessResponse sr = new SuccessResponse();
+                    sr.setSuccess(false);
+                    sr.setMessage(e.getLocalizedMessage());
+                    return sr;
+                }
+            }
+        };
+        task.setOnSucceeded((WorkerStateEvent e) -> {
+
+            SuccessResponse successResponse = (SuccessResponse) e.getSource().getValue();
+            if(successResponse != null) {
+
+                if(successResponse.isSuccess()) {
+
+                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich gelöscht");
+                    update();
+                } else {
+
+                    maskerPane.setVisible(false);
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät löschen fehlgeschlagen", successResponse.getMessage());
                     if(successResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();

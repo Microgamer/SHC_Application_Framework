@@ -335,6 +335,43 @@ public class HttpRequestUtil {
         return sendHttpRequest("automationdevice", params, postParams);
     }
 
+    /**
+     * sendet eine Anfrage zum bearbeiten eines Automationsgeräte an den Server
+     *
+     * @param device Gerät
+     * @param type Typ
+     * @param sid Session ID
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String editAutomationDevice(String device, int type, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "editdevice");
+        params.put("type", Integer.valueOf(type).toString());
+        Map<String, String> postParams = new HashMap<>();
+        postParams.put("data", device);
+        return sendHttpRequest("automationdevice", params, postParams);
+    }
+
+    /**
+     * sendet eine Anfrage zum löschen eines Automationsgeräte an den Server
+     *
+     * @param hash Geräte Hash
+     * @param sid Session ID
+     * @return Erfolgsrückmeldung
+     * @throws IOException
+     */
+    public String deleteAutomationDevice(String hash, String sid) throws IOException {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("action", "deletedevice");
+        params.put("hash", hash);
+        return sendHttpRequest("automationdevice", params, null);
+    }
+
     protected String sendHttpRequest(String request, Map<String, String> getParams, Map<String, String> postParams) throws IOException {
 
         /*

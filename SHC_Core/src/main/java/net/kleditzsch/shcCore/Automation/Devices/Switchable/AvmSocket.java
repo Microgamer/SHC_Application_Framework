@@ -14,7 +14,7 @@ public class AvmSocket extends AbstractDoubleSwitchable {
     /**
      * Identifizierung
      */
-    public String identifier;
+    protected String identifier;
 
     /**
      * Typ
