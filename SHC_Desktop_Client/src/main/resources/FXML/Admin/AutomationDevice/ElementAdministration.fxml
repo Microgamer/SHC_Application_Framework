@@ -23,8 +23,9 @@
                   <Button fx:id="buttonRefresh" mnemonicParsing="false" onAction="#refreshList" text="aktualisieren" />
                   <Pane fx:id="toolbarSpace" />
                   <Label fx:id="filterLabel" text="Filter:" />
-                  <TextField fx:id="inputNameFilter" onKeyReleased="#filterName" prefHeight="26.0" prefWidth="200.0" promptText="Name ..." />
+                  <TextField fx:id="inputNameFilter" prefHeight="26.0" prefWidth="200.0" promptText="Name ..." />
                   <CheckComboBox fx:id="inputTypeFilter" prefHeight="26.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" onAction="#clearFilter" text="X" />
               </items>
             </ToolBar>
          </top>

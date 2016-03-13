@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
@@ -23,10 +25,13 @@ import net.kleditzsch.shcCore.Automation.Devices.Readable.UserAtHome;
 import net.kleditzsch.shcCore.Automation.Devices.SensorValue.*;
 import net.kleditzsch.shcCore.Automation.Devices.Switchable.*;
 import net.kleditzsch.shcCore.Automation.Interface.AutomationDevice;
+import net.kleditzsch.shcCore.Automation.Interface.Readable.Readable;
 import net.kleditzsch.shcCore.Automation.Interface.Sensor.SensorValue;
 import net.kleditzsch.shcCore.Automation.Interface.Sensor.VirtualSensorValue;
+import net.kleditzsch.shcCore.Automation.Interface.Switchable.Switchable;
 import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceResponse;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
+import net.kleditzsch.shcCore.Room.Elements.VirtualSensor;
 import net.kleditzsch.shcCore.Settings.BooleanSetting;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
@@ -164,6 +169,11 @@ public class ElementAdministrationController {
      * Response
      */
     protected AutomationDeviceResponse automationDeviceResponse;
+
+    /**
+     * gefilterte Liste
+     */
+    protected FilteredList<AutomationDevice> filteredList;
 
     @FXML
     void back(ActionEvent event) {
@@ -625,14 +635,20 @@ public class ElementAdministrationController {
     }
 
     @FXML
-    void filterName(KeyEvent event) {
-
-    }
-
-    @FXML
     void refreshList(ActionEvent event) {
 
         update();
+    }
+
+    @FXML
+    void clearFilter(ActionEvent event) {
+
+        if(filteredList != null) {
+
+            filteredList.setPredicate(e -> true);
+            inputNameFilter.setText("");
+            inputTypeFilter.getCheckModel().checkAll();
+        }
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -673,6 +689,43 @@ public class ElementAdministrationController {
         //Filter Liste erstellen
         inputTypeFilter.getItems().addAll("schaltbare Elemente", "lesbare Elemente", "Sensorwerte", "virtuelle Sensorwerte");
         inputTypeFilter.getCheckModel().checkAll();
+
+        //Filter Ereignisse
+        inputNameFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            filteredList.setPredicate(automationDevice -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (automationDevice.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        inputTypeFilter.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(Change<? extends String> c) {
+
+                List<String> checkedItems = inputTypeFilter.getCheckModel().getCheckedItems();
+                filteredList.setPredicate(automationDevice -> {
+
+                    if(
+                            (automationDevice instanceof Readable && checkedItems.contains("lesbare Elemente"))
+                                    || (automationDevice instanceof Switchable && checkedItems.contains("schaltbare Elemente"))
+                                    || (automationDevice instanceof SensorValue && checkedItems.contains("Sensorwerte"))
+                                    || (automationDevice instanceof VirtualSensorValue && checkedItems.contains("virtuelle Sensorwerte"))) {
+
+                        return true;
+                    }
+                    return false;
+                });
+            }
+        });
 
         //Ladeanzeige
         rootStackPane.getChildren().add(maskerPane);
@@ -719,9 +772,11 @@ public class ElementAdministrationController {
 
                 if (automationDeviceResponse.isSuccess()) {
 
+                    filteredList = new FilteredList<AutomationDevice>(FXCollections.observableArrayList(automationDeviceResponse.getAutomationDevices().values()), e -> true);
+
                     //Daten
                     elementsTable.getItems().clear();
-                    elementsTable.getItems().addAll(automationDeviceResponse.getAutomationDevices().values());
+                    elementsTable.setItems(filteredList);
                     maskerPane.setVisible(false);
                     menuButtonCreate.setDisable(false);
                     menuButtonEdit.setDisable(false);
