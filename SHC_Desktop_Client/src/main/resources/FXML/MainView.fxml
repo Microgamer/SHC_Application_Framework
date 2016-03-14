@@ -17,12 +17,12 @@
          <children>
             <Circle fx:id="circleState" fill="RED" radius="8.0" strokeType="INSIDE">
                <HBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="7.0" />
                </HBox.margin>
             </Circle>
             <Label fx:id="labelState" text="getrennt">
                <HBox.margin>
-                  <Insets top="4.0" />
+                  <Insets top="6.0" />
                </HBox.margin>
             </Label>
             <Pane HBox.hgrow="ALWAYS" />
