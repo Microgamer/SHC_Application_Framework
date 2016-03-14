@@ -118,18 +118,21 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         temp.setIdentifier(BasicElement.createHash().substring(0, 10));
                                                         temp.setName(automationDevice.getName() + " #temp");
                                                         temp.setComment("AVM Steckdose Temperatur");
+                                                        temp.setSystemValue(true);
 
                                                         ActualPowerValue power = new ActualPowerValue();
                                                         power.setHash(BasicElement.createHash());
                                                         power.setIdentifier(BasicElement.createHash().substring(0, 10));
                                                         power.setName(automationDevice.getName() + " #power");
                                                         power.setComment("AVM Steckdose Momentanverbrauch");
+                                                        power.setSystemValue(true);
 
                                                         EnergyValue energy = new EnergyValue();
                                                         energy.setHash(BasicElement.createHash());
                                                         energy.setIdentifier(BasicElement.createHash().substring(0, 10));
                                                         energy.setName(automationDevice.getName() + " #energy");
                                                         energy.setComment("AVM Steckdose Energieverbrauch");
+                                                        energy.setSystemValue(true);
 
                                                         //Sensoren an Steckdose binden
                                                         ((AvmSocket) automationDevice).setTempSensorHash(temp.getHash());
@@ -149,12 +152,14 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         power.setIdentifier(BasicElement.createHash().substring(0, 10));
                                                         power.setName(automationDevice.getName() + " #power");
                                                         power.setComment("Edimax Steckdose Momentanverbrauch");
+                                                        power.setSystemValue(true);
 
                                                         EnergyValue energy = new EnergyValue();
                                                         energy.setHash(BasicElement.createHash());
                                                         energy.setIdentifier(BasicElement.createHash().substring(0, 10));
                                                         energy.setName(automationDevice.getName() + " #energy");
                                                         energy.setComment("Edimax Steckdose Energieverbrauch");
+                                                        energy.setSystemValue(true);
 
                                                         //Sensoren an Steckdose binden
                                                         ((EdimaxSocket) automationDevice).setPowerSensorHash(power.getHash());
