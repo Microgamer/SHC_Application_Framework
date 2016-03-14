@@ -20,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.Input;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.UserAtHome;
 import net.kleditzsch.shcCore.Automation.Devices.SensorValue.*;
@@ -627,10 +628,13 @@ public class ElementAdministrationController {
     @FXML
     void deleteElement(ActionEvent event) {
 
-        AutomationDevice device = elementsTable.getSelectionModel().getSelectedItem();
-        if(device != null) {
+        if(UiDialogHelper.showConfirmDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Element löschen", null, "willst du das Element wirklich löschen?")) {
 
-            sendDeleteRequest(device);
+            AutomationDevice device = elementsTable.getSelectionModel().getSelectedItem();
+            if(device != null) {
+
+                sendDeleteRequest(device);
+            }
         }
     }
 
