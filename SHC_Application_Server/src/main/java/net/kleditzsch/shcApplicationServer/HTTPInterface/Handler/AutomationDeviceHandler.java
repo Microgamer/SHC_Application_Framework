@@ -7,7 +7,9 @@ import net.kleditzsch.shcApplicationServer.HTTPInterface.AbstractRequestHandler;
 import net.kleditzsch.shcApplicationServer.SwitchServer.SwitchServerEditor;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.Input;
 import net.kleditzsch.shcCore.Automation.Devices.Readable.UserAtHome;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.ActualPowerValue;
 import net.kleditzsch.shcCore.Automation.Devices.SensorValue.DistanceValue;
+import net.kleditzsch.shcCore.Automation.Devices.SensorValue.EnergyValue;
 import net.kleditzsch.shcCore.Automation.Devices.SensorValue.TemperatureValue;
 import net.kleditzsch.shcCore.Automation.Devices.Switchable.*;
 import net.kleditzsch.shcCore.Automation.Interface.AutomationDevice;
@@ -17,6 +19,7 @@ import net.kleditzsch.shcCore.Automation.Interface.Sensor.VirtualSensorValue;
 import net.kleditzsch.shcCore.Automation.Interface.Switchable.Switchable;
 import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceResponse;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
+import net.kleditzsch.shcCore.Core.BasicElement;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
 import net.kleditzsch.shcCore.User.Permissions;
 import net.kleditzsch.shcCore.User.User;
@@ -106,8 +109,66 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                 //prüfen ob Hash schon vorhanden
                                                 if(!automationDeviceEditor.getAutomationDevices().containsKey(automationDevice.getHash())) {
 
-                                                    //neues Gerät speichern
-                                                    automationDeviceEditor.getAutomationDevices().put(automationDevice.getHash(), automationDevice);
+                                                                                                        //Geräte an die Sensoren gebunden sind
+                                                    if(automationDevice instanceof AvmSocket) {
+
+                                                        //Sensorwerte erstellen
+                                                        TemperatureValue temp = new TemperatureValue();
+                                                        temp.setHash(BasicElement.createHash());
+                                                        temp.setIdentifier(BasicElement.createHash().substring(0, 10));
+                                                        temp.setName(automationDevice.getName() + " #temp");
+                                                        temp.setComment("AVM Steckdose Temperatur");
+
+                                                        ActualPowerValue power = new ActualPowerValue();
+                                                        power.setHash(BasicElement.createHash());
+                                                        power.setIdentifier(BasicElement.createHash().substring(0, 10));
+                                                        power.setName(automationDevice.getName() + " #power");
+                                                        power.setComment("AVM Steckdose Momentanverbrauch");
+
+                                                        EnergyValue energy = new EnergyValue();
+                                                        energy.setHash(BasicElement.createHash());
+                                                        energy.setIdentifier(BasicElement.createHash().substring(0, 10));
+                                                        energy.setName(automationDevice.getName() + " #energy");
+                                                        energy.setComment("AVM Steckdose Energieverbrauch");
+
+                                                        //Sensoren an Steckdose binden
+                                                        ((AvmSocket) automationDevice).setTempSensorHash(temp.getHash());
+                                                        ((AvmSocket) automationDevice).setPowerSensorHash(power.getHash());
+                                                        ((AvmSocket) automationDevice).setEnergySensorHash(energy.getHash());
+
+                                                        //neues Gerät speichern
+                                                        automationDeviceEditor.getAutomationDevices().put(automationDevice.getHash(), automationDevice);
+                                                        automationDeviceEditor.getAutomationDevices().put(temp.getHash(), temp);
+                                                        automationDeviceEditor.getAutomationDevices().put(power.getHash(), power);
+                                                        automationDeviceEditor.getAutomationDevices().put(energy.getHash(), energy);
+                                                    } else if(automationDevice instanceof EdimaxSocket) {
+
+                                                        //Sensorwerte erstellen
+                                                        ActualPowerValue power = new ActualPowerValue();
+                                                        power.setHash(BasicElement.createHash());
+                                                        power.setIdentifier(BasicElement.createHash().substring(0, 10));
+                                                        power.setName(automationDevice.getName() + " #power");
+                                                        power.setComment("Edimax Steckdose Momentanverbrauch");
+
+                                                        EnergyValue energy = new EnergyValue();
+                                                        energy.setHash(BasicElement.createHash());
+                                                        energy.setIdentifier(BasicElement.createHash().substring(0, 10));
+                                                        energy.setName(automationDevice.getName() + " #energy");
+                                                        energy.setComment("Edimax Steckdose Energieverbrauch");
+
+                                                        //Sensoren an Steckdose binden
+                                                        ((EdimaxSocket) automationDevice).setPowerSensorHash(power.getHash());
+                                                        ((EdimaxSocket) automationDevice).setEnergySensorHash(energy.getHash());
+
+                                                        //neues Gerät speichern
+                                                        automationDeviceEditor.getAutomationDevices().put(automationDevice.getHash(), automationDevice);
+                                                        automationDeviceEditor.getAutomationDevices().put(power.getHash(), power);
+                                                        automationDeviceEditor.getAutomationDevices().put(energy.getHash(), energy);
+                                                    } else {
+
+                                                        //neues Gerät speichern
+                                                        automationDeviceEditor.getAutomationDevices().put(automationDevice.getHash(), automationDevice);
+                                                    }
 
                                                     successResponse.setSuccess(true);
                                                 } else {
@@ -177,9 +238,6 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                             AutomationDevice knownDevice = automationDeviceEditor.getAutomationDevices().get(automationDevice.getHash());
                                             if(knownDevice != null) {
 
-                                                knownDevice.setName(automationDevice.getName());
-                                                knownDevice.setComment(automationDevice.getComment());
-                                                knownDevice.setDisabled(automationDevice.isDisabled());
                                                 switch (knownDevice.getType()) {
 
                                                     case AutomationDevice.INPUT:
@@ -216,6 +274,27 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         AvmSocket automationDeviceAvmSocket = (AvmSocket) automationDevice;
                                                         knownAvmSocket.setIdentifier(automationDeviceAvmSocket.getIdentifier());
                                                         knownAvmSocket.setInverse(automationDeviceAvmSocket.isInverse());
+
+                                                        //Sensorwerte ggf. mit umbenennen
+                                                        if(!knownAvmSocket.getName().equals(automationDevice.getName())) {
+
+                                                            TemperatureValue temp = (TemperatureValue) automationDeviceEditor.getSensorValueByHash(knownAvmSocket.getTempSensorHash());
+                                                            ActualPowerValue power = (ActualPowerValue) automationDeviceEditor.getSensorValueByHash(knownAvmSocket.getPowerSensorHash());
+                                                            EnergyValue energy = (EnergyValue) automationDeviceEditor.getSensorValueByHash(knownAvmSocket.getEnergySensorHash());
+
+                                                            if(temp.getName().equals(knownAvmSocket.getName() + " #temp")) {
+
+                                                                temp.setName(automationDevice.getName() + " #temp");
+                                                            }
+                                                            if(power.getName().equals(knownAvmSocket.getName() + " #power")) {
+
+                                                                power.setName(automationDevice.getName() + " #power");
+                                                            }
+                                                            if(energy.getName().equals(knownAvmSocket.getName() + " #energy")) {
+
+                                                                energy.setName(automationDevice.getName() + " #energy");
+                                                            }
+                                                        }
                                                         break;
                                                     case AutomationDevice.EDIMAX_SOCKET:
 
@@ -226,6 +305,22 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         konwnEdimaxSocket.setPassword(automationDeviceEdimaxSocket.getPassword());
                                                         konwnEdimaxSocket.setSocketType(automationDeviceEdimaxSocket.getSocketType());
                                                         konwnEdimaxSocket.setInverse(automationDeviceEdimaxSocket.isInverse());
+
+                                                        //Sensorwerte ggf. mit umbenennen
+                                                        if(!konwnEdimaxSocket.getName().equals(automationDevice.getName())) {
+
+                                                            ActualPowerValue power = (ActualPowerValue) automationDeviceEditor.getSensorValueByHash(konwnEdimaxSocket.getPowerSensorHash());
+                                                            EnergyValue energy = (EnergyValue) automationDeviceEditor.getSensorValueByHash(konwnEdimaxSocket.getEnergySensorHash());
+
+                                                            if(power.getName().equals(konwnEdimaxSocket.getName() + " #power")) {
+
+                                                                power.setName(automationDevice.getName() + " #power");
+                                                            }
+                                                            if(energy.getName().equals(konwnEdimaxSocket.getName() + " #energy")) {
+
+                                                                energy.setName(automationDevice.getName() + " #energy");
+                                                            }
+                                                        }
                                                         break;
                                                     case AutomationDevice.RADIO_SOCKET:
 
@@ -325,6 +420,9 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         konwnVirtualSensorValue.getSensorValues().addAll(automationDeviceVirtualSensorValue.getSensorValues());
                                                         break;
                                                 }
+                                                knownDevice.setName(automationDevice.getName());
+                                                knownDevice.setComment(automationDevice.getComment());
+                                                knownDevice.setDisabled(automationDevice.isDisabled());
                                                 successResponse.setSuccess(true);
                                             } else {
 
@@ -387,6 +485,18 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                             successResponse.setSuccess(true);
                                         } else if(!(automationDevice instanceof SensorValue)) {
 
+                                            if(automationDevice instanceof AvmSocket) {
+
+                                                //Sensowerte löschen
+                                                automationDeviceEditor.getAutomationDevices().remove(((AvmSocket) automationDevice).getTempSensorHash());
+                                                automationDeviceEditor.getAutomationDevices().remove(((AvmSocket) automationDevice).getPowerSensorHash());
+                                                automationDeviceEditor.getAutomationDevices().remove(((AvmSocket) automationDevice).getEnergySensorHash());
+                                            } else if(automationDevice instanceof EdimaxSocket) {
+
+                                                //Sensorwerte löschen
+                                                automationDeviceEditor.getAutomationDevices().remove(((EdimaxSocket) automationDevice).getPowerSensorHash());
+                                                automationDeviceEditor.getAutomationDevices().remove(((EdimaxSocket) automationDevice).getEnergySensorHash());
+                                            }
                                             automationDeviceEditor.getAutomationDevices().remove(params.get("hash"));
                                             successResponse.setSuccess(true);
                                         } else {

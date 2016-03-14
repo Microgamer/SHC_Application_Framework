@@ -38,6 +38,12 @@ public class EdimaxSocket extends AbstractDoubleSwitchable {
     protected int socketType = TYPE_SP_1101W;
 
     /**
+     * Sensorwerte der Steckdose
+     */
+    protected String powerSensorHash = "";
+    protected String energySensorHash = "";
+
+    /**
      * Typ
      */
     protected int type = EDIMAX_SOCKET;
@@ -112,6 +118,42 @@ public class EdimaxSocket extends AbstractDoubleSwitchable {
      */
     public void setSocketType(int socketType) {
         this.socketType = socketType;
+    }
+
+    /**
+     * gibt den Hash des Verbrauchs Sensorwertes zurück
+     *
+     * @return Hash vom Sensorwert
+     */
+    public String getPowerSensorHash() {
+        return powerSensorHash;
+    }
+
+    /**
+     * setzt den Hash des Verbrauchs Sensorwertes
+     *
+     * @param powerSensorHash Hash vom Sensorwert
+     */
+    public void setPowerSensorHash(String powerSensorHash) {
+        this.powerSensorHash = powerSensorHash;
+    }
+
+    /**
+     * gibt den Hash des Energie Sensorwertes zurück
+     *
+     * @return Hash vom Sensorwert
+     */
+    public String getEnergySensorHash() {
+        return energySensorHash;
+    }
+
+    /**
+     * setzt den Hash des Energie Sensorwertes
+     *
+     * @param energySensorHash Hash vom Sensorwert
+     */
+    public void setEnergySensorHash(String energySensorHash) {
+        this.energySensorHash = energySensorHash;
     }
 
     /**
