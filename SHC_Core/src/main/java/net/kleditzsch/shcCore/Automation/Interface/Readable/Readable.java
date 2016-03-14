@@ -24,4 +24,18 @@ public interface Readable extends AutomationDevice {
      * @param state Status
      */
     void setState(int state);
+
+    /**
+     * gibt die Identifizierung zurück
+     *
+     * @return Identifizierung
+     */
+    String getIdentifier();
+
+    /**
+     * setzt die Identifizierung
+     *
+     * @param identifier Identifizierung
+     */
+    void setIdentifier(String identifier);
 }

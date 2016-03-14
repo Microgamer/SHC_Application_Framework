@@ -186,15 +186,18 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
 
                                                         Input knownInput = (Input) knownDevice;
                                                         Input automationDeviceInput = (Input) automationDevice;
+                                                        knownInput.setIdentifier(automationDeviceInput.getIdentifier());
                                                         knownInput.setSwitchServer(automationDeviceInput.getSwitchServer());
                                                         knownInput.setPin(automationDeviceInput.getPin());
                                                         knownInput.setInverse(automationDeviceInput.isInverse());
                                                         knownInput.setUseExternalData(automationDeviceInput.isUseExternalData());
+                                                        knownInput.setInverse(automationDeviceInput.isInverse());
                                                         break;
                                                     case AutomationDevice.USER_AT_HOME:
 
                                                         UserAtHome konwnUserAtHome = (UserAtHome) knownDevice;
                                                         UserAtHome automationDeviceUserAtHome = (UserAtHome) automationDevice;
+                                                        konwnUserAtHome.setIdentifier(automationDeviceUserAtHome.getIdentifier());
                                                         konwnUserAtHome.setIpAddress(automationDeviceUserAtHome.getIpAddress());
                                                         konwnUserAtHome.setTimeout(automationDeviceUserAtHome.getTimeout());
                                                         konwnUserAtHome.setUseExternalData(automationDeviceUserAtHome.isUseExternalData());
@@ -205,12 +208,14 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         Output automationDeviceOutput = (Output) automationDevice;
                                                         knownOutput.setSwitchServer(automationDeviceOutput.getSwitchServer());
                                                         knownOutput.setPin(automationDeviceOutput.getPin());
+                                                        knownOutput.setInverse(automationDeviceOutput.isInverse());
                                                         break;
                                                     case AutomationDevice.AVM_SOCKET:
 
                                                         AvmSocket knownAvmSocket = (AvmSocket) knownDevice;
                                                         AvmSocket automationDeviceAvmSocket = (AvmSocket) automationDevice;
                                                         knownAvmSocket.setIdentifier(automationDeviceAvmSocket.getIdentifier());
+                                                        knownAvmSocket.setInverse(automationDeviceAvmSocket.isInverse());
                                                         break;
                                                     case AutomationDevice.EDIMAX_SOCKET:
 
@@ -220,6 +225,7 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         konwnEdimaxSocket.setUsername(automationDeviceEdimaxSocket.getUsername());
                                                         konwnEdimaxSocket.setPassword(automationDeviceEdimaxSocket.getPassword());
                                                         konwnEdimaxSocket.setSocketType(automationDeviceEdimaxSocket.getSocketType());
+                                                        konwnEdimaxSocket.setInverse(automationDeviceEdimaxSocket.isInverse());
                                                         break;
                                                     case AutomationDevice.RADIO_SOCKET:
 
@@ -230,6 +236,7 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         konwnRadioSocket.setDeviceCode(automationDeviceRadioSocket.getDeviceCode());
                                                         konwnRadioSocket.setContinues(automationDeviceRadioSocket.getContinues());
                                                         konwnRadioSocket.setUseID(automationDeviceRadioSocket.isUseID());
+                                                        konwnRadioSocket.setInverse(automationDeviceRadioSocket.isInverse());
                                                         break;
                                                     case AutomationDevice.WAKE_ON_LAN:
 
@@ -243,6 +250,7 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         FritzBoxWirelessLan konwnFritzBoxWirelessLan = (FritzBoxWirelessLan) knownDevice;
                                                         FritzBoxWirelessLan automationDeviceFritzBoxWirelessLan = (FritzBoxWirelessLan) automationDevice;
                                                         konwnFritzBoxWirelessLan.setFunction(automationDeviceFritzBoxWirelessLan.getFunction());
+                                                        konwnFritzBoxWirelessLan.setInverse(automationDeviceFritzBoxWirelessLan.isInverse());
                                                         break;
                                                     case AutomationDevice.FRITZ_BOX_REBOOT_RECONNECT:
 
@@ -271,6 +279,7 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         konwnScriptDouble.setSwitchServer(automationDeviceScriptDouble.getSwitchServer());
                                                         konwnScriptDouble.setOnCommand(automationDeviceScriptDouble.getOnCommand());
                                                         konwnScriptDouble.setOffCommand(automationDeviceScriptDouble.getOffCommand());
+                                                        konwnScriptDouble.setInverse(automationDeviceScriptDouble.isInverse());
                                                         break;
                                                     case AutomationDevice.ACTUAL_POWER:
                                                     case AutomationDevice.ENERGY:

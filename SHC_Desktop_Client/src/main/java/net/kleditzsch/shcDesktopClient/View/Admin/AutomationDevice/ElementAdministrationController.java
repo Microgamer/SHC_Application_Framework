@@ -775,7 +775,6 @@ public class ElementAdministrationController {
                     filteredList = new FilteredList<AutomationDevice>(FXCollections.observableArrayList(automationDeviceResponse.getAutomationDevices().values()), e -> true);
 
                     //Daten
-                    elementsTable.getItems().clear();
                     elementsTable.setItems(filteredList);
                     maskerPane.setVisible(false);
                     menuButtonCreate.setDisable(false);

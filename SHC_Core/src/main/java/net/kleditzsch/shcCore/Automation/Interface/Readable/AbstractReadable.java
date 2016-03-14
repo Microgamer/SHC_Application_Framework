@@ -17,6 +17,11 @@ public abstract class AbstractReadable extends AbstractAutomationDevice implemen
     protected int state = OFF;
 
     /**
+     * Identifizierung
+     */
+    protected String identifier = "";
+
+    /**
      * gibt den aktuellen Status zurück
      *
      * @return Status
@@ -32,5 +37,23 @@ public abstract class AbstractReadable extends AbstractAutomationDevice implemen
      */
     public void setState(int state) {
         this.state = state;
+    }
+
+    /**
+     * gibt die Identifizierung zurück
+     *
+     * @return Identifizierung
+     */
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    /**
+     * setzt die Identifizierung
+     *
+     * @param identifier Identifizierung
+     */
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 }

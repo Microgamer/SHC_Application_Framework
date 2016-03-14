@@ -210,7 +210,7 @@ public class AdminMenuController {
 
             buttonInfo.setDisable(true);
         }
-        if(true) { //!cm.checkPermission(Permissions.DEVICE_ADMINISTRATION)) {
+        if(!cm.checkPermission(Permissions.ROOM_ADMINISTRATION)) {
 
             buttonRooms.setDisable(true);
         }

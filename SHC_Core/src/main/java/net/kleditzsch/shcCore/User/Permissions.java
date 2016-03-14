@@ -26,6 +26,9 @@ public interface Permissions {
     //Elements verwalten
     String ELEMENT_ADMINISTRATION = "shc.permission.elements.administration";
 
+    //Räume verwalten
+    String ROOM_ADMINISTRATION = "shc.permission.room.administration";
+
     /**
      * gibt eine Liste mit allen Berechtigungen zurück
      *
@@ -38,6 +41,7 @@ public interface Permissions {
         permissions.add(DEVICE_ADMINISTRATION);
         permissions.add(SETTINGS_ADMINISTRATION);
         permissions.add(ELEMENT_ADMINISTRATION);
+        permissions.add(ROOM_ADMINISTRATION);
         return permissions;
     }
 }

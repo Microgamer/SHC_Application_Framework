@@ -62,6 +62,9 @@ public class InputFormController {
     @FXML // fx:id="inputDisabled"
     private CheckBox inputDisabled; // Value injected by FXMLLoader
 
+    @FXML // fx:id="inputIdentifier"
+    private TextField inputIdentifier; // Value injected by FXMLLoader
+
     /**
      * Datenelement
      */
@@ -99,6 +102,7 @@ public class InputFormController {
             input.setHash(inputHash.getText());
             input.setName(inputName.getText());
             input.setComment(inputComment.getText());
+            input.setIdentifier(inputIdentifier.getText());
             input.setSwitchServer(inputSwitchServer.getValue().getHash());
             input.setPin(inputPin.getValue());
             input.setInverse(inputInverse.isSelected());
@@ -129,6 +133,7 @@ public class InputFormController {
         inputSwitchServer.disableProperty().bind(inputExternalData.selectedProperty());
         inputPin.disableProperty().bind(inputExternalData.selectedProperty());
         inputInverse.disableProperty().bind(inputExternalData.selectedProperty());
+        inputIdentifier.disableProperty().bind(inputExternalData.selectedProperty().not());
 
         //Auswahlfelder initalisieren
         for(int i = 0; i <= 30; i++) {
@@ -138,6 +143,7 @@ public class InputFormController {
 
         //Validieren
         validationSupport.registerValidator(inputName, Validator.createEmptyValidator("Der Name muss ausgefüllt werden"));
+        validationSupport.registerValidator(inputIdentifier, Validator.createEmptyValidator("Die Identifizierung muss ausgefüllt werden"));
         validationSupport.registerValidator(inputSwitchServer, Validator.createEmptyValidator("Der Schaltserver muss ausgewählt werden"));
         validationSupport.registerValidator(inputPin, Validator.createEmptyValidator("Der Pin muss ausgewählt werden"));
 
@@ -148,10 +154,12 @@ public class InputFormController {
 
                 validationSupport.registerValidator(inputSwitchServer, false, (Control c, TextField newValue) -> ValidationResult.fromErrorIf( c, "", false));
                 validationSupport.registerValidator(inputPin, false, (Control c, TextField newValue) -> ValidationResult.fromErrorIf( c, "", false));
+                validationSupport.registerValidator(inputIdentifier, Validator.createEmptyValidator("Die Identifizierung muss ausgefüllt werden"));
             } else {
 
                 validationSupport.registerValidator(inputSwitchServer, Validator.createEmptyValidator("Der Schaltserver muss ausgewählt werden"));
                 validationSupport.registerValidator(inputPin, Validator.createEmptyValidator("Der Pin muss ausgewählt werden"));
+                validationSupport.registerValidator(inputIdentifier, false, (Control c, TextField newValue) -> ValidationResult.fromErrorIf( c, "", false));
             }
         });
 
@@ -186,6 +194,7 @@ public class InputFormController {
         inputHash.setText(input.getHash());
         inputName.setText(input.getName());
         inputComment.setText(input.getComment());
+        inputIdentifier.setText(input.getIdentifier());
         inputSwitchServer.setValue(switchServers.get(input.getSwitchServer()));
         inputPin.setValue(input.getPin());
         inputInverse.setSelected(input.isInverse());

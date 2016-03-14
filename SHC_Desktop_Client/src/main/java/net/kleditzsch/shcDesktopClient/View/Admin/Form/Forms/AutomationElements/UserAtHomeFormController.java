@@ -60,6 +60,9 @@ public class UserAtHomeFormController {
     @FXML // fx:id="inputDisabled"
     private CheckBox inputDisabled; // Value injected by FXMLLoader
 
+    @FXML // fx:id="inputIdentifier"
+    private TextField inputIdentifier; // Value injected by FXMLLoader
+
     /**
      * Datenelement
      */
@@ -92,6 +95,7 @@ public class UserAtHomeFormController {
             userAtHome.setHash(inputHash.getText());
             userAtHome.setName(inputName.getText());
             userAtHome.setComment(inputComment.getText());
+            userAtHome.setIdentifier(inputIdentifier.getText());
             userAtHome.setIpAddress(inputIpAddress.getText());
             userAtHome.setTimeout(inputTimeout.getValueFactory().getValue());
             userAtHome.setUseExternalData(inputExternalData.isSelected());
@@ -119,6 +123,7 @@ public class UserAtHomeFormController {
         //Bindings herstellen
         inputIpAddress.disableProperty().bind(inputExternalData.selectedProperty());
         inputTimeout.disableProperty().bind(inputExternalData.selectedProperty());
+        inputIdentifier.disableProperty().bind(inputExternalData.selectedProperty().not());
 
         //Spinner initalisieren
         SpinnerValueFactory.IntegerSpinnerValueFactory timeoutValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 86_400_000, 0);
@@ -146,6 +151,7 @@ public class UserAtHomeFormController {
 
         //Validieren
         validationSupport.registerValidator(inputName, Validator.createEmptyValidator("Der Name muss ausgefüllt werden"));
+        validationSupport.registerValidator(inputIdentifier, Validator.createEmptyValidator("Die Identifizierung muss ausgefüllt werden"));
         validationSupport.registerValidator(inputIpAddress, new IpAddressValidator());
 
         //Validator deaktivieren wenn externe Daten aktiv
@@ -154,9 +160,11 @@ public class UserAtHomeFormController {
             if(inputExternalData.isSelected()) {
 
                 validationSupport.registerValidator(inputIpAddress, false, (Control c, TextField newValue) -> ValidationResult.fromErrorIf( c, "", false));
+                validationSupport.registerValidator(inputIdentifier, Validator.createEmptyValidator("Die Identifizierung muss ausgefüllt werden"));
             } else {
 
                 validationSupport.registerValidator(inputIpAddress, true, new IpAddressValidator());
+                validationSupport.registerValidator(inputIdentifier, false, (Control c, TextField newValue) -> ValidationResult.fromErrorIf( c, "", false));
             }
         });
 
@@ -188,6 +196,7 @@ public class UserAtHomeFormController {
         inputHash.setText(userAtHome.getHash());
         inputName.setText(userAtHome.getName());
         inputComment.setText(userAtHome.getComment());
+        inputIdentifier.setText(userAtHome.getIdentifier());
         inputIpAddress.setText(userAtHome.getIpAddress());
         inputTimeout.getValueFactory().setValue(userAtHome.getTimeout());
         inputExternalData.setSelected(userAtHome.isUseExternalData());
