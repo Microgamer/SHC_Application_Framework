@@ -515,7 +515,8 @@ public class ConnectionManager {
      */
     public void setSessionidInvalid() {
 
-        disconnect();
+        sessionId = "";
+        lastContact = null;
     }
 
     /**
