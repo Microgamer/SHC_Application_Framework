@@ -225,6 +225,11 @@ public class SensorValueWithOffsetFormController {
         }
         inputValue.setText(element.getDisplayValue());
         inputDisabled.setSelected(element.isDisabled());
+
+        if(element.isSystemValue()) {
+
+            inputIdentifier.setDisable(true);
+        }
     }
 
     /**
