@@ -673,7 +673,10 @@ public class AutomationDeviceEditor implements DatabaseEditor {
 
         Pipeline pipeline = ShcApplicationServer.getInstance().getRedis().pipelined();
         Gson gson = ShcApplicationServer.getInstance().getGson();
-        pipeline.del(KEY_DEVICES_ELEMENTS + ":*");
+        for(int i = 200; i <= 600; i++) {
+
+            pipeline.del(KEY_DEVICES_ELEMENTS + ":" + i);
+        }
 
         synchronized (this) {
 
