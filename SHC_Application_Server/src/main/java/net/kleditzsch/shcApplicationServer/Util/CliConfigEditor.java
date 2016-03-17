@@ -9,12 +9,15 @@ import net.kleditzsch.shcApplicationServer.Settings.Settings;
 import net.kleditzsch.shcCore.Settings.IntegerSetting;
 import net.kleditzsch.shcCore.Settings.Interface.Setting;
 import net.kleditzsch.shcCore.Settings.StringSetting;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Editor für die Datenbank Konfiguration
@@ -24,6 +27,8 @@ import java.util.Optional;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public abstract class CliConfigEditor {
+
+    private static Logger logger = LoggerUtil.getLogger(CliConfigEditor.class);
 
     /**
      * bearbeitet die Datenbank Konfiguration
@@ -84,13 +89,8 @@ public abstract class CliConfigEditor {
             }
         } catch (IOException e) {
 
-            System.err.println("Es ist ein Fehler bei der Datenbank Konfiguration aufgetreten!");
-
             //Debug Ausgabe
-            if(ShcApplicationServer.isDebug()) {
-
-                e.printStackTrace();
-            }
+            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
 
         //Einstellungen speichern
@@ -100,16 +100,11 @@ public abstract class CliConfigEditor {
             out = Files.newBufferedWriter(dbConfigFile, StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
             out.write(config.toString());
             out.close();
-            System.out.println("Die Datenbank Konfiguration wurde erfolgreich gespeichert!");
+            logger.info("Einstellungen erfolgreich gespeichert");
         } catch (IOException e) {
 
-            System.err.println("Die Datenbank Konfiguration konnte nicht gespeichert werden!");
-
             //Debug Ausgabe
-            if(ShcApplicationServer.isDebug()) {
-
-                e.printStackTrace();
-            }
+            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
     }
 
@@ -147,16 +142,11 @@ public abstract class CliConfigEditor {
             //EInstellungen speichern
             settings.saveData();
 
-            System.out.println("Die Einstellungen wurden erfolgreich gespeichert!");
+            logger.info("Einstellungen erfolgreich gespeichert");
         } catch (IOException e) {
 
-            System.err.println("Es ist ein Fehler bei den Einstellungen aufgetreten!");
-
             //Debug Ausgabe
-            if(ShcApplicationServer.isDebug()) {
-
-                e.printStackTrace();
-            }
+            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
     }
 }
