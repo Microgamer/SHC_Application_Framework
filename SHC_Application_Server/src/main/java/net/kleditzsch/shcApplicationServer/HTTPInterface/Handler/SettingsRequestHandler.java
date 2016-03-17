@@ -12,8 +12,10 @@ import net.kleditzsch.shcCore.ClientData.SettingsResponse;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
 import net.kleditzsch.shcCore.User.Permissions;
 import net.kleditzsch.shcCore.User.User;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Einstellungen
@@ -23,6 +25,8 @@ import java.util.Map;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class SettingsRequestHandler extends AbstractRequestHandler {
+
+    private static Logger logger = LoggerUtil.getLogger(SettingsRequestHandler.class);
 
     /**
      * behandelt eine Anfrage
@@ -39,10 +43,12 @@ public class SettingsRequestHandler extends AbstractRequestHandler {
             SettingsResponse settingsResponse;
             SuccessResponse successResponse;
             User sessionUser = checkSession(params);
+            String json;
             switch (params.get("action")) {
 
                 case "listsettings":
 
+                    logger.info("Einstellungen listen");
                     settingsResponse = new SettingsResponse();
                     if(sessionUser != null) {
 
@@ -69,21 +75,31 @@ public class SettingsRequestHandler extends AbstractRequestHandler {
 
                             //Antwort
                             settingsResponse.setSuccess(true);
-                            return gson.toJson(settingsResponse);
+                            logger.info("Einstellungen gelistet");
+                            json = gson.toJson(settingsResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         settingsResponse.setSuccess(false);
                         settingsResponse.setErrorCode(101);
                         settingsResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(settingsResponse);
+                        logger.warning(settingsResponse.getMessage());
+                        json = gson.toJson(settingsResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     settingsResponse.setSuccess(false);
                     settingsResponse.setErrorCode(100);
                     settingsResponse.setMessage("Ungültige Session");
-                    return gson.toJson(settingsResponse);
+                    logger.warning(settingsResponse.getMessage());
+                    json = gson.toJson(settingsResponse);
+                    logger.fine(json);
+                    return json;
                 case "setsettings":
 
+                    logger.info("Einstellungen speichern");
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
@@ -114,11 +130,13 @@ public class SettingsRequestHandler extends AbstractRequestHandler {
                                     }
 
                                     successResponse.setSuccess(true);
+                                    logger.info("Einstellungen gespeichert");
                                 } else {
 
                                     //ungültige Daten
                                     successResponse.setSuccess(false);
                                     successResponse.setMessage("ungültige Daten");
+                                    logger.warning(successResponse.getMessage());
                                 }
                             } else {
 
@@ -126,20 +144,29 @@ public class SettingsRequestHandler extends AbstractRequestHandler {
                                 successResponse.setSuccess(false);
                                 successResponse.setErrorCode(200);
                                 successResponse.setMessage("Fehlender Parameter \"data\"");
+                                logger.warning(successResponse.getMessage());
                             }
-                            return gson.toJson(successResponse);
+                            json = gson.toJson(successResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         successResponse.setSuccess(false);
                         successResponse.setErrorCode(101);
                         successResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(successResponse);
+                        logger.warning(successResponse.getMessage());
+                        json = gson.toJson(successResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     successResponse.setSuccess(false);
                     successResponse.setErrorCode(100);
                     successResponse.setMessage("Ungültige Session");
-                    return gson.toJson(successResponse);
+                    logger.warning(successResponse.getMessage());
+                    json = gson.toJson(successResponse);
+                    logger.fine(json);
+                    return json;
             }
         }
         return "";

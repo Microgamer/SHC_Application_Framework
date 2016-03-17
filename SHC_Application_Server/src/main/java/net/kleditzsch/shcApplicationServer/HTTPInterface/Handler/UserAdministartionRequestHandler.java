@@ -11,9 +11,11 @@ import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 import net.kleditzsch.shcCore.User.Permissions;
 import net.kleditzsch.shcCore.User.User;
 import net.kleditzsch.shcCore.User.UserGroup;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Benutzerverwaltung
@@ -23,6 +25,8 @@ import java.util.Set;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class UserAdministartionRequestHandler extends AbstractRequestHandler {
+
+    private static Logger logger = LoggerUtil.getLogger(UserAdministartionRequestHandler.class);
 
     /**
      * behandelt eine Anfrage
@@ -39,11 +43,13 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
 
             SuccessResponse successResponse;
             UserAdministrationResponse userAdministrationResponse;
-            User sessionUser = checkSession(params);;
+            User sessionUser = checkSession(params);
+            String json;
             switch (params.get("action")) {
 
                 case "listusers":
 
+                    logger.info("Benutzer listen");
                     userAdministrationResponse = new UserAdministrationResponse();
                     if(sessionUser != null) {
 
@@ -91,7 +97,10 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
 
                                 //Antwort
                                 userAdministrationResponse.setSuccess(true);
-                                return gson.toJson(userAdministrationResponse);
+                                logger.info("Geräte gelistet");
+                                json = gson.toJson(userAdministrationResponse);
+                                logger.fine(json);
+                                return json;
                             }
 
                         }
@@ -99,16 +108,23 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                         userAdministrationResponse.setSuccess(false);
                         userAdministrationResponse.setErrorCode(101);
                         userAdministrationResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(userAdministrationResponse);
+                        logger.warning(userAdministrationResponse.getMessage());
+                        json = gson.toJson(userAdministrationResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     userAdministrationResponse.setSuccess(false);
                     userAdministrationResponse.setErrorCode(100);
                     userAdministrationResponse.setMessage("Ungültige Session");
-                    return gson.toJson(userAdministrationResponse);
+                    logger.warning(userAdministrationResponse.getMessage());
+                    json = gson.toJson(userAdministrationResponse);
+                    logger.fine(json);
+                    return json;
                 case "adduser":
 
                     //Benutzer erstellen
+                    logger.info("Benutzer erstellen");
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
@@ -141,17 +157,20 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
 
                                                 //erfolgreich
                                                 successResponse.setSuccess(true);
+                                                logger.info("Benutzer erstellt");
                                             } else {
 
                                                 //fehler
                                                 successResponse.setSuccess(false);
                                                 successResponse.setMessage("der Benutzer konnte nicht erstellt werden");
+                                                logger.warning(successResponse.getMessage());
                                             }
                                         } else {
 
                                             //benutzer existiert bereits
                                             successResponse.setSuccess(false);
                                             successResponse.setMessage("der Benutzer existiert bereits");
+                                            logger.warning(successResponse.getMessage());
                                         }
                                     }
                                 } else {
@@ -159,6 +178,7 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                     //ungültige Daten
                                     successResponse.setSuccess(false);
                                     successResponse.setMessage("ungültige Daten");
+                                    logger.warning(successResponse.getMessage());
                                 }
                             } else {
 
@@ -166,23 +186,33 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 successResponse.setSuccess(false);
                                 successResponse.setErrorCode(200);
                                 successResponse.setMessage("Fehlender Parameter \"data\"");
+                                logger.warning(successResponse.getMessage());
                             }
-                            return gson.toJson(successResponse);
+                            json = gson.toJson(successResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         successResponse.setSuccess(false);
                         successResponse.setErrorCode(101);
                         successResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(successResponse);
+                        logger.warning(successResponse.getMessage());
+                        json = gson.toJson(successResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     successResponse.setSuccess(false);
                     successResponse.setErrorCode(100);
                     successResponse.setMessage("Ungültige Session");
-                    return gson.toJson(successResponse);
+                    logger.warning(successResponse.getMessage());
+                    json = gson.toJson(successResponse);
+                    logger.fine(json);
+                    return json;
                 case "edituser":
 
                     //Benutzer bearbeiten
+                    logger.info("Benutzer bearbeiten");
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
@@ -211,11 +241,13 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                                 }
                                             }
                                             successResponse.setSuccess(true);
+                                            logger.info("Benutzer bearbeitet");
                                         } else {
 
                                             //benutzer existiert nicht
                                             successResponse.setSuccess(false);
                                             successResponse.setMessage("der Benutzer existiert nicht");
+                                            logger.warning(successResponse.getMessage());
                                         }
                                     }
                                 } else {
@@ -223,6 +255,7 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                     //ungültige Daten
                                     successResponse.setSuccess(false);
                                     successResponse.setMessage("ungültige Daten");
+                                    logger.warning(successResponse.getMessage());
                                 }
                             } else {
 
@@ -230,23 +263,33 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 successResponse.setSuccess(false);
                                 successResponse.setErrorCode(200);
                                 successResponse.setMessage("Fehlender Parameter \"data\"");
+                                logger.warning(successResponse.getMessage());
                             }
-                            return gson.toJson(successResponse);
+                            json = gson.toJson(successResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         successResponse.setSuccess(false);
                         successResponse.setErrorCode(101);
                         successResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(successResponse);
+                        logger.warning(successResponse.getMessage());
+                        json = gson.toJson(successResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     successResponse.setSuccess(false);
                     successResponse.setErrorCode(100);
                     successResponse.setMessage("Ungültige Session");
-                    return gson.toJson(successResponse);
+                    logger.warning(successResponse.getMessage());
+                    json = gson.toJson(successResponse);
+                    logger.fine(json);
+                    return json;
                 case "deleteuser":
 
                     //Benutzer löschen
+                    logger.info("Benutzer löschen");
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
@@ -274,18 +317,21 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                                     //fehler beim löschen
                                                     successResponse.setSuccess(false);
                                                     successResponse.setMessage("");
+                                                    logger.info("Benutzer gelöscht");
                                                 }
                                             } else {
 
                                                 //Systembenutzer
                                                 successResponse.setSuccess(false);
                                                 successResponse.setMessage("Der Benutzer kann nicht gelöscht werden");
+                                                logger.warning(successResponse.getMessage());
                                             }
                                         } else {
 
                                             //ungültiger Benutzer
                                             successResponse.setSuccess(false);
                                             successResponse.setMessage("ungültiger Benutzer");
+                                            logger.warning(successResponse.getMessage());
                                         }
                                     }
                                 } else {
@@ -293,6 +339,7 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                     //ungültiger Hash
                                     successResponse.setSuccess(false);
                                     successResponse.setMessage("ungültiger Hash");
+                                    logger.warning(successResponse.getMessage());
                                 }
                             } else {
 
@@ -300,24 +347,34 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 successResponse.setSuccess(false);
                                 successResponse.setErrorCode(200);
                                 successResponse.setMessage("Fehlender Parameter \"hash\"");
+                                logger.warning(successResponse.getMessage());
                             }
-                            return gson.toJson(successResponse);
+                            json = gson.toJson(successResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         successResponse.setSuccess(false);
                         successResponse.setErrorCode(101);
                         successResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(successResponse);
+                        logger.warning(successResponse.getMessage());
+                        json = gson.toJson(successResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     successResponse.setSuccess(false);
                     successResponse.setErrorCode(100);
                     successResponse.setMessage("Ungültige Session");
-                    return gson.toJson(successResponse);
+                    logger.warning(successResponse.getMessage());
+                    json = gson.toJson(successResponse);
+                    logger.fine(json);
+                    return json;
 
                 case "addusergroup":
 
                     //Benutzergruppe erstellen
+                    logger.info("Benutzergruppe erstellen");
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
@@ -343,17 +400,20 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
 
                                                 //erfolgreich
                                                 successResponse.setSuccess(true);
+                                                logger.info("Benutzergruppe erstellt");
                                             } else {
 
                                                 //fehler
                                                 successResponse.setSuccess(false);
                                                 successResponse.setMessage("die Benutzergruppe konnte nicht erstellt werden");
+                                                logger.warning(successResponse.getMessage());
                                             }
                                         } else {
 
                                             //benutzer existiert bereits
                                             successResponse.setSuccess(false);
                                             successResponse.setMessage("die Benutzergruppe existiert bereits");
+                                            logger.warning(successResponse.getMessage());
                                         }
                                     }
                                 } else {
@@ -361,6 +421,7 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                     //ungültige Daten
                                     successResponse.setSuccess(false);
                                     successResponse.setMessage("ungültige Daten");
+                                    logger.warning(successResponse.getMessage());
                                 }
                             } else {
 
@@ -368,23 +429,33 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 successResponse.setSuccess(false);
                                 successResponse.setErrorCode(200);
                                 successResponse.setMessage("Fehlender Parameter \"data\"");
+                                logger.warning(successResponse.getMessage());
                             }
-                            return gson.toJson(successResponse);
+                            json = gson.toJson(successResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         successResponse.setSuccess(false);
                         successResponse.setErrorCode(101);
                         successResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(successResponse);
+                        logger.warning(successResponse.getMessage());
+                        json = gson.toJson(successResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     successResponse.setSuccess(false);
                     successResponse.setErrorCode(100);
                     successResponse.setMessage("Ungültige Session");
-                    return gson.toJson(successResponse);
+                    logger.warning(successResponse.getMessage());
+                    json = gson.toJson(successResponse);
+                    logger.fine(json);
+                    return json;
                 case "editeusergroup":
 
                     //Benutzergruppe bearbeiten
+                    logger.info("Benutzergruppe bearbeiten");
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
@@ -408,11 +479,13 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                             userGroup.getPermissions().addAll(userGroupData.getPermissions());
 
                                             successResponse.setSuccess(true);
+                                            logger.info("Benutzergruppe bearbeitet");
                                         } else {
 
                                             //benutzer existiert bereits
                                             successResponse.setSuccess(false);
                                             successResponse.setMessage("die Benutzergruppe existiert nicht");
+                                            logger.warning(successResponse.getMessage());
                                         }
                                     }
                                 } else {
@@ -420,6 +493,7 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                     //ungültige Daten
                                     successResponse.setSuccess(false);
                                     successResponse.setMessage("ungültige Daten");
+                                    logger.warning(successResponse.getMessage());
                                 }
                             } else {
 
@@ -427,23 +501,33 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 successResponse.setSuccess(false);
                                 successResponse.setErrorCode(200);
                                 successResponse.setMessage("Fehlender Parameter \"data\"");
+                                logger.warning(successResponse.getMessage());
                             }
-                            return gson.toJson(successResponse);
+                            json = gson.toJson(successResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         successResponse.setSuccess(false);
                         successResponse.setErrorCode(101);
                         successResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(successResponse);
+                        logger.warning(successResponse.getMessage());
+                        json = gson.toJson(successResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     successResponse.setSuccess(false);
                     successResponse.setErrorCode(100);
                     successResponse.setMessage("Ungültige Session");
-                    return gson.toJson(successResponse);
+                    logger.warning(successResponse.getMessage());
+                    json = gson.toJson(successResponse);
+                    logger.fine(json);
+                    return json;
                 case "deleteusergroup":
 
                     //Benutzergruppe löschen
+                    logger.info("Benutzergruppe löschen");
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
@@ -466,6 +550,7 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
 
                                                     //erfolgreich
                                                     successResponse.setSuccess(true);
+                                                    logger.info("Benutzergruppe gelöscht");
                                                 } else {
 
                                                     //fehler beim löschen
@@ -477,12 +562,14 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                                 //Systemgruppe
                                                 successResponse.setSuccess(false);
                                                 successResponse.setMessage("Die Benutzergruppe kann nicht gelöscht werden");
+                                                logger.warning(successResponse.getMessage());
                                             }
                                         } else {
 
                                             //ungültiger Benutzer
                                             successResponse.setSuccess(false);
                                             successResponse.setMessage("ungültige Benutzergruppe");
+                                            logger.warning(successResponse.getMessage());
                                         }
                                     }
                                 } else {
@@ -490,6 +577,7 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                     //ungültiger Hash
                                     successResponse.setSuccess(false);
                                     successResponse.setMessage("ungültiger Hash");
+                                    logger.warning(successResponse.getMessage());
                                 }
                             } else {
 
@@ -497,20 +585,29 @@ public class UserAdministartionRequestHandler extends AbstractRequestHandler {
                                 successResponse.setSuccess(false);
                                 successResponse.setErrorCode(200);
                                 successResponse.setMessage("Fehlender Parameter \"hash\"");
+                                logger.warning(successResponse.getMessage());
                             }
-                            return gson.toJson(successResponse);
+                            json = gson.toJson(successResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         successResponse.setSuccess(false);
                         successResponse.setErrorCode(101);
                         successResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(successResponse);
+                        logger.warning(successResponse.getMessage());
+                        json = gson.toJson(successResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     successResponse.setSuccess(false);
                     successResponse.setErrorCode(100);
                     successResponse.setMessage("Ungültige Session");
-                    return gson.toJson(successResponse);
+                    logger.warning(successResponse.getMessage());
+                    json = gson.toJson(successResponse);
+                    logger.fine(json);
+                    return json;
             }
         }
         return "";

@@ -23,8 +23,10 @@ import net.kleditzsch.shcCore.Core.BasicElement;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
 import net.kleditzsch.shcCore.User.Permissions;
 import net.kleditzsch.shcCore.User.User;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Automationsgeräte Verwaltung
@@ -34,6 +36,8 @@ import java.util.Map;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class AutomationDeviceHandler extends AbstractRequestHandler {
+
+    private static Logger logger = LoggerUtil.getLogger(AutomationDeviceHandler.class);
 
     /**
      * behandelt eine Anfrage
@@ -50,10 +54,12 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
             AutomationDeviceResponse automationDeviceResponse;
             SuccessResponse successResponse;
             User sessionUser = checkSession(params);
+            String json;
             switch (params.get("action")) {
 
                 case "listdevices":
 
+                    logger.info("Automatisierungsgeräte Listen");
                     automationDeviceResponse = new AutomationDeviceResponse();
                     if(sessionUser != null) {
 
@@ -72,21 +78,31 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
 
                             //Antwort
                             automationDeviceResponse.setSuccess(true);
-                            return gson.toJson(automationDeviceResponse);
+                            logger.info("Automatisierungsgeräte erfolgreich gelistet");
+                            json = gson.toJson(automationDeviceResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         automationDeviceResponse.setSuccess(false);
                         automationDeviceResponse.setErrorCode(101);
                         automationDeviceResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(automationDeviceResponse);
+                        logger.warning(automationDeviceResponse.getMessage());
+                        json = gson.toJson(automationDeviceResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     automationDeviceResponse.setSuccess(false);
                     automationDeviceResponse.setErrorCode(100);
                     automationDeviceResponse.setMessage("Ungültige Session");
-                    return gson.toJson(automationDeviceResponse);
+                    logger.warning(automationDeviceResponse.getMessage());
+                    json = gson.toJson(automationDeviceResponse);
+                    logger.fine(json);
+                    return json;
                 case "adddevice":
 
+                    logger.info("Automatisierungsgerät hinzufügen");
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
@@ -176,17 +192,20 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                     }
 
                                                     successResponse.setSuccess(true);
+                                                    logger.info("Automatisierungsgerät \"" + automationDevice.getName() + "\" erfolgreich erstellt");
                                                 } else {
 
                                                     //Hash schon vorhanden
                                                     successResponse.setSuccess(false);
                                                     successResponse.setMessage("Der Hash ist schon vorhanden");
+                                                    logger.warning(successResponse.getMessage());
                                                 }
                                             } else {
 
                                                 //Fehler ungültiger Hash
                                                 successResponse.setSuccess(false);
                                                 successResponse.setMessage("Ungültiger Hash");
+                                                logger.warning(successResponse.getMessage());
                                             }
                                         }
                                     } else {
@@ -194,12 +213,14 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                         //Fehler ungültige Daten
                                         successResponse.setSuccess(false);
                                         successResponse.setMessage("Ungültige Daten");
+                                        logger.warning(successResponse.getMessage());
                                     }
                                 } else {
 
                                     //Fehler ungältiger Typ
                                     successResponse.setSuccess(false);
                                     successResponse.setMessage("Ungültiger Typ");
+                                    logger.warning(successResponse.getMessage());
                                 }
                             } else {
 
@@ -207,22 +228,32 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                 successResponse.setSuccess(false);
                                 successResponse.setErrorCode(200);
                                 successResponse.setMessage("Fehlender Parameter \"data\" oder \"type\"");
+                                logger.warning(successResponse.getMessage());
                             }
-                            return gson.toJson(successResponse);
+                            json = gson.toJson(successResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         successResponse.setSuccess(false);
                         successResponse.setErrorCode(101);
                         successResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(successResponse);
+                        logger.warning(successResponse.getMessage());
+                        json = gson.toJson(successResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     successResponse.setSuccess(false);
                     successResponse.setErrorCode(100);
                     successResponse.setMessage("Ungültige Session");
-                    return gson.toJson(successResponse);
+                    logger.warning(successResponse.getMessage());
+                    json = gson.toJson(successResponse);
+                    logger.fine(json);
+                    return json;
                 case "editdevice":
 
+                    logger.info("Automatisierungsgerät bearbeiten");
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
@@ -429,11 +460,13 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                 knownDevice.setComment(automationDevice.getComment());
                                                 knownDevice.setDisabled(automationDevice.isDisabled());
                                                 successResponse.setSuccess(true);
+                                                logger.info("Automatisierungsgerät \"" + automationDevice.getName() + "\" erfolgreich bearbeitet");
                                             } else {
 
                                                 //Fehler ungültiges Element
                                                 successResponse.setSuccess(false);
                                                 successResponse.setMessage("Ungültiges Element");
+                                                logger.warning(successResponse.getMessage());
                                             }
                                         }
                                     } else {
@@ -441,12 +474,14 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                         //Fehler ungültige Daten
                                         successResponse.setSuccess(false);
                                         successResponse.setMessage("Ungültige Daten");
+                                        logger.warning(successResponse.getMessage());
                                     }
                                 } else {
 
                                     //Fehler ungältiger Typ
                                     successResponse.setSuccess(false);
                                     successResponse.setMessage("Ungültiger Typ");
+                                    logger.warning(successResponse.getMessage());
                                 }
                             } else {
 
@@ -454,22 +489,32 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                 successResponse.setSuccess(false);
                                 successResponse.setErrorCode(200);
                                 successResponse.setMessage("Fehlender Parameter \"hash\" oder \"type\"");
+                                logger.warning(successResponse.getMessage());
                             }
-                            return gson.toJson(successResponse);
+                            json = gson.toJson(successResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         successResponse.setSuccess(false);
                         successResponse.setErrorCode(101);
                         successResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(successResponse);
+                        logger.warning(successResponse.getMessage());
+                        json = gson.toJson(successResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     successResponse.setSuccess(false);
                     successResponse.setErrorCode(100);
                     successResponse.setMessage("Ungültige Session");
-                    return gson.toJson(successResponse);
+                    logger.warning(successResponse.getMessage());
+                    json = gson.toJson(successResponse);
+                    logger.fine(json);
+                    return json;
                 case "deletedevice":
 
+                    logger.info("Automatisierungsgerät löschen");
                     successResponse = new SuccessResponse();
                     if(sessionUser != null) {
 
@@ -504,17 +549,20 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                             }
                                             automationDeviceEditor.getAutomationDevices().remove(params.get("hash"));
                                             successResponse.setSuccess(true);
+                                            logger.info("Automatisierungsgerät \"" + automationDevice.getName() + "\" erfolgreich gelöscht");
                                         } else {
 
                                             //System Sensorwerte können nicht gelöscht werden
                                             successResponse.setSuccess(false);
                                             successResponse.setMessage("System Sensorwerte können nicht gelöscht werden");
+                                            logger.warning(successResponse.getMessage());
                                         }
                                     } else {
 
                                         //ungültiger Hash
                                         successResponse.setSuccess(false);
                                         successResponse.setMessage("ungültiger Hash");
+                                        logger.warning(successResponse.getMessage());
                                     }
                                 }
                             } else {
@@ -523,20 +571,29 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                 successResponse.setSuccess(false);
                                 successResponse.setErrorCode(200);
                                 successResponse.setMessage("Fehlender Parameter \"hash\"");
+                                logger.warning(successResponse.getMessage());
                             }
-                            return gson.toJson(successResponse);
+                            json = gson.toJson(successResponse);
+                            logger.fine(json);
+                            return json;
                         }
                         //nicht Berechtigt
                         successResponse.setSuccess(false);
                         successResponse.setErrorCode(101);
                         successResponse.setMessage("Fehlende Berechtigung");
-                        return gson.toJson(successResponse);
+                        logger.warning(successResponse.getMessage());
+                        json = gson.toJson(successResponse);
+                        logger.fine(json);
+                        return json;
                     }
                     //Ungültige Session
                     successResponse.setSuccess(false);
                     successResponse.setErrorCode(100);
                     successResponse.setMessage("Ungültige Session");
-                    return gson.toJson(successResponse);
+                    logger.warning(successResponse.getMessage());
+                    json = gson.toJson(successResponse);
+                    logger.fine(json);
+                    return json;
             }
         }
         return "";

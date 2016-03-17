@@ -21,6 +21,7 @@ import net.kleditzsch.shcCore.Json.LocalTimeSerializer;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
 import net.kleditzsch.shcCore.SwitchServer.RaspberryPiSwitchServer;
 import net.kleditzsch.shcCore.User.User;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import redis.clients.jedis.Jedis;
 
 import java.nio.file.Files;
@@ -35,6 +36,8 @@ import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Basisklasse
@@ -106,6 +109,11 @@ public class ShcApplicationServer {
     private RoomEditor roomEditor;
 
     /**
+     * Logger
+     */
+    private static Logger logger;
+
+    /**
      * Eintrittspunkt in die Anwendung
      *
      * @param args
@@ -123,11 +131,27 @@ public class ShcApplicationServer {
             return;
         }
 
-        //Debug Modus
+        //Debug Modus / Logger
         if(arguments.contains("-d") || arguments.contains("--Debug")) {
 
+            //Standard Log Level
             debug = true;
+            LoggerUtil.setLogLevel(Level.CONFIG);
+            LoggerUtil.setLogFileLevel(Level.CONFIG);
+        } else if(arguments.contains("-df") || arguments.contains("--Debug-Fine")) {
+
+            //Alle Log Daten ausgeben
+            LoggerUtil.setLogLevel(Level.FINEST);
+            LoggerUtil.setLogFileLevel(Level.FINEST);
+            debug = true;
+        } else {
+
+            //Fehler in Log Datei Schreiben
+            LoggerUtil.setLogLevel(Level.OFF);
+            LoggerUtil.setLogFileLevel(Level.SEVERE);
+            LoggerUtil.setLogFile(Paths.get("error.log"));
         }
+        logger = LoggerUtil.getLogger(ShcApplicationServer.class);
 
         //Datenbank Konfiguration
         Path dbConfigFile = Paths.get("db.config.json");
@@ -168,6 +192,7 @@ public class ShcApplicationServer {
         scheduledExecutorService.scheduleAtFixedRate((Runnable) () -> {
 
             ShcApplicationServer.getInstance().saveApplicationData();
+            logger.info("Daten in Datenbank gespeichert");
         },
                 30, //Startverzögerung
                 30, //Intervall
@@ -189,11 +214,7 @@ public class ShcApplicationServer {
         //Daten laden
         initData();
 
-        //Info komplett durchlaufen
-        if(isDebug()) {
-
-            System.out.println("Initialisierung beendet");
-        }
+        logger.info("Initialisierung abgeschlossen");
     }
 
     /**

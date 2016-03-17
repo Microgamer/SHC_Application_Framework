@@ -1,8 +1,11 @@
 package net.kleditzsch.shcApplicationServer.HTTPInterface;
 
 import fi.iki.elonen.NanoHTTPD;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Server Thread
@@ -12,6 +15,8 @@ import java.io.IOException;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class ServerRunnable implements Runnable {
+
+    private static Logger logger = LoggerUtil.getLogger(ServerRunnable.class);
 
     /**
      * When an object implementing interface <code>Runnable</code> is used
@@ -31,9 +36,10 @@ public class ServerRunnable implements Runnable {
 
             HttpServer server = new HttpServer();
             server.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
-            System.out.println("HTTPs Server auf Port " + server.getListeningPort() + " erfolgreich gestartet");
+            logger.info("HTTPs Server auf Port " + server.getListeningPort() + " erfolgreich gestartet");
         } catch (IOException e) {
-            e.printStackTrace();
+
+            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
     }
 }

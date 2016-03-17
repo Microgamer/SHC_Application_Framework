@@ -5,10 +5,12 @@ import fi.iki.elonen.NanoHTTPD;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.*;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * HTTP Server
@@ -18,6 +20,8 @@ import java.util.Map;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class HttpServer extends NanoHTTPD {
+
+    private static Logger logger = LoggerUtil.getLogger(HttpServer.class);
 
     public HttpServer() throws IOException {
 
@@ -34,6 +38,7 @@ public class HttpServer extends NanoHTTPD {
     public Response serve(IHTTPSession session) {
 
         RequestHandler requestHandler = null;
+        logger.info("HTTP Anfrage: " + session.getUri() + "?" + session.getQueryParameterString());
         switch (session.getUri()) {
 
             case "/handshake":
@@ -63,6 +68,7 @@ public class HttpServer extends NanoHTTPD {
             default:
 
                 //Unbekannte Anfrage
+                logger.warning("Unbekannte Anfrage");
                 return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/test", "Fehlerhafte Anfrage");
         }
 
@@ -73,8 +79,12 @@ public class HttpServer extends NanoHTTPD {
             try {
                 session.parseBody(post);
             } catch (IOException ioe) {
+
+                logger.warning("POST Daten Lesen fehlgeschlagen -> " + ioe.getLocalizedMessage());
                 return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "SERVER INTERNAL ERROR: IOException: " + ioe.getMessage());
             } catch (ResponseException re) {
+
+                logger.warning("POST Daten Lesen fehlgeschlagen -> " + re.getLocalizedMessage());
                 return newFixedLengthResponse(re.getStatus(), MIME_PLAINTEXT, re.getMessage());
             }
         }
@@ -84,6 +94,7 @@ public class HttpServer extends NanoHTTPD {
         String response = requestHandler.handleRequest(session.getParms(), gson);
         if(response.equals("")) {
 
+            logger.warning("Ungültige Anfrage");
             return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "SERVER INTERNAL ERROR: unknown request");
         }
         return newFixedLengthResponse(response);

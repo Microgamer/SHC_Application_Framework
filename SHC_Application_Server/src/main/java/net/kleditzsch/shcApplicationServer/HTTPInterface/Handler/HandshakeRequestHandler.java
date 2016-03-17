@@ -6,8 +6,10 @@ import net.kleditzsch.shcApplicationServer.DeviceManager.ClientDevice;
 import net.kleditzsch.shcApplicationServer.DeviceManager.DeviceManager;
 import net.kleditzsch.shcCore.ClientData.Login.Handshake;
 import net.kleditzsch.shcApplicationServer.HTTPInterface.RequestHandler;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Handshake Anfrage
@@ -17,6 +19,8 @@ import java.util.Map;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class HandshakeRequestHandler implements RequestHandler {
+
+    private static Logger logger = LoggerUtil.getLogger(HandshakeRequestHandler.class);
 
     /**
      * behandelt eine Anfrage
@@ -32,6 +36,7 @@ public class HandshakeRequestHandler implements RequestHandler {
         handshake.setClientHash(params.get("clientHash"));
         handshake.setUserAgent(params.get("userAgent"));
 
+        logger.info("Handshake ");
         if(handshake.getClientHash() != null && handshake.getClientHash().length() > 20 && handshake.getUserAgent() != null) {
 
             DeviceManager deviceManager = ShcApplicationServer.getInstance().getDeviceManager();
@@ -52,12 +57,14 @@ public class HandshakeRequestHandler implements RequestHandler {
 
                     handshake.setSuccess(true);
                     handshake.setKnown(false);
+                    logger.info("Handshake erfolgreich");
                 } else {
 
                     //bekanntes Gerät
                     handshake.setSuccess(false);
                     handshake.setKnown(true);
                     handshake.setMessage("Das Gerät ist bereits bekannt");
+                    logger.warning(handshake.getMessage());
                 }
             }
         } else {
@@ -65,7 +72,10 @@ public class HandshakeRequestHandler implements RequestHandler {
             handshake.setSuccess(false);
             handshake.setErrorCode(200);
             handshake.setMessage("Parameter fehler!");
+            logger.warning(handshake.getMessage());
         }
-        return gson.toJson(handshake);
+        String json = gson.toJson(handshake);
+        logger.fine(json);
+        return json;
     }
 }

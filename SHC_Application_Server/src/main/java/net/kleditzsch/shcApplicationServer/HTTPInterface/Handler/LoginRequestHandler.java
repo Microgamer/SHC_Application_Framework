@@ -10,11 +10,13 @@ import net.kleditzsch.shcCore.ClientData.Login.LoginResponse;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
 import net.kleditzsch.shcCore.User.Permissions;
 import net.kleditzsch.shcCore.User.User;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Login Anfrage
@@ -24,6 +26,8 @@ import java.util.Set;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class LoginRequestHandler implements RequestHandler {
+
+    private static Logger logger = LoggerUtil.getLogger(LoginRequestHandler.class);
 
     /**
      * behandelt eine Anfrage
@@ -37,17 +41,22 @@ public class LoginRequestHandler implements RequestHandler {
 
         String challangeResponse = params.get("challangeResponse");
         SessionEditor sessionEditor = ShcApplicationServer.getInstance().getSessionEditor();
+        String json;
         if(challangeResponse == null) {
 
             //Chalange erzeugen
+            logger.info("Challange angefragt");
             String challange = BasicElement.createHash().substring(0, 15);
             ShcApplicationServer.getInstance().getSessionEditor().getChallenges().add(challange);
+            logger.info("Challange: " + challange);
             return challange;
         } else {
 
             LoginResponse loginResponse = new LoginResponse();
 
             //Challange Response prüfen
+
+            logger.info("Login angefragt");
             Set<String> challenges = ShcApplicationServer.getInstance().getSessionEditor().getChallenges();
             for(String challange : challenges) {
 
@@ -95,20 +104,29 @@ public class LoginRequestHandler implements RequestHandler {
 
                                                 loginResponse.setSuccess(true);
                                                 loginResponse.setSessionId(sessionId);
-                                                return gson.toJson(loginResponse);
+                                                logger.info("Login erfolgreich");
+                                                json = gson.toJson(loginResponse);
+                                                logger.fine(json);
+                                                return json;
                                             } else {
 
                                                 //Zutritt für dieses Gerät verweigert
                                                 loginResponse.setSuccess(false);
                                                 loginResponse.setMessage("Zutritt verweigert");
                                                 sessionEditor.getChallenges().remove(challange);
-                                                return gson.toJson(loginResponse);
+                                                logger.warning(loginResponse.getMessage());
+                                                json = gson.toJson(loginResponse);
+                                                logger.fine(json);
+                                                return json;
                                             }
                                         }
                                         loginResponse.setSuccess(false);
                                         loginResponse.setMessage("ungültiges Gerät");
                                         sessionEditor.getChallenges().remove(challange);
-                                        return gson.toJson(loginResponse);
+                                        logger.warning(loginResponse.getMessage());
+                                        json = gson.toJson(loginResponse);
+                                        logger.fine(json);
+                                        return json;
                                     }
                                 } catch (NoSuchAlgorithmException e) {
 
@@ -116,7 +134,10 @@ public class LoginRequestHandler implements RequestHandler {
                                     loginResponse.setSuccess(false);
                                     loginResponse.setMessage("Server Fehler");
                                     sessionEditor.getChallenges().remove(challange);
-                                    return gson.toJson(loginResponse);
+                                    logger.warning(loginResponse.getMessage());
+                                    json = gson.toJson(loginResponse);
+                                    logger.fine(json);
+                                    return json;
                                 }
                             }
                         }
@@ -125,21 +146,30 @@ public class LoginRequestHandler implements RequestHandler {
                         loginResponse.setSuccess(false);
                         loginResponse.setMessage("Login ungültig");
                         sessionEditor.getChallenges().remove(challange);
-                        return gson.toJson(loginResponse);
+                        logger.warning(loginResponse.getMessage());
+                        json = gson.toJson(loginResponse);
+                        logger.fine(json);
+                        return json;
                     } else {
 
                         //Fehler Unbekannter Benutzer
                         loginResponse.setSuccess(false);
                         loginResponse.setMessage("Unbekannter Benutzer");
                         sessionEditor.getChallenges().remove(challange);
-                        return gson.toJson(loginResponse);
+                        logger.warning(loginResponse.getMessage());
+                        json = gson.toJson(loginResponse);
+                        logger.fine(json);
+                        return json;
                     }
                 }
             }
             //Fehler Unbekannter Benutzer
             loginResponse.setSuccess(false);
             loginResponse.setMessage("ungültige Challange");
-            return gson.toJson(loginResponse);
+            logger.warning(loginResponse.getMessage());
+            json = gson.toJson(loginResponse);
+            logger.fine(json);
+            return json;
         }
     }
 }
