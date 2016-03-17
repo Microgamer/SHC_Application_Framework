@@ -59,11 +59,6 @@ public class ShcApplicationServer {
     private static ShcApplicationServer instance;
 
     /**
-     * Debug Modus Aktiv?
-     */
-    private static boolean debug = false;
-
-    /**
      * Datenbankverbindung
      */
     private Jedis redis;
@@ -135,7 +130,6 @@ public class ShcApplicationServer {
         if(arguments.contains("-d") || arguments.contains("--Debug")) {
 
             //Standard Log Level
-            debug = true;
             LoggerUtil.setLogLevel(Level.CONFIG);
             LoggerUtil.setLogFileLevel(Level.CONFIG);
         } else if(arguments.contains("-df") || arguments.contains("--Debug-Fine")) {
@@ -143,7 +137,6 @@ public class ShcApplicationServer {
             //Alle Log Daten ausgeben
             LoggerUtil.setLogLevel(Level.FINEST);
             LoggerUtil.setLogFileLevel(Level.FINEST);
-            debug = true;
         } else {
 
             //Fehler in Log Datei Schreiben
@@ -381,14 +374,5 @@ public class ShcApplicationServer {
      */
     public static ShcApplicationServer getInstance() {
         return instance;
-    }
-
-    /**
-     * gibt an ob der Debug Modus aktiv ist
-     *
-     * @return true wenn aktiv
-     */
-    public static boolean isDebug() {
-        return debug;
     }
 }
