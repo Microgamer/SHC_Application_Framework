@@ -15,7 +15,7 @@ public class ConnectionService extends ScheduledService<Boolean> {
 
     public ConnectionService() {
         super();
-        setPeriod(Duration.seconds(1));
+        setPeriod(Duration.millis(100));
     }
 
     /**
