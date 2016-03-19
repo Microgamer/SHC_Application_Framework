@@ -160,7 +160,7 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         automationDeviceEditor.getAutomationDevices().put(temp.getHash(), temp);
                                                         automationDeviceEditor.getAutomationDevices().put(power.getHash(), power);
                                                         automationDeviceEditor.getAutomationDevices().put(energy.getHash(), energy);
-                                                    } else if(automationDevice instanceof EdimaxSocket) {
+                                                    } else if(automationDevice instanceof EdimaxSocket && ((EdimaxSocket) automationDevice).getSocketType() == EdimaxSocket.TYPE_SP_2101W) {
 
                                                         //Sensorwerte erstellen
                                                         ActualPowerValue power = new ActualPowerValue();
@@ -343,7 +343,7 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                         konwnEdimaxSocket.setInverse(automationDeviceEdimaxSocket.isInverse());
 
                                                         //Sensorwerte ggf. mit umbenennen
-                                                        if(!konwnEdimaxSocket.getName().equals(automationDevice.getName())) {
+                                                        if(!konwnEdimaxSocket.getName().equals(automationDevice.getName()) && konwnEdimaxSocket.getSocketType() == EdimaxSocket.TYPE_SP_2101W) {
 
                                                             ActualPowerValue power = (ActualPowerValue) automationDeviceEditor.getSensorValueByHash(konwnEdimaxSocket.getPowerSensorHash());
                                                             EnergyValue energy = (EnergyValue) automationDeviceEditor.getSensorValueByHash(konwnEdimaxSocket.getEnergySensorHash());
@@ -541,7 +541,7 @@ public class AutomationDeviceHandler extends AbstractRequestHandler {
                                                 automationDeviceEditor.getAutomationDevices().remove(((AvmSocket) automationDevice).getTempSensorHash());
                                                 automationDeviceEditor.getAutomationDevices().remove(((AvmSocket) automationDevice).getPowerSensorHash());
                                                 automationDeviceEditor.getAutomationDevices().remove(((AvmSocket) automationDevice).getEnergySensorHash());
-                                            } else if(automationDevice instanceof EdimaxSocket) {
+                                            } else if(automationDevice instanceof EdimaxSocket && ((EdimaxSocket) automationDevice).getSocketType() == EdimaxSocket.TYPE_SP_2101W) {
 
                                                 //Sensorwerte löschen
                                                 automationDeviceEditor.getAutomationDevices().remove(((EdimaxSocket) automationDevice).getPowerSensorHash());

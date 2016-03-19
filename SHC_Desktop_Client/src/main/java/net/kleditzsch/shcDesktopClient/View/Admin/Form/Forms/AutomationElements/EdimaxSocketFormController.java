@@ -151,6 +151,10 @@ public class EdimaxSocketFormController {
             edimaxSocket.setHash(edimaxSocket.createHash());
             edimaxSocket.setUsername("admin");
             edimaxSocket.setPassword("1234");
+        } else {
+
+            //wenn element bearbeitet wurd kann der Typ nicht mehr geändert werden
+            inputType.setDisable(true);
         }
 
         //Daten setzen
