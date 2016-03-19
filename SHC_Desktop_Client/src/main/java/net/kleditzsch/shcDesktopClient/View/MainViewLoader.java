@@ -3,9 +3,12 @@ package net.kleditzsch.shcDesktopClient.View;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import net.kleditzsch.Ui.UiDialogHelper;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Lädt die Panes der Main view
@@ -15,6 +18,8 @@ import java.io.IOException;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public abstract class MainViewLoader {
+
+    private static Logger logger = LoggerUtil.getLogger(MainViewLoader.class);
 
     /**
      * lädt die Login View
@@ -85,9 +90,10 @@ public abstract class MainViewLoader {
 
             pane = loader.load();
             ShcDesktopClient.getInstance().getMainViewController().getMainPane().setCenter(pane);
+            logger.info("FXML Datei \"" + loaction +"\" geladen");
         } catch (IOException e1) {
 
-            e1.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + loaction +"\" fehlgeschlagen", e1);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
     }

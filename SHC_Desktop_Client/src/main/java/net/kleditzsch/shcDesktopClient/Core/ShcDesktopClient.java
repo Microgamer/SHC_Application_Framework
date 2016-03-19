@@ -23,15 +23,20 @@ import net.kleditzsch.shcCore.Json.AutomationDeviceResponseSerializer;
 import net.kleditzsch.shcCore.Json.LocalDateSerializer;
 import net.kleditzsch.shcCore.Json.LocalDateTimeSerializer;
 import net.kleditzsch.shcCore.Json.LocalTimeSerializer;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
 import net.kleditzsch.shcDesktopClient.Service.ConnectionService;
 import net.kleditzsch.shcDesktopClient.Settings.Settings;
 import net.kleditzsch.shcDesktopClient.View.MainViewController;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ShcDesktopClient extends Application {
 
@@ -75,8 +80,34 @@ public class ShcDesktopClient extends Application {
      */
     protected static ShcDesktopClient instance;
 
+    /**
+     * Logger
+     */
+    private static Logger logger;
+
     @Override
     public void start(Stage primaryStage) {
+
+        //Debug Modus / Logger
+        List<String> arguments = getParameters().getRaw();
+        if(arguments.contains("-d") || arguments.contains("--Debug")) {
+
+            //Standard Log Level
+            LoggerUtil.setLogLevel(Level.CONFIG);
+            LoggerUtil.setLogFileLevel(Level.CONFIG);
+        } else if(arguments.contains("-df") || arguments.contains("--Debug-Fine")) {
+
+            //Alle Log Daten ausgeben
+            LoggerUtil.setLogLevel(Level.FINEST);
+            LoggerUtil.setLogFileLevel(Level.FINEST);
+        } else {
+
+            //Fehler in Log Datei Schreiben
+            LoggerUtil.setLogLevel(Level.OFF);
+            LoggerUtil.setLogFileLevel(Level.SEVERE);
+            LoggerUtil.setLogFile(Paths.get(System.getProperty("user.home"), ".shcDesktopApp", "error.log"));
+        }
+        logger = LoggerUtil.getLogger(ShcDesktopClient.class);
 
         //Initalisieren
         ShcDesktopClient.instance = this;
@@ -131,6 +162,7 @@ public class ShcDesktopClient extends Application {
             //Fenster Anzeigen
             primaryStage.show();
             primaryStage.toFront();
+            logger.info("Hauptfenster geladen");
 
             //Listener für das Schliesen
             primaryStage.setOnCloseRequest(e -> {
@@ -141,6 +173,7 @@ public class ShcDesktopClient extends Application {
                     saveAndExit();
                     Platform.exit();
                 //}
+                //e.consume();
             });
 
         } catch (IOException e) {
@@ -153,6 +186,7 @@ public class ShcDesktopClient extends Application {
         connectionService.setRestartOnFailure(true);
         connectionService.setMaximumFailureCount(5);
         connectionService.start();
+        logger.info("Connection Service gestartet");
     }
 
     /**
@@ -174,7 +208,7 @@ public class ShcDesktopClient extends Application {
             Platform.exit();
         }
 
-
+        logger.info("Desktop App initalisiert");
     }
 
     /**
@@ -237,9 +271,10 @@ public class ShcDesktopClient extends Application {
             try {
 
                 settings.dump();
+                logger.info("Anwendungseinstellungen gespeichert");
             } catch (IOException e1) {
 
-                UiDialogHelper.showExceptionDialog(primaryStage, e1);
+                logger.log(Level.SEVERE, "Anwendungseinstellungen speichern fehlgeschlagen", e1);
             }
         }
     }

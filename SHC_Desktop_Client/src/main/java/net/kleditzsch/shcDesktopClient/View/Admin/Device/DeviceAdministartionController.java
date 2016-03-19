@@ -5,6 +5,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
@@ -19,6 +20,7 @@ import javafx.stage.WindowEvent;
 import net.kleditzsch.shcCore.ClientData.Device.DeviceData;
 import net.kleditzsch.shcCore.ClientData.Device.DeviceResponse;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
 import net.kleditzsch.shcDesktopClient.View.MainViewLoader;
@@ -32,6 +34,8 @@ import org.controlsfx.control.MaskerPane;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class DeviceAdministartionController {
+
+    private static Logger logger = LoggerUtil.getLogger(DeviceAdministartionController.class);
 
     private static class AllowedCell extends TableCell<DeviceData, Boolean> {
 
@@ -165,10 +169,12 @@ public class DeviceAdministartionController {
                     if (successResponse.isSuccess()) {
 
                         UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich aktiviert");
+                        logger.info("Gerät aktiviert");
                         update();
                     } else {
 
                         UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät aktivieren fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Gerät nicht aktiviert -> " + successResponse.getMessage());
                         if (successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -215,11 +221,13 @@ public class DeviceAdministartionController {
 
                     if(successResponse.isSuccess()) {
 
-                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich aktiviert");
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich deaktiviert");
+                        logger.info("Gerät deaktiviert");
                         update();
                     } else {
 
                         UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät aktivieren fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Gerät nicht deaktiviert -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -267,10 +275,12 @@ public class DeviceAdministartionController {
                     if(successResponse.isSuccess()) {
 
                         UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich gelöscht");
+                        logger.info("Gerät gelöscht");
                         update();
                     } else {
 
                         UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät löschen fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Gerät nicht gelöscht -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -397,10 +407,12 @@ public class DeviceAdministartionController {
                     menuButtonAllow.setDisable(false);
                     menuButtonDenied.setDisable(false);
                     menuButtonDelete.setDisable(false);
+                    logger.info("Geräte gelistet");
 
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", deviceResponse.getMessage());
+                    logger.warning("Geräte nicht gelistet -> " + deviceResponse.getMessage());
                     if (deviceResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
@@ -17,6 +18,7 @@ import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserAdministrationResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
 import net.kleditzsch.shcDesktopClient.View.Admin.Form.FormDialogManager;
@@ -31,6 +33,8 @@ import org.controlsfx.control.MaskerPane;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class UserGroupAdminstration {
+
+    private static Logger logger = LoggerUtil.getLogger(UserGroupAdminstration.class);
 
     private static class SystemCell extends TableCell<UserGroupData, Boolean> {
 
@@ -145,10 +149,12 @@ public class UserGroupAdminstration {
                     if(successResponse.isSuccess()) {
 
                         UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich erstellt");
+                        logger.info("Benutzergruppe erstellt");
                         update();
                     } else {
 
                         UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe erstellen fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Benutzergruppe nicht erstellt -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -197,10 +203,12 @@ public class UserGroupAdminstration {
                     if(successResponse.isSuccess()) {
 
                         UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich gelöscht");
+                        logger.info("Benutzergruppe gelöscht");
                         update();
                     } else {
 
                         UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe löschen fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Benutzergruppe nicht gelöscht -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -250,10 +258,12 @@ public class UserGroupAdminstration {
                     if(successResponse.isSuccess()) {
 
                         UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich bearbeitet");
+                        logger.info("Benutzergruppe bearbeitet");
                         update();
                     } else {
 
                         UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe bearbeiten fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Benutzergruppe nicht bearbeitet -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -351,10 +361,12 @@ public class UserGroupAdminstration {
                     menuButtonCreateGroup.setDisable(false);
                     menuButtonEditGroup.setDisable(false);
                     menuButtonDeleteGroup.setDisable(false);
+                    logger.info("Benutzergruppen gelistet");
 
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", userAdministrationResponse.getMessage());
+                    logger.warning("Benutzergruppen listen fehlgeschlagen -> " + userAdministrationResponse.getMessage());
                     if(userAdministrationResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();

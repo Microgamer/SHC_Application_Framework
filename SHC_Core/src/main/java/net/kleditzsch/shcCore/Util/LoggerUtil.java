@@ -160,8 +160,11 @@ public class LoggerUtil {
             logFileHandler.setLevel(logFileLevel);
             logger.addHandler(logFileHandler);
         }
-        consoleHandler.setLevel(logLevel);
-        logger.addHandler(consoleHandler);
+        if(logLevel != Level.OFF) {
+
+            consoleHandler.setLevel(logLevel);
+            logger.addHandler(consoleHandler);
+        }
         logger.setLevel(logLevel);
         logger.setUseParentHandlers(false);
         return logger;

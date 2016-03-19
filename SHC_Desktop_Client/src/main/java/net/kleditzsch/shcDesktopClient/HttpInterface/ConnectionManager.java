@@ -14,6 +14,7 @@ import net.kleditzsch.shcCore.ClientData.User.UserAdministrationResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserData;
 import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Settings.Settings;
 import net.kleditzsch.shcDesktopClient.View.MainViewController;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Verbindungsmanager
@@ -34,6 +36,8 @@ import java.util.Set;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class ConnectionManager {
+
+    private static Logger logger = LoggerUtil.getLogger(ConnectionManager.class);
 
     /**
      * Hilfsklasse für HTTP ANfragen an den Server
@@ -132,6 +136,7 @@ public class ConnectionManager {
     public Handshake sendHandshake(String clientHash, String userAgent) throws IOException {
 
         String response = requestUtil.sendHandshake(clientHash, userAgent);
+        logger.fine("Handshake Response -> " + response);
         return gson.fromJson(response, Handshake.class);
     }
 
@@ -143,7 +148,9 @@ public class ConnectionManager {
      */
     public String getLoginChallange() throws IOException {
 
-        return requestUtil.getLoginChallange();
+        String challange = requestUtil.getLoginChallange();
+        logger.fine("Login Challange -> " + challange);
+        return challange;
     }
 
     /**
@@ -156,6 +163,7 @@ public class ConnectionManager {
     public LoginResponse sendLogin(String challangeResponse) throws IOException {
 
         String response = requestUtil.sendLoginRequest(challangeResponse);
+        logger.fine("Login Response -> " + response);
         return gson.fromJson(response, LoginResponse.class);
     }
 
@@ -205,6 +213,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.getUsersAndGroups(this.sessionId);
             updateLastContact();
+            logger.fine("UserAdministration Response -> " + response);
             return gson.fromJson(response, UserAdministrationResponse.class);
         }
         return null;
@@ -223,6 +232,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.addUser(gson.toJson(userData), this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -241,6 +251,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.editUser(gson.toJson(userData), this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -259,6 +270,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.deleteUser(userData, this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -277,6 +289,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.addUserGroup(gson.toJson(userGroupData), this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -295,6 +308,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.editUserGroup(gson.toJson(userGroupData), this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -313,6 +327,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.deleteUserGroup(userGroupData, this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -330,6 +345,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.getDevices(this.sessionId);
             updateLastContact();
+            logger.fine("Device Response -> " + response);
             return gson.fromJson(response, DeviceResponse.class);
         }
         return null;
@@ -348,6 +364,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.allowDevice(deviceData, this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -366,6 +383,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.denyDevice(deviceData, this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -384,6 +402,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.deleteDevice(deviceData, this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -401,6 +420,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.getSettings(this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SettingsResponse.class);
         }
         return null;
@@ -419,6 +439,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.setSettings(gson.toJson(settingsRequest), this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -436,6 +457,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.getAutomationDevices(this.sessionId);
             updateLastContact();
+            logger.fine("Automationsgeräte Response -> " + response);
             return gson.fromJson(response, AutomationDeviceResponse.class);
         }
         return null;
@@ -453,6 +475,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.addAutomationDevice(gson.toJson(automationDevice), automationDevice.getType(), this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -470,6 +493,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.editAutomationDevice(gson.toJson(automationDevice), automationDevice.getType(), this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -487,6 +511,7 @@ public class ConnectionManager {
 
             String response = this.requestUtil.deleteAutomationDevice(automationDevice.getHash(), this.sessionId);
             updateLastContact();
+            logger.fine("Success Response -> " + response);
             return gson.fromJson(response, SuccessResponse.class);
         }
         return null;
@@ -517,6 +542,7 @@ public class ConnectionManager {
 
         sessionId = "";
         lastContact = null;
+        logger.info("Session invalid");
     }
 
     /**
@@ -535,5 +561,6 @@ public class ConnectionManager {
         sessionId = "";
         lastContact = null;
         userPermissions.clear();
+        logger.info("Session abgerochen");
     }
 }

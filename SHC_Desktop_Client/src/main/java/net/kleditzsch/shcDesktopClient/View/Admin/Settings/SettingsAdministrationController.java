@@ -3,6 +3,8 @@ package net.kleditzsch.shcDesktopClient.View.Admin.Settings;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
@@ -20,6 +22,7 @@ import net.kleditzsch.shcCore.Settings.DoubleSetting;
 import net.kleditzsch.shcCore.Settings.IntegerSetting;
 import net.kleditzsch.shcCore.Settings.StringSetting;
 import net.kleditzsch.shcCore.User.Permissions;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Settings.Settings;
 import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
@@ -34,6 +37,8 @@ import org.controlsfx.control.MaskerPane;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class SettingsAdministrationController {
+
+    private static Logger logger = LoggerUtil.getLogger(SettingsAdministrationController.class);
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -415,6 +420,7 @@ public class SettingsAdministrationController {
         inputUserAgent.setText(ShcDesktopClient.getInstance().getUserAgent());
         inputUserName.setText(settings.getStringSetting(Settings.SETTING_SERVER_USER).getValue());
         inputUserHash.setText(settings.getStringSetting(Settings.SETTING_SERVER_IDENTIFIER).getValue());
+        logger.info("Anwendungseinstellungen geladen");
     }
 
     /**
@@ -435,10 +441,11 @@ public class SettingsAdministrationController {
         try {
 
             settings.dump();
-
+            logger.info("Anwendungseinstellungen gespeichert");
             UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "App Einstellungen", "Die App Einstellungen wurden erfolgreich gespeichert");
         } catch (IOException e) {
 
+            logger.log(Level.SEVERE, "Anwendungseinstellungen nicht gespeichert", e);
             UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "App Einstellungen", "Die App Einstellungen konnten nicht gespeichert werden");
         }
     }
@@ -492,10 +499,12 @@ public class SettingsAdministrationController {
 
                     maskerPane.setVisible(false);
                     buttonSave.setDisable(false);
+                    logger.info("Server Einstellungen geladen");
 
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", settingsResponse.getMessage());
+                    logger.warning("Server Einstellungen nicht geladen -> " + settingsResponse.getMessage());
                     if(settingsResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -589,10 +598,12 @@ public class SettingsAdministrationController {
                     buttonSave.setDisable(false);
 
                     //Erfolgsmeldung
+                    logger.info("Server EInstellungen gespeichert");
                     UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "App Einstellungen", "Die Server Einstellungen wurden erfolgreich gespeichert");
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "App Einstellungen", "Die Server Einstellungen konnten nicht gespeichert werden");
+                    logger.warning("Server Einstellungen nicht gespeichert -> " + successResponse.getMessage());
                     if(successResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();

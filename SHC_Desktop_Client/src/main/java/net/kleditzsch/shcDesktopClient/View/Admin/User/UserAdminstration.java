@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
@@ -18,6 +19,7 @@ import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserAdministrationResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserData;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
 import net.kleditzsch.shcDesktopClient.View.Admin.Form.FormDialogManager;
@@ -32,6 +34,8 @@ import org.controlsfx.control.MaskerPane;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class UserAdminstration {
+
+    private static Logger logger = LoggerUtil.getLogger(UserAdminstration.class);
 
     private static class OriginatorCell extends TableCell<UserData, Boolean> {
 
@@ -154,10 +158,12 @@ public class UserAdminstration {
                     if(successResponse.isSuccess()) {
 
                         UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich erstellt");
+                        logger.info("Benutzer erstellt");
                         update();
                     } else {
 
                         UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer erstellen fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Benutzer nicht erstellt -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -211,10 +217,12 @@ public class UserAdminstration {
                     if(successResponse.isSuccess()) {
 
                         UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich gelöscht");
+                        logger.info("Benutzer gelöscht");
                         update();
                     } else {
 
                         UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer löschen fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Benutzer nicht gelöscht -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -269,10 +277,12 @@ public class UserAdminstration {
                     if(successResponse.isSuccess()) {
 
                         UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich bearbeitet");
+                        logger.info("Beuntzer bearbeitet");
                         update();
                     } else {
 
                         UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer bearbeiten fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Benutzer nicht bearbeitet -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -373,10 +383,12 @@ public class UserAdminstration {
                     menuButtonCreateUser.setDisable(false);
                     menuButtonEditUser.setDisable(false);
                     menuButtonDeleteUser.setDisable(false);
+                    logger.info("Benutzer gelistet");
 
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", userAdministrationResponse.getMessage());
+                    logger.warning("Benutzer listen fehlgeschlagen -> " + userAdministrationResponse.getMessage());
                     if(userAdministrationResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();

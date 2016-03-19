@@ -18,6 +18,7 @@ import net.kleditzsch.shcCore.ClientData.User.UserData;
 import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 import net.kleditzsch.shcCore.Room.Elements.Sensor;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.AutomationElements.*;
 import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.User.UserFormController;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Dialogverwaltung
@@ -37,6 +40,8 @@ import java.util.Optional;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public abstract class FormDialogManager {
+
+    private static Logger logger = LoggerUtil.getLogger(FormDialogManager.class);
 
     /**
      * erzeugt ein Modales Dialogfenster
@@ -61,7 +66,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<UserData> showUserDataDialog(UserData userData, List<UserGroupData> userGroupDataList) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/User/UserForm.fxml"));
+        String location = "FXML/Admin/Form/User/UserForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -73,6 +79,7 @@ public abstract class FormDialogManager {
             userFormController.setGroups(userGroupDataList);
             userFormController.setUser(userData);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!userFormController.isCanceld()) {
 
@@ -80,7 +87,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -95,7 +102,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<UserGroupData> showUserGroupDataDialog(UserGroupData userGroupData, List<String> permissions) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/User/UserGroupForm.fxml"));
+        String location = "FXML/Admin/Form/User/UserGroupForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -107,6 +115,7 @@ public abstract class FormDialogManager {
             userGroupFormController.setPermissionList(permissions);
             userGroupFormController.setUserGroupData(userGroupData);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!userGroupFormController.isCanceld()) {
 
@@ -114,7 +123,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -128,7 +137,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<UserAtHome> showUserAtHomeDialog(UserAtHome userAtHome) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/UserAtHomeForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/UserAtHomeForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -139,6 +149,7 @@ public abstract class FormDialogManager {
             UserAtHomeFormController userAtHomeFormController = loader.getController();
             userAtHomeFormController.setElement(userAtHome);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!userAtHomeFormController.isCanceld()) {
 
@@ -146,7 +157,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -161,7 +172,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<Input> showInputDialog(Input input, Map<String, SwitchServer> switchServers) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/InputForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/InputForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -173,6 +185,7 @@ public abstract class FormDialogManager {
             inputFormController.setSwitchServers(switchServers);
             inputFormController.setElement(input);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!inputFormController.isCanceld()) {
 
@@ -180,7 +193,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -195,7 +208,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<Output> showOutputDialog(Output output, Map<String, SwitchServer> switchServers) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/OutputForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/OutputForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -207,6 +221,7 @@ public abstract class FormDialogManager {
             outputFormController.setSwitchServers(switchServers);
             outputFormController.setElement(output);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!outputFormController.isCanceld()) {
 
@@ -214,7 +229,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -228,7 +243,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<AvmSocket> showAvmSocketDialog(AvmSocket avmSocket) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/AvmSocketForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/AvmSocketForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -239,6 +255,7 @@ public abstract class FormDialogManager {
             AvmSocketController avmSocketController = loader.getController();
             avmSocketController.setElement(avmSocket);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!avmSocketController.isCanceld()) {
 
@@ -246,7 +263,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -260,7 +277,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<EdimaxSocket> showEdimaxSocketDialog(EdimaxSocket edimaxSocket) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/EdimaxSocketForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/EdimaxSocketForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -271,6 +289,7 @@ public abstract class FormDialogManager {
             EdimaxSocketFormController edimaxSocketFormController = loader.getController();
             edimaxSocketFormController.setElement(edimaxSocket);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!edimaxSocketFormController.isCanceld()) {
 
@@ -278,7 +297,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -293,7 +312,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<RadioSocket> showRadioSocketDialog(RadioSocket element, Map<String, SwitchServer> switchServers) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/RadioSocketForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/RadioSocketForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -305,6 +325,7 @@ public abstract class FormDialogManager {
             controller.setSwitchServers(switchServers);
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -312,7 +333,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -326,7 +347,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<VirtualSocket> showVirtualSocketDialog(VirtualSocket element) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/VirtualSocketForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/VirtualSocketForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -337,6 +359,7 @@ public abstract class FormDialogManager {
             VirtualSocketFormController controller = loader.getController();
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -344,7 +367,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -358,7 +381,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<WakeOnLan> showWakeOnLanDialog(WakeOnLan element) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/WakeOnLanForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/WakeOnLanForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -369,6 +393,7 @@ public abstract class FormDialogManager {
             WakeOnLanFormController controller = loader.getController();
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -376,7 +401,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -390,7 +415,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<FritzBoxWirelessLan> showFritzBoxWirelessLanDialog(FritzBoxWirelessLan element) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/FritzBoxWlanForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/FritzBoxWlanForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -401,6 +427,7 @@ public abstract class FormDialogManager {
             FritzBoxWlanFormController controller = loader.getController();
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -408,7 +435,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -422,7 +449,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<FritzBoxRebootReconnect> showFritzBoxRebootReconnectDialog(FritzBoxRebootReconnect element) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/FritzBoxRebootReconnectForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/FritzBoxRebootReconnectForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -433,6 +461,7 @@ public abstract class FormDialogManager {
             FritzBoxRebootReconnectFormController controller = loader.getController();
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -440,7 +469,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -455,7 +484,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<RebootShutdown> showRebootShutdownDialog(RebootShutdown element, Map<String, SwitchServer> switchServers) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/RebootShutdownForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/RebootShutdownForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -467,6 +497,7 @@ public abstract class FormDialogManager {
             controller.setSwitchServers(switchServers);
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -474,7 +505,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -489,7 +520,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<ScriptSingle> showScriptSingleDialog(ScriptSingle element, Map<String, SwitchServer> switchServers) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/ScriptSingleForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/ScriptSingleForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -501,6 +533,7 @@ public abstract class FormDialogManager {
             controller.setSwitchServers(switchServers);
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -508,7 +541,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -523,7 +556,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<ScriptDouble> showScriptDoubleDialog(ScriptDouble element, Map<String, SwitchServer> switchServers) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/ScriptDoubleForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/ScriptDoubleForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -535,6 +569,7 @@ public abstract class FormDialogManager {
             controller.setSwitchServers(switchServers);
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -542,7 +577,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -556,7 +591,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<SensorValue> showSensorValueDialog(SensorValue element) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/SensorValueForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/SensorValueForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -567,6 +603,7 @@ public abstract class FormDialogManager {
             SensorValueFormController controller = loader.getController();
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -574,7 +611,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -588,7 +625,8 @@ public abstract class FormDialogManager {
      */
     public static Optional<SensorValue> showSensorValueWithOffsetDialog(SensorValue element) {
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/SensorValueWithOffsetForm.fxml"));
+        String location = "FXML/Admin/Form/AutomationDevice/SensorValueWithOffsetForm.fxml";
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -599,6 +637,7 @@ public abstract class FormDialogManager {
             SensorValueWithOffsetFormController controller = loader.getController();
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -606,7 +645,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();
@@ -620,6 +659,7 @@ public abstract class FormDialogManager {
      */
     public static Optional<VirtualSensorValue> showVirtualSensorValueDialog(VirtualSensorValue element, Map<String, AutomationDevice> automationDevices) {
 
+        String location = "FXML/Admin/Form/AutomationDevice/VirtualSensorValueForm.fxml";
         List<SensorValue> sensorValues = new ArrayList<>();
         for(AutomationDevice automationDevice : automationDevices.values()) {
 
@@ -629,7 +669,7 @@ public abstract class FormDialogManager {
             }
         }
 
-        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource("FXML/Admin/Form/AutomationDevice/VirtualSensorValueForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(ShcDesktopClient.getInstance().getClassLoader().getResource(location));
         Parent pane;
         try {
 
@@ -660,6 +700,7 @@ public abstract class FormDialogManager {
             controller.setSensorValues(sensorValues);
             controller.setElement(element);
             dialog.showAndWait();
+            logger.info("FXML Datei \"" + location +"\" geladen");
 
             if(!controller.isCanceld()) {
 
@@ -667,7 +708,7 @@ public abstract class FormDialogManager {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Laden der FXML Datei \"" + location +"\" fehlgeschlagen", e);
             UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
         }
         return Optional.empty();

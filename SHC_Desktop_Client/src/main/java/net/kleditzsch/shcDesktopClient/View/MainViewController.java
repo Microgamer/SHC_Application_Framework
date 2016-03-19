@@ -3,6 +3,8 @@ package net.kleditzsch.shcDesktopClient.View;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
@@ -15,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import net.kleditzsch.Ui.UiDialogHelper;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 
@@ -26,6 +29,8 @@ import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class MainViewController {
+
+    private static Logger logger = LoggerUtil.getLogger(MainViewController.class);
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -76,6 +81,7 @@ public class MainViewController {
             if(cm.autoLogin()) {
 
                 setState(true);
+                logger.info("autologin erfolgreich");
             } else {
 
                 //Anmeldefenster zeigen
@@ -85,9 +91,10 @@ public class MainViewController {
 
                     pane = loader.load();
                     mainBorderPane.setCenter(pane);
+                    logger.info("FXML Datei \"FXML/Login/Login.fxml\" geladen");
                 } catch (IOException e1) {
 
-                    UiDialogHelper.showErrorDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Ladefehler", null, "Eine FXML Datei konnte nicht geladen werden");
+                    logger.log(Level.SEVERE, "Laden der FXML Datei \"FXML/Login/Login.fxml\" fehlgeschlagen", e1);
                 }
             }
         }
@@ -95,7 +102,8 @@ public class MainViewController {
         if (cm.isConnected()) {
 
             //Dashboard lasen
-            System.out.println("Dash Laden");
+            //TODO Raumansicht laden
+
         } else {
 
             //TODO Fehler Hilfeseite

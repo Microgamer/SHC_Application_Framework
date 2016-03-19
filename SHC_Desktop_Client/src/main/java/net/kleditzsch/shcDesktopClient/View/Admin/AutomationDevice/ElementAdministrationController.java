@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -34,6 +35,7 @@ import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceRespon
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
 import net.kleditzsch.shcCore.Room.Elements.VirtualSensor;
 import net.kleditzsch.shcCore.Settings.BooleanSetting;
+import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
 import net.kleditzsch.shcDesktopClient.View.Admin.Form.FormDialogManager;
@@ -50,6 +52,8 @@ import org.controlsfx.control.MaskerPane;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class ElementAdministrationController {
+
+    private static Logger logger = LoggerUtil.getLogger(ElementAdministrationController.class);
 
     private static class ActiveCell extends TableCell<AutomationDevice, Boolean> {
 
@@ -235,6 +239,7 @@ public class ElementAdministrationController {
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent()) {
 
+            logger.info("Element \"" + result.get() + "\" erstellen");
             switch(result.get()) {
 
                 //lesbare Elemente
@@ -517,6 +522,7 @@ public class ElementAdministrationController {
 
         tableContextMenu.hide();
         AutomationDevice device = elementsTable.getSelectionModel().getSelectedItem();
+        logger.info("ELement \"" + device.getClass().getSimpleName() + "\" bearbeiten");
         if(device instanceof Input) {
 
             Optional<Input> input = FormDialogManager.showInputDialog((Input) device, automationDeviceResponse.getSwitchServers());
@@ -631,6 +637,7 @@ public class ElementAdministrationController {
         if(UiDialogHelper.showConfirmDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Element löschen", null, "willst du das Element wirklich löschen?")) {
 
             AutomationDevice device = elementsTable.getSelectionModel().getSelectedItem();
+            logger.info("ELement \"" + device.getClass().getSimpleName() + "\" löschen");
             if(device != null) {
 
                 sendDeleteRequest(device);
@@ -784,9 +791,11 @@ public class ElementAdministrationController {
                     menuButtonCreate.setDisable(false);
                     menuButtonEdit.setDisable(false);
                     menuButtonDelete.setDisable(false);
+                    logger.info("Elemente gelistet");
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", automationDeviceResponse.getMessage());
+                    logger.warning("Elemente nicht gelistet -> " + automationDeviceResponse.getMessage());
                     if (automationDeviceResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -832,12 +841,14 @@ public class ElementAdministrationController {
 
                 if(successResponse.isSuccess()) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich erstellt");
+                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Element wurde erfolgreich erstellt");
+                    logger.info("Element erstellt");
                     update();
                 } else {
 
                     maskerPane.setVisible(false);
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät erstellen fehlgeschlagen", successResponse.getMessage());
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät Element fehlgeschlagen", successResponse.getMessage());
+                    logger.warning("Element nicht erstellt -> " + successResponse.getMessage());
                     if(successResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -883,12 +894,14 @@ public class ElementAdministrationController {
 
                 if(successResponse.isSuccess()) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich bearbeitet");
+                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Element wurde erfolgreich bearbeitet");
+                    logger.info("Element bearbeitet");
                     update();
                 } else {
 
                     maskerPane.setVisible(false);
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät bearbeiten fehlgeschlagen", successResponse.getMessage());
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Element bearbeiten fehlgeschlagen", successResponse.getMessage());
+                    logger.warning("Element nicht bearbeitet -> " + successResponse.getMessage());
                     if(successResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -934,12 +947,14 @@ public class ElementAdministrationController {
 
                 if(successResponse.isSuccess()) {
 
-                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Gerät wurde erfolgreich gelöscht");
+                    UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Das Element wurde erfolgreich gelöscht");
+                    logger.info("Element gelöscht");
                     update();
                 } else {
 
                     maskerPane.setVisible(false);
-                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Gerät löschen fehlgeschlagen", successResponse.getMessage());
+                    UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Element löschen fehlgeschlagen", successResponse.getMessage());
+                    logger.warning("Element nicht gelöscht -> " + successResponse.getMessage());
                     if(successResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
