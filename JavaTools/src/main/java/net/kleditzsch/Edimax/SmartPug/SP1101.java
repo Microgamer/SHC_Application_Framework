@@ -7,7 +7,7 @@ import java.net.*;
  * Edimax SmartPlug SP-1101
  *
  * @author Oliver Kleditzsch
- * @copyright Copyright (c) 2015, Oliver Kleditzsch
+ * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
 public class SP1101 {
@@ -221,7 +221,7 @@ public class SP1101 {
      * @param content XML ANfrage
      * @return XML Antwort
      */
-    private String sendHttpCommand(String content) throws IOException {
+    protected String sendHttpCommand(String content) throws IOException {
 
         final String user = getUser();
         final String password = getPassword();
