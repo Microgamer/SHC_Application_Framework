@@ -1,13 +1,5 @@
 package net.kleditzsch.shcDesktopClient.Core;
 
-/**
- * SHC Dasktop ClientData
- *
- * @author Oliver Kleditzsch
- * @copyright Copyright (c) 2016, Oliver Kleditzsch
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- */
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.application.Application;
@@ -38,6 +30,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * SHC Dasktop ClientData
+ *
+ * @author Oliver Kleditzsch
+ * @copyright Copyright (c) 2016, Oliver Kleditzsch
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ */
 public class ShcDesktopClient extends Application {
 
     /**
