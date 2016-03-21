@@ -13,12 +13,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserAdministrationResponse;
-import net.kleditzsch.shcCore.ClientData.User.UserData;
+import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
 import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
@@ -27,17 +26,17 @@ import net.kleditzsch.shcDesktopClient.View.MainViewLoader;
 import org.controlsfx.control.MaskerPane;
 
 /**
- * Benutzerverwaltung
+ * Benutzergruppen Verwaltung
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class UserAdminstration {
+public class UserGroupAdminstrationController {
 
-    private static Logger logger = LoggerUtil.getLogger(UserAdminstration.class);
+    private static Logger logger = LoggerUtil.getLogger(UserGroupAdminstrationController.class);
 
-    private static class OriginatorCell extends TableCell<UserData, Boolean> {
+    private static class SystemCell extends TableCell<UserGroupData, Boolean> {
 
         /**
          * @param item  The new item for the cell.
@@ -74,35 +73,32 @@ public class UserAdminstration {
     @FXML // fx:id="rootStackPane"
     private StackPane rootStackPane; // Value injected by FXMLLoader
 
-    @FXML // fx:id="roodBorderPane"
-    private BorderPane roodBorderPane; // Value injected by FXMLLoader
-
     @FXML // fx:id="buttonBack"
     private Button buttonBack; // Value injected by FXMLLoader
 
     @FXML // fx:id="buttonRefresh"
     private Button buttonRefresh; // Value injected by FXMLLoader
 
-    @FXML // fx:id="buttonUserGroups"
-    private Button buttonUserGroups; // Value injected by FXMLLoader
+    @FXML // fx:id="groupTable"
+    private TableView<UserGroupData> groupTable; // Value injected by FXMLLoader
 
-    @FXML // fx:id="userTable"
-    private TableView<UserData> userTable; // Value injected by FXMLLoader
+    @FXML // fx:id="columnGroupName"
+    private TableColumn<UserGroupData, String> columnGroupName; // Value injected by FXMLLoader
 
-    @FXML // fx:id="columnUserName"
-    private TableColumn<UserData, String> columnUserName; // Value injected by FXMLLoader
+    @FXML // fx:id="columnSystemGroup"
+    private TableColumn<UserGroupData, Boolean> columnSystemGroup; // Value injected by FXMLLoader
 
-    @FXML // fx:id="columnUserOriginator"
-    private TableColumn<UserData, Boolean> columnUserOriginator; // Value injected by FXMLLoader
+    @FXML // fx:id="columnGroupDescription"
+    private TableColumn<UserGroupData, String> columnGroupDescription; // Value injected by FXMLLoader
 
-    @FXML // fx:id="menuButtonCreateUser"
-    private MenuItem menuButtonCreateUser; // Value injected by FXMLLoader
+    @FXML // fx:id="menuButtonCreateGroup"
+    private MenuItem menuButtonCreateGroup; // Value injected by FXMLLoader
 
-    @FXML // fx:id="menuButtonEditUser"
-    private MenuItem menuButtonEditUser; // Value injected by FXMLLoader
+    @FXML // fx:id="menuButtonEditGroup"
+    private MenuItem menuButtonEditGroup; // Value injected by FXMLLoader
 
-    @FXML // fx:id="menuButtonDeleteUser"
-    private MenuItem menuButtonDeleteUser; // Value injected by FXMLLoader
+    @FXML // fx:id="menuButtonDeleteGroup"
+    private MenuItem menuButtonDeleteGroup; // Value injected by FXMLLoader
 
     /**
      * Ladeanzeige
@@ -117,19 +113,14 @@ public class UserAdminstration {
     @FXML
     void back(ActionEvent event) {
 
-        MainViewLoader.loadAdminMenueView();
+        MainViewLoader.loadUserAdministartionView();
     }
 
-    /**
-     * Benutzer erstellen
-     *
-     * @param event
-     */
     @FXML
-    void createUser(ActionEvent event) {
+    void createGroup(ActionEvent event) {
 
-        UserData userData = new UserData();
-        Optional<UserData> userDataOptional = FormDialogManager.showUserDataDialog(userData, userAdministrationResponse.getGroupDataList());
+        UserGroupData userGroupDataData = new UserGroupData();
+        Optional<UserGroupData> userDataOptional = FormDialogManager.showUserGroupDataDialog(userGroupDataData, userAdministrationResponse.getPermissions());
 
         if(userDataOptional.isPresent()) {
 
@@ -140,7 +131,7 @@ public class UserAdminstration {
 
                     try {
 
-                        return ShcDesktopClient.getInstance().getConnectionManager().addUser(userDataOptional.get());
+                        return ShcDesktopClient.getInstance().getConnectionManager().addUserGroup(userDataOptional.get());
                     } catch (IOException e) {
 
                         SuccessResponse sr = new SuccessResponse();
@@ -157,13 +148,13 @@ public class UserAdminstration {
 
                     if(successResponse.isSuccess()) {
 
-                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich erstellt");
-                        logger.info("Benutzer erstellt");
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich erstellt");
+                        logger.info("Benutzergruppe erstellt");
                         update();
                     } else {
 
-                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer erstellen fehlgeschlagen", successResponse.getMessage());
-                        logger.warning("Benutzer nicht erstellt -> " + successResponse.getMessage());
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe erstellen fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Benutzergruppe nicht erstellt -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -179,18 +170,13 @@ public class UserAdminstration {
         }
     }
 
-    /**
-     * Benutzer löschen
-     *
-     * @param event
-     */
     @FXML
-    void deleteUser(ActionEvent event) {
+    void deleteGroup(ActionEvent event) {
 
-        if(UiDialogHelper.showConfirmDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer löschen", null, "Bist du sicher das du den Benutzer löschen willst?")) {
+        if(UiDialogHelper.showConfirmDialog(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe löschen", null, "Bist du sicher das du die Benutzergruppe löschen willst?")) {
 
-            int index = userTable.getSelectionModel().getFocusedIndex();
-            UserData userData = userTable.getItems().get(index);
+            int index = groupTable.getSelectionModel().getFocusedIndex();
+            UserGroupData userGroupData = groupTable.getItems().get(index);
 
             //Anfrage senden
             Task<SuccessResponse> task = new Task<SuccessResponse>() {
@@ -199,7 +185,7 @@ public class UserAdminstration {
 
                     try {
 
-                        return ShcDesktopClient.getInstance().getConnectionManager().deleteUser(userData);
+                        return ShcDesktopClient.getInstance().getConnectionManager().deleteUserGroup(userGroupData);
                     } catch (IOException e) {
 
                         SuccessResponse sr = new SuccessResponse();
@@ -216,13 +202,13 @@ public class UserAdminstration {
 
                     if(successResponse.isSuccess()) {
 
-                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich gelöscht");
-                        logger.info("Benutzer gelöscht");
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich gelöscht");
+                        logger.info("Benutzergruppe gelöscht");
                         update();
                     } else {
 
-                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer löschen fehlgeschlagen", successResponse.getMessage());
-                        logger.warning("Benutzer nicht gelöscht -> " + successResponse.getMessage());
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe löschen fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Benutzergruppe nicht gelöscht -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -238,17 +224,12 @@ public class UserAdminstration {
         }
     }
 
-    /**
-     * Benutzer bearbeiten
-     *
-     * @param event
-     */
     @FXML
-    void editUser(ActionEvent event) {
+    void editGroup(ActionEvent event) {
 
-        int index = userTable.getSelectionModel().getFocusedIndex();
-        UserData userData = userTable.getItems().get(index);
-        Optional<UserData> userDataOptional = FormDialogManager.showUserDataDialog(userData, userAdministrationResponse.getGroupDataList());
+        int index = groupTable.getSelectionModel().getFocusedIndex();
+        UserGroupData userGroupDataData = groupTable.getItems().get(index);
+        Optional<UserGroupData> userDataOptional = FormDialogManager.showUserGroupDataDialog(userGroupDataData, userAdministrationResponse.getPermissions());
 
         if(userDataOptional.isPresent()) {
 
@@ -259,7 +240,7 @@ public class UserAdminstration {
 
                     try {
 
-                        return ShcDesktopClient.getInstance().getConnectionManager().editUser(userDataOptional.get());
+                        return ShcDesktopClient.getInstance().getConnectionManager().editUserGroup(userDataOptional.get());
                     } catch (IOException e) {
 
                         SuccessResponse sr = new SuccessResponse();
@@ -276,13 +257,13 @@ public class UserAdminstration {
 
                     if(successResponse.isSuccess()) {
 
-                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Der Benutzer wurde erfolgreich bearbeitet");
-                        logger.info("Beuntzer bearbeitet");
+                        UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Die Benutzergruppe wurde erfolgreich bearbeitet");
+                        logger.info("Benutzergruppe bearbeitet");
                         update();
                     } else {
 
-                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzer bearbeiten fehlgeschlagen", successResponse.getMessage());
-                        logger.warning("Benutzer nicht bearbeitet -> " + successResponse.getMessage());
+                        UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Benutzergruppe bearbeiten fehlgeschlagen", successResponse.getMessage());
+                        logger.warning("Benutzergruppe nicht bearbeitet -> " + successResponse.getMessage());
                         if(successResponse.getErrorCode() == 100) {
 
                             ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
@@ -296,12 +277,6 @@ public class UserAdminstration {
             Thread thread = new Thread(task);
             thread.start();
         }
-    }
-
-    @FXML
-    void openUserGroupAdmistration(ActionEvent event) {
-
-        MainViewLoader.loadUserGroupAdministartionView();
     }
 
     @FXML
@@ -312,27 +287,33 @@ public class UserAdminstration {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert roodBorderPane != null : "fx:id=\"roodBorderPane\" was not injected: check your FXML file 'UserAdminstration.fxml'.";
-        assert buttonBack != null : "fx:id=\"buttonBack\" was not injected: check your FXML file 'UserAdminstration.fxml'.";
-        assert buttonUserGroups != null : "fx:id=\"buttonUserGroups\" was not injected: check your FXML file 'UserAdminstration.fxml'.";
-        assert userTable != null : "fx:id=\"userTable\" was not injected: check your FXML file 'UserAdminstration.fxml'.";
-        assert columnUserName != null : "fx:id=\"columnUserName\" was not injected: check your FXML file 'UserAdminstration.fxml'.";
-        assert columnUserOriginator != null : "fx:id=\"columnUserOriginator\" was not injected: check your FXML file 'UserAdminstration.fxml'.";
+        assert rootStackPane != null : "fx:id=\"rootStackPane\" was not injected: check your FXML file 'UserGroupAdministarion.fxml'.";
+        assert buttonBack != null : "fx:id=\"buttonBack\" was not injected: check your FXML file 'UserGroupAdministarion.fxml'.";
+        assert buttonRefresh != null : "fx:id=\"buttonRefresh\" was not injected: check your FXML file 'UserGroupAdministarion.fxml'.";
+        assert groupTable != null : "fx:id=\"groupTable\" was not injected: check your FXML file 'UserGroupAdministarion.fxml'.";
+        assert columnGroupName != null : "fx:id=\"columnGroupName\" was not injected: check your FXML file 'UserGroupAdministarion.fxml'.";
+        assert columnSystemGroup != null : "fx:id=\"columnSystemGroup\" was not injected: check your FXML file 'UserGroupAdministarion.fxml'.";
+        assert columnGroupDescription != null : "fx:id=\"columnGroupDescription\" was not injected: check your FXML file 'UserGroupAdministarion.fxml'.";
+        assert menuButtonCreateGroup != null : "fx:id=\"menuButtonCreateGroup\" was not injected: check your FXML file 'UserGroupAdministarion.fxml'.";
+        assert menuButtonEditGroup != null : "fx:id=\"menuButtonEditGroup\" was not injected: check your FXML file 'UserGroupAdministarion.fxml'.";
+        assert menuButtonDeleteGroup != null : "fx:id=\"menuButtonDeleteGroup\" was not injected: check your FXML file 'UserGroupAdministarion.fxml'.";
 
         //Spaltenbreite
-        userTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        columnUserName.setMaxWidth(1f * Integer.MAX_VALUE * 70);
-        columnUserOriginator.setMaxWidth(1f * Integer.MAX_VALUE * 30);
+        groupTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        columnGroupName.setMaxWidth(1f * Integer.MAX_VALUE * 30);
+        columnSystemGroup.setMaxWidth(1f * Integer.MAX_VALUE * 20);
+        columnGroupDescription.setMaxWidth(1f * Integer.MAX_VALUE * 50);
 
         //Spalte Benutzername
-        columnUserName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        columnUserOriginator.setCellValueFactory(new PropertyValueFactory<>("Originator"));
-        columnUserOriginator.setCellFactory(param -> new OriginatorCell());
+        columnGroupName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        columnSystemGroup.setCellValueFactory(new PropertyValueFactory<>("SystemGroup"));
+        columnSystemGroup.setCellFactory(param -> new SystemCell());
+        columnGroupDescription.setCellValueFactory(new PropertyValueFactory<>("Descripion"));
 
         //Optionen erst einmal deaktivieren
-        menuButtonCreateUser.setDisable(true);
-        menuButtonEditUser.setDisable(true);
-        menuButtonDeleteUser.setDisable(true);
+        menuButtonCreateGroup.setDisable(true);
+        menuButtonEditGroup.setDisable(true);
+        menuButtonDeleteGroup.setDisable(true);
 
         //Ladeanzeige
         rootStackPane.getChildren().add(maskerPane);
@@ -341,16 +322,13 @@ public class UserAdminstration {
         update();
     }
 
-    /**
-     * läadt die Benutzer und zeigt sie in der Tabelle an
-     */
     protected void update() {
 
         maskerPane.setVisible(true);
 
-        menuButtonCreateUser.setDisable(true);
-        menuButtonEditUser.setDisable(true);
-        menuButtonDeleteUser.setDisable(true);
+        menuButtonCreateGroup.setDisable(true);
+        menuButtonEditGroup.setDisable(true);
+        menuButtonDeleteGroup.setDisable(true);
 
         //Benutzerdaten laden
         Task<UserAdministrationResponse> task = new Task<UserAdministrationResponse>() {
@@ -377,18 +355,18 @@ public class UserAdminstration {
                 if(userAdministrationResponse.isSuccess()) {
 
                     //Daten
-                    userTable.getItems().clear();
-                    userTable.getItems().addAll(FXCollections.observableList(userAdministrationResponse.getUserDataList()));
+                    groupTable.getItems().clear();
+                    groupTable.getItems().addAll(FXCollections.observableList(userAdministrationResponse.getGroupDataList()));
                     maskerPane.setVisible(false);
-                    menuButtonCreateUser.setDisable(false);
-                    menuButtonEditUser.setDisable(false);
-                    menuButtonDeleteUser.setDisable(false);
-                    logger.info("Benutzer gelistet");
+                    menuButtonCreateGroup.setDisable(false);
+                    menuButtonEditGroup.setDisable(false);
+                    menuButtonDeleteGroup.setDisable(false);
+                    logger.info("Benutzergruppen gelistet");
 
                 } else {
 
                     UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehler", userAdministrationResponse.getMessage());
-                    logger.warning("Benutzer listen fehlgeschlagen -> " + userAdministrationResponse.getMessage());
+                    logger.warning("Benutzergruppen listen fehlgeschlagen -> " + userAdministrationResponse.getMessage());
                     if(userAdministrationResponse.getErrorCode() == 100) {
 
                         ShcDesktopClient.getInstance().getConnectionManager().setSessionidInvalid();
