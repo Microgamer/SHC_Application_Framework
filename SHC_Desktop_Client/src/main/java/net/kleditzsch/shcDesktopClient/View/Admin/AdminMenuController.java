@@ -1,21 +1,14 @@
 package net.kleditzsch.shcDesktopClient.View.Admin;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcCore.User.Permissions;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
@@ -119,6 +112,13 @@ public class AdminMenuController {
     @FXML
     void openRoomAdministration(ActionEvent event) {
 
+        if(ShcDesktopClient.getInstance().getConnectionManager().checkPermission(Permissions.ROOM_ADMINISTRATION)) {
+
+            MainViewLoader.loadRoomAdministartionView();
+        } else {
+
+            UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehlende Berechtigung", "Du bist nicht Berechtigt diese Aktion aus zu führen");
+        }
     }
 
     @FXML

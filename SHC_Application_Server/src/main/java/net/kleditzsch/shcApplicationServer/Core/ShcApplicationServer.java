@@ -6,6 +6,7 @@ import net.kleditzsch.shcApplicationServer.Automation.AutomationDeviceEditor;
 import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.DeviceManager.DeviceManager;
 import net.kleditzsch.shcApplicationServer.HTTPInterface.ServerRunnable;
+import net.kleditzsch.shcApplicationServer.Icon.IconEditor;
 import net.kleditzsch.shcCore.Json.AutomationDeviceResponseSerializer;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.User.UserSerializer;
 import net.kleditzsch.shcApplicationServer.Room.RoomEditor;
@@ -102,6 +103,11 @@ public class ShcApplicationServer {
      * Raum Verwaltung
      */
     private RoomEditor roomEditor;
+
+    /**
+     * Icon Verwaltung
+     */
+    private IconEditor iconEditor;
 
     /**
      * Logger
@@ -289,6 +295,10 @@ public class ShcApplicationServer {
         //Räume laden
         roomEditor = new RoomEditor();
         roomEditor.loadData();
+
+        //Icons laden
+        iconEditor = new IconEditor();
+        iconEditor.loadSystemIcons();
     }
 
     /**
@@ -352,6 +362,15 @@ public class ShcApplicationServer {
      */
     public RoomEditor getRoomEditor() {
         return roomEditor;
+    }
+
+    /**
+     * gibt den Icon Editor zurück
+     *
+     * @return
+     */
+    public IconEditor getIconEditor() {
+        return iconEditor;
     }
 
     /**

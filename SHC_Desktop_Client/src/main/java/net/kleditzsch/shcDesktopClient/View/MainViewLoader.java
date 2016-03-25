@@ -78,6 +78,14 @@ public abstract class MainViewLoader {
     }
 
     /**
+     * lädt die Element Adminstration
+     */
+    public static void loadRoomAdministartionView() {
+
+        MainViewLoader.load("FXML/Admin/Room/RoomAdministration.fxml");
+    }
+
+    /**
      * lädt eine FXML Datei als View
      *
      * @param loaction Speicherort

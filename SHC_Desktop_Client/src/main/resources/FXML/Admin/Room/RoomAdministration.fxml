@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<StackPane fx:id="rootStackPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.kleditzsch.shcDesktopClient.View.Admin.Room.RoomAdminstrationController">
+   <children>
+      <BorderPane fx:id="rootBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="200.0" prefHeight="550.0" prefWidth="800.0">
+         <top>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <items>
+                <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#back" text="zurück" />
+                  <Button fx:id="buttonRefresh" mnemonicParsing="false" onAction="#refreshList" text="aktualisieren" />
+              </items>
+            </ToolBar>
+         </top>
+         <center>
+            <TableView fx:id="roomsTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="columnName" prefWidth="534.0" text="Name" />
+                <TableColumn fx:id="columnIcon" prefWidth="122.0" text="Icon" />
+                  <TableColumn fx:id="columnActive" prefWidth="143.0" text="Aktiv" />
+              </columns>
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem fx:id="menuButtonCreate" mnemonicParsing="false" onAction="#createElement" text="erstellen" />
+                        <MenuItem fx:id="menuButtonEdit" mnemonicParsing="false" onAction="#editElement" text="bearbeiten" />
+                        <MenuItem fx:id="menuButtonDelete" mnemonicParsing="false" onAction="#deleteElement" text="löschen" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+            </TableView>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>
