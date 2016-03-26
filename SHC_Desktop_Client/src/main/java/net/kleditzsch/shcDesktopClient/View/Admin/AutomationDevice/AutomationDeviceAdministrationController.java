@@ -17,7 +17,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -33,13 +32,10 @@ import net.kleditzsch.shcCore.Automation.Interface.Sensor.VirtualSensorValue;
 import net.kleditzsch.shcCore.Automation.Interface.Switchable.Switchable;
 import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceResponse;
 import net.kleditzsch.shcCore.ClientData.SuccessResponse;
-import net.kleditzsch.shcCore.Room.Elements.VirtualSensor;
-import net.kleditzsch.shcCore.Settings.BooleanSetting;
 import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
 import net.kleditzsch.shcDesktopClient.Util.UiNotificationHelper;
 import net.kleditzsch.shcDesktopClient.View.Admin.Form.FormDialogManager;
-import net.kleditzsch.shcDesktopClient.View.Admin.Form.Forms.AutomationElements.FritzBoxRebootReconnectFormController;
 import net.kleditzsch.shcDesktopClient.View.MainViewLoader;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.MaskerPane;
@@ -51,9 +47,9 @@ import org.controlsfx.control.MaskerPane;
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class ElementAdministrationController {
+public class AutomationDeviceAdministrationController {
 
-    private static Logger logger = LoggerUtil.getLogger(ElementAdministrationController.class);
+    private static Logger logger = LoggerUtil.getLogger(AutomationDeviceAdministrationController.class);
 
     private static class ActiveCell extends TableCell<AutomationDevice, Boolean> {
 
@@ -664,24 +660,24 @@ public class ElementAdministrationController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert rootStackPane != null : "fx:id=\"rootStackPane\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert rootBorderPane != null : "fx:id=\"rootBorderPane\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert rootToolbar != null : "fx:id=\"rootToolbar\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert buttonBack != null : "fx:id=\"buttonBack\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert buttonRefresh != null : "fx:id=\"buttonRefresh\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert toolbarSpace != null : "fx:id=\"toolbarSpace\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert filterLabel != null : "fx:id=\"filterLabel\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert inputNameFilter != null : "fx:id=\"inputNameFilter\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert inputTypeFilter != null : "fx:id=\"inputTypeFilter\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert elementsTable != null : "fx:id=\"elementsTable\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert columnName != null : "fx:id=\"columnName\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert columnType != null : "fx:id=\"columnType\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert columnActive != null : "fx:id=\"columnActive\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert columnComment != null : "fx:id=\"columnComment\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert tableContextMenu != null : "fx:id=\"tableContextMenu\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert menuButtonCreate != null : "fx:id=\"menuButtonCreate\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert menuButtonEdit != null : "fx:id=\"menuButtonEdit\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
-        assert menuButtonDelete != null : "fx:id=\"menuButtonDelete\" was not injected: check your FXML file 'ElementAdministration.fxml'.";
+        assert rootStackPane != null : "fx:id=\"rootStackPane\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert rootBorderPane != null : "fx:id=\"rootBorderPane\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert rootToolbar != null : "fx:id=\"rootToolbar\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert buttonBack != null : "fx:id=\"buttonBack\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert buttonRefresh != null : "fx:id=\"buttonRefresh\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert toolbarSpace != null : "fx:id=\"toolbarSpace\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert filterLabel != null : "fx:id=\"filterLabel\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert inputNameFilter != null : "fx:id=\"inputNameFilter\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert inputTypeFilter != null : "fx:id=\"inputTypeFilter\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert elementsTable != null : "fx:id=\"elementsTable\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert columnName != null : "fx:id=\"columnName\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert columnType != null : "fx:id=\"columnType\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert columnActive != null : "fx:id=\"columnActive\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert columnComment != null : "fx:id=\"columnComment\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert tableContextMenu != null : "fx:id=\"tableContextMenu\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert menuButtonCreate != null : "fx:id=\"menuButtonCreate\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert menuButtonEdit != null : "fx:id=\"menuButtonEdit\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
+        assert menuButtonDelete != null : "fx:id=\"menuButtonDelete\" was not injected: check your FXML file 'AutomationDeviceAdministration.fxml'.";
 
         elementsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         columnName.setMaxWidth(1f * Integer.MAX_VALUE * 30);

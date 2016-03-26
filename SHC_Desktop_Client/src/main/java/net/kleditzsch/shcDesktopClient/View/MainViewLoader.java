@@ -74,7 +74,7 @@ public abstract class MainViewLoader {
      */
     public static void loadElementsAdministartionView() {
 
-        MainViewLoader.load("FXML/Admin/AutomationDevice/ElementAdministration.fxml");
+        MainViewLoader.load("FXML/Admin/AutomationDevice/AutomationDeviceAdministration.fxml");
     }
 
     /**
