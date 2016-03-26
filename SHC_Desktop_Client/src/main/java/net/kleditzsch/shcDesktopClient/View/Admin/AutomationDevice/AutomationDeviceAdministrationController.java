@@ -192,13 +192,19 @@ public class AutomationDeviceAdministrationController {
 
         //schaltbare Elemente
         choices.add("Ausgang");
-        choices.add("AVM Steckdose");
+        if(ShcDesktopClient.getInstance().getConnectionManager().isFritzBoxSupportActive()) {
+
+            choices.add("AVM Steckdose");
+        }
         choices.add("Edimax Steckdose");
         choices.add("Funk Steckdose");
         choices.add("Virtuelle Steckdose");
         choices.add("Wake on Lan");
-        choices.add("Fritz!Box WLan");
-        choices.add("Fritz!Box Reboot/Reconnect");
+        if(ShcDesktopClient.getInstance().getConnectionManager().isFritzBoxSupportActive()) {
+
+            choices.add("Fritz!Box WLan");
+            choices.add("Fritz!Box Reboot/Reconnect");
+        }
         choices.add("Reboot/Shutdown");
         choices.add("einfaches Script");
         choices.add("erweitertes Script");

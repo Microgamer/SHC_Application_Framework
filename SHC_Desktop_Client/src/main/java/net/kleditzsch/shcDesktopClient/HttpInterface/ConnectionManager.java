@@ -13,6 +13,7 @@ import net.kleditzsch.shcCore.ClientData.SuccessResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserAdministrationResponse;
 import net.kleditzsch.shcCore.ClientData.User.UserData;
 import net.kleditzsch.shcCore.ClientData.User.UserGroupData;
+import net.kleditzsch.shcCore.Icon.Icon;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
 import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.Core.ShcDesktopClient;
@@ -23,9 +24,7 @@ import net.kleditzsch.shcDesktopClient.View.MainViewLoader;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -58,6 +57,16 @@ public class ConnectionManager {
      * Benutzerrechte
      */
     protected Set<String> userPermissions = new HashSet<>();
+
+    /**
+     * gibt an ob die FritzBox Einbindung aktiv ist
+     */
+    protected boolean fritzBoxSupportActive = false;
+
+    /**
+     * Liste der verfügbaren Icons
+     */
+    protected List<Icon> icons = new ArrayList<>();
 
     /**
      * Gson Objekt
@@ -109,6 +118,33 @@ public class ConnectionManager {
      */
     public Set<String> getUserPermissions() {
         return userPermissions;
+    }
+
+    /**
+     * gibt an ob der Fritz Box Support aktiv ist
+     *
+     * @return aktiviert/deaktiviert
+     */
+    public boolean isFritzBoxSupportActive() {
+        return fritzBoxSupportActive;
+    }
+
+    /**
+     * aktiviert/deaktiviert den FritzBoxSupport
+     *
+     * @param fritzBoxSupportActive aktiviert/deaktiviert
+     */
+    public void setFritzBoxSupportActive(boolean fritzBoxSupportActive) {
+        this.fritzBoxSupportActive = fritzBoxSupportActive;
+    }
+
+    /**
+     * gibt die Liste der verfügbaren Icons zurück
+     *
+     * @return Icons
+     */
+    public List<Icon> getIcons() {
+        return icons;
     }
 
     /**

@@ -7,7 +7,8 @@ import net.kleditzsch.shcApplicationServer.Database.Redis;
 import net.kleditzsch.shcApplicationServer.DeviceManager.DeviceManager;
 import net.kleditzsch.shcApplicationServer.HTTPInterface.ServerRunnable;
 import net.kleditzsch.shcApplicationServer.Icon.IconEditor;
-import net.kleditzsch.shcCore.Json.AutomationDeviceResponseSerializer;
+import net.kleditzsch.shcCore.ClientData.Login.LoginResponse;
+import net.kleditzsch.shcCore.Json.*;
 import net.kleditzsch.shcApplicationServer.Json.Serializer.User.UserSerializer;
 import net.kleditzsch.shcApplicationServer.Room.RoomEditor;
 import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
@@ -16,9 +17,6 @@ import net.kleditzsch.shcApplicationServer.SwitchServer.SwitchServerEditor;
 import net.kleditzsch.shcApplicationServer.User.UserEditor;
 import net.kleditzsch.shcApplicationServer.Util.CliConfigEditor;
 import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceResponse;
-import net.kleditzsch.shcCore.Json.LocalDateSerializer;
-import net.kleditzsch.shcCore.Json.LocalDateTimeSerializer;
-import net.kleditzsch.shcCore.Json.LocalTimeSerializer;
 import net.kleditzsch.shcCore.SwitchServer.Interface.SwitchServer;
 import net.kleditzsch.shcCore.SwitchServer.RaspberryPiSwitchServer;
 import net.kleditzsch.shcCore.User.User;
@@ -229,6 +227,7 @@ public class ShcApplicationServer {
         builder.registerTypeAdapter(User.class, new UserSerializer());
 
         builder.registerTypeAdapter(AutomationDeviceResponse.class, new AutomationDeviceResponseSerializer());
+        builder.registerTypeAdapter(LoginResponse.class, new LoginResponseSerializer());
 
         //Datum und Zeit
         builder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());

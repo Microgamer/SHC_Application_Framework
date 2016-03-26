@@ -11,10 +11,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.kleditzsch.Ui.UiDialogHelper;
 import net.kleditzsch.shcCore.ClientData.AutomationDevice.AutomationDeviceResponse;
-import net.kleditzsch.shcCore.Json.AutomationDeviceResponseSerializer;
-import net.kleditzsch.shcCore.Json.LocalDateSerializer;
-import net.kleditzsch.shcCore.Json.LocalDateTimeSerializer;
-import net.kleditzsch.shcCore.Json.LocalTimeSerializer;
+import net.kleditzsch.shcCore.ClientData.Login.LoginResponse;
+import net.kleditzsch.shcCore.Json.*;
 import net.kleditzsch.shcCore.Util.LoggerUtil;
 import net.kleditzsch.shcDesktopClient.HttpInterface.ConnectionManager;
 import net.kleditzsch.shcDesktopClient.Service.ConnectionService;
@@ -218,6 +216,7 @@ public class ShcDesktopClient extends Application {
         builder = new GsonBuilder();
 
         builder.registerTypeAdapter(AutomationDeviceResponse.class, new AutomationDeviceResponseSerializer());
+        builder.registerTypeAdapter(LoginResponse.class, new LoginResponseSerializer());
 
         //Serialisierer und Deserialisierer anmelden
         builder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());

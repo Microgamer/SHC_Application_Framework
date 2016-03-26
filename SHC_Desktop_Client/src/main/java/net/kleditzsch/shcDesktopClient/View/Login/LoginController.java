@@ -178,10 +178,11 @@ public class LoginController {
         try {
 
             String challange = cm.getLoginChallange();
+            System.out.println(challange);
             String challengeResponse = ChallangeResponseUtil.computeChallangeResponse(challange, userName, userHash, clientHash);
 
             LoginResponse loginResponse = cm.sendLogin(challengeResponse);
-            if(loginResponse.isSuccess() == true) {
+            if(loginResponse.isSuccess()) {
 
                 //Login erfolgreich
                 maskerPane.setVisible(false);
@@ -199,6 +200,9 @@ public class LoginController {
                 connectionManager.setSessionId(loginResponse.getSessionId());
                 connectionManager.updateLastContact();
                 connectionManager.getUserPermissions().addAll(loginResponse.getPermissions());
+                connectionManager.setFritzBoxSupportActive(loginResponse.isFritzBoxActive());
+                connectionManager.getIcons().addAll(loginResponse.getIcons());
+
                 UiNotificationHelper.showInfoNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "", "Login erfolgreich");
                 logger.info("Login erfolgreich");
                 return;

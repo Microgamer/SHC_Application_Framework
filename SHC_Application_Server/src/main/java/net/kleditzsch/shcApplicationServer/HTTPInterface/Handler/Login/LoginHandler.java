@@ -5,7 +5,11 @@ import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.DeviceManager.ClientDevice;
 import net.kleditzsch.shcApplicationServer.HTTPInterface.AbstractRequestHandler;
 import net.kleditzsch.shcApplicationServer.Session.SessionEditor;
+import net.kleditzsch.shcApplicationServer.Settings.Settings;
 import net.kleditzsch.shcCore.ClientData.Login.LoginResponse;
+import net.kleditzsch.shcCore.Icon.Icon;
+import net.kleditzsch.shcCore.Settings.BooleanSetting;
+import net.kleditzsch.shcCore.Settings.Interface.Setting;
 import net.kleditzsch.shcCore.User.ChallangeResponseUtil;
 import net.kleditzsch.shcCore.User.Permissions;
 import net.kleditzsch.shcCore.User.User;
@@ -13,6 +17,7 @@ import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -82,7 +87,7 @@ public class LoginHandler extends AbstractRequestHandler {
                                             //Update letzrer Login
                                             device.setLastLogin(LocalDateTime.now());
 
-                                            //Berechtigungen für den benutzer mit senden
+                                            //Berechtigungen für den Benutzer mit senden
                                             for(String permission : Permissions.listPermissions()) {
 
                                                 if(user.checkPermission(permission)) {
@@ -90,6 +95,14 @@ public class LoginHandler extends AbstractRequestHandler {
                                                     loginResponse.getPermissions().add(permission);
                                                 }
                                             }
+
+                                            //FritzBox aktivierung mit senden
+                                            BooleanSetting fritzBoxActive = ShcApplicationServer.getInstance().getSettings().getBooleanSetting(Settings.SETTING_FRITZBOX_ACTIVE);
+                                            loginResponse.setFritzBoxActive(fritzBoxActive.getValue());
+
+                                            //Liste der Icons mit senden
+                                            List<Icon> icons = ShcApplicationServer.getInstance().getIconEditor().getIconList();
+                                            loginResponse.getIcons().addAll(icons);
 
                                             loginResponse.setSuccess(true);
                                             loginResponse.setSessionId(sessionId);

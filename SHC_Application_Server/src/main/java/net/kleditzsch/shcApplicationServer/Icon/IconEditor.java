@@ -1,5 +1,6 @@
 package net.kleditzsch.shcApplicationServer.Icon;
 
+import net.kleditzsch.shcCore.Icon.Icon;
 import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.io.IOException;

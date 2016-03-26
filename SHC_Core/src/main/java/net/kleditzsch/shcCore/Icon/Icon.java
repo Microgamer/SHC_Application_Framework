@@ -1,4 +1,4 @@
-package net.kleditzsch.shcApplicationServer.Icon;
+package net.kleditzsch.shcCore.Icon;
 
 import java.nio.file.Path;
 import java.util.HashSet;
