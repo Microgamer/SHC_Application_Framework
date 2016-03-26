@@ -87,6 +87,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
+            <Separator prefWidth="200.0" />
             <FlowPane>
                <children>
                   <Button fx:id="buttonRooms" mnemonicParsing="false" onAction="#openRoomAdministration" text="Räume">
@@ -121,7 +122,6 @@
                   <Insets />
                </VBox.margin>
             </FlowPane>
-            <Separator prefWidth="200.0" />
             <Label text="Automatisierung">
                <VBox.margin>
                   <Insets left="20.0" top="10.0" />
