@@ -52,7 +52,7 @@ public class HttpRequestUtil {
         Map<String, String> params = new HashMap<>();
         params.put("clientHash", clientHash);
         params.put("userAgent", userAgent);
-        return sendHttpRequest("handshake", params, null);
+        return sendHttpRequest("handshake", "get", params, null);
     }
 
     /**
@@ -64,7 +64,7 @@ public class HttpRequestUtil {
     public String getLoginChallange() throws IOException {
 
         Map<String, String> params = new HashMap<>();
-        return sendHttpRequest("login", params, null);
+        return sendHttpRequest("login", "challange", params, null);
     }
 
     /**
@@ -78,7 +78,7 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("challangeResponse", challangeResponse);
-        return sendHttpRequest("login", params, null);
+        return sendHttpRequest("login", "login", params, null);
     }
 
     /**
@@ -91,8 +91,7 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "listusers");
-        return sendHttpRequest("useradmin", params, null);
+        return sendHttpRequest("user", "list", params, null);
     }
 
     /**
@@ -107,10 +106,9 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "adduser");
         Map<String, String> postParams = new HashMap<>();
         postParams.put("data", userData);
-        return sendHttpRequest("useradmin", params, postParams);
+        return sendHttpRequest("user", "add", params, postParams);
     }
 
     /**
@@ -125,10 +123,9 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "edituser");
         Map<String, String> postParams = new HashMap<>();
         postParams.put("data", userData);
-        return sendHttpRequest("useradmin", params, postParams);
+        return sendHttpRequest("user", "edit", params, postParams);
     }
 
     /**
@@ -143,9 +140,8 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "deleteuser");
         params.put("hash", userData.getHash());
-        return sendHttpRequest("useradmin", params, null);
+        return sendHttpRequest("user", "delete", params, null);
     }
 
     /**
@@ -160,10 +156,9 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "addusergroup");
         Map<String, String> postParams = new HashMap<>();
         postParams.put("data", userGroupData);
-        return sendHttpRequest("useradmin", params, postParams);
+        return sendHttpRequest("user", "addGroup", params, postParams);
     }
 
     /**
@@ -178,10 +173,9 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "editeusergroup");
         Map<String, String> postParams = new HashMap<>();
         postParams.put("data", userGroupData);
-        return sendHttpRequest("useradmin", params, postParams);
+        return sendHttpRequest("user", "editGroup", params, postParams);
     }
 
     /**
@@ -196,9 +190,8 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "deleteusergroup");
         params.put("hash", userGroupData.getHash());
-        return sendHttpRequest("useradmin", params, null);
+        return sendHttpRequest("user", "deleteGroup", params, null);
     }
 
     /**
@@ -212,8 +205,7 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "listdevices");
-        return sendHttpRequest("deviceadmin", params, null);
+        return sendHttpRequest("device", "list", params, null);
     }
 
     /**
@@ -228,9 +220,8 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "setdeviceallowed");
         params.put("hash", deviceData.getClientHash());
-        return sendHttpRequest("deviceadmin", params, null);
+        return sendHttpRequest("device", "allow", params, null);
     }
 
     /**
@@ -245,9 +236,8 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "setdevicedenied");
         params.put("hash", deviceData.getClientHash());
-        return sendHttpRequest("deviceadmin", params, null);
+        return sendHttpRequest("device", "deny", params, null);
     }
 
     /**
@@ -262,9 +252,8 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "deletedevice");
         params.put("hash", deviceData.getClientHash());
-        return sendHttpRequest("deviceadmin", params, null);
+        return sendHttpRequest("device", "delete", params, null);
     }
 
     /**
@@ -278,8 +267,7 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "listsettings");
-        return sendHttpRequest("settings", params, null);
+        return sendHttpRequest("settings", "list", params, null);
     }
 
     /**
@@ -294,10 +282,9 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "setsettings");
         Map<String, String> post = new HashMap<>();
         post.put("data", settingsRequest);
-        return sendHttpRequest("settings", params, post);
+        return sendHttpRequest("settings", "edit", params, post);
     }
 
     /**
@@ -311,8 +298,7 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "listdevices");
-        return sendHttpRequest("automationdevice", params, null);
+        return sendHttpRequest("automationdevice", "list", params, null);
     }
 
     /**
@@ -328,11 +314,10 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "adddevice");
         params.put("type", Integer.valueOf(type).toString());
         Map<String, String> postParams = new HashMap<>();
         postParams.put("data", device);
-        return sendHttpRequest("automationdevice", params, postParams);
+        return sendHttpRequest("automationdevice", "add", params, postParams);
     }
 
     /**
@@ -348,11 +333,10 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "editdevice");
         params.put("type", Integer.valueOf(type).toString());
         Map<String, String> postParams = new HashMap<>();
         postParams.put("data", device);
-        return sendHttpRequest("automationdevice", params, postParams);
+        return sendHttpRequest("automationdevice", "edit", params, postParams);
     }
 
     /**
@@ -367,12 +351,11 @@ public class HttpRequestUtil {
 
         Map<String, String> params = new HashMap<>();
         params.put("sid", sid);
-        params.put("action", "deletedevice");
         params.put("hash", hash);
-        return sendHttpRequest("automationdevice", params, null);
+        return sendHttpRequest("automationdevice", "delete", params, null);
     }
 
-    protected String sendHttpRequest(String request, Map<String, String> getParams, Map<String, String> postParams) throws IOException {
+    protected String sendHttpRequest(String request, String action, Map<String, String> getParams, Map<String, String> postParams) throws IOException {
 
         /*
         // Jedes Zertifikat akzeptieren >>>
@@ -407,13 +390,11 @@ public class HttpRequestUtil {
         */
 
         //Vorbereiten
-        String urlString = "http://" + server + ":" + port + "/" + request + "?";
-        boolean first = true;
+        String urlString = "http://" + server + ":" + port + "/" + request + "?action=" + action;
         for(String key : getParams.keySet()) {
 
             String value = getParams.get(key);
-            urlString += (!first ? "&" : "") + URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8");
-            first = false;
+            urlString += "&" + URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8");
         }
 
         //TODO HTTPs Support

@@ -1,32 +1,32 @@
-package net.kleditzsch.shcApplicationServer.HTTPInterface.Handler;
+package net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.Handshake;
 
 import com.google.gson.Gson;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
 import net.kleditzsch.shcApplicationServer.DeviceManager.ClientDevice;
 import net.kleditzsch.shcApplicationServer.DeviceManager.DeviceManager;
+import net.kleditzsch.shcApplicationServer.HTTPInterface.AbstractRequestHandler;
 import net.kleditzsch.shcCore.ClientData.Login.Handshake;
-import net.kleditzsch.shcApplicationServer.HTTPInterface.RequestHandler;
 import net.kleditzsch.shcCore.Util.LoggerUtil;
 
 import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Handshake Anfrage
+ * bearbeitet einen Handshake Request
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  */
-public class HandshakeRequestHandler implements RequestHandler {
+public class GetHandler extends AbstractRequestHandler {
 
-    private static Logger logger = LoggerUtil.getLogger(HandshakeRequestHandler.class);
+    private static Logger logger = LoggerUtil.getLogger(GetHandler.class);
 
     /**
      * behandelt eine Anfrage
      *
      * @param params GET Parameter
-     * @param gson Gson Objekt
+     * @param gson   Gson Objekt
      * @return Json Antwort
      */
     @Override
@@ -40,7 +40,7 @@ public class HandshakeRequestHandler implements RequestHandler {
         if(handshake.getClientHash() != null && handshake.getClientHash().length() > 20 && handshake.getUserAgent() != null) {
 
             DeviceManager deviceManager = ShcApplicationServer.getInstance().getDeviceManager();
-            synchronized (deviceManager) {
+            synchronized (ShcApplicationServer.getInstance().getDeviceManager()) {
 
                 if(!deviceManager.getDevices().containsKey(handshake.getClientHash())) {
 

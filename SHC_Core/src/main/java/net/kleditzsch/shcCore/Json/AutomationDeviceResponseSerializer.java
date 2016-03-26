@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 /**
- * Serialisiert AutomationDevice Antworten
+ * Serialisiert Automationdevice Antworten
  *
  * @author Oliver Kleditzsch
  * @copyright Copyright (c) 2016, Oliver Kleditzsch

@@ -299,6 +299,7 @@ public class ShcApplicationServer {
         //Icons laden
         iconEditor = new IconEditor();
         iconEditor.loadSystemIcons();
+        iconEditor.loadUserIcons();
     }
 
     /**

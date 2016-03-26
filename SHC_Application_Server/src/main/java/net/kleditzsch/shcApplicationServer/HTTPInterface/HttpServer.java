@@ -10,6 +10,7 @@ import net.kleditzsch.shcCore.Util.LoggerUtil;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -37,40 +38,7 @@ public class HttpServer extends NanoHTTPD {
     @Override
     public Response serve(IHTTPSession session) {
 
-        RequestHandler requestHandler = null;
         logger.info("HTTP Anfrage: " + session.getUri() + "?" + session.getQueryParameterString());
-        switch (session.getUri()) {
-
-            case "/handshake":
-
-                requestHandler = new HandshakeRequestHandler();
-                break;
-            case "/login":
-
-                requestHandler = new LoginRequestHandler();
-                break;
-            case "/useradmin":
-
-                requestHandler = new UserAdministartionRequestHandler();
-                break;
-            case "/deviceadmin":
-
-                requestHandler = new DeviceRequestHandler();
-                break;
-            case "/settings":
-
-                requestHandler = new SettingsRequestHandler();
-                break;
-            case "/automationdevice":
-
-                requestHandler = new AutomationDeviceHandler();
-                break;
-            default:
-
-                //Unbekannte Anfrage
-                logger.warning("Unbekannte Anfrage");
-                return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/test", "Fehlerhafte Anfrage");
-        }
 
         //Parameter
         Map<String, String> post = new HashMap<>();
@@ -88,15 +56,41 @@ public class HttpServer extends NanoHTTPD {
                 return newFixedLengthResponse(re.getStatus(), MIME_PLAINTEXT, re.getMessage());
             }
         }
+        Map<String, String> params = session.getParms();
 
-        //Antwort verarbeiten
-        Gson gson = ShcApplicationServer.getInstance().getGson();
-        String response = requestHandler.handleRequest(session.getParms(), gson);
-        if(response.equals("")) {
+        //Anfrage bearbeiten
+        if(params.containsKey("action")) {
 
-            logger.warning("Ungültige Anfrage");
-            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "SERVER INTERNAL ERROR: unknown request");
+            //Versuch den Handler zu laden
+            String uri = session.getUri().replace("/", "");
+            String packageStr = "net.kleditzsch.shcApplicationServer.HTTPInterface.Handler." + uri.substring(0, 1).toUpperCase() + uri.substring(1).toLowerCase() + ".";
+            String action = params.get("action");
+            action = action.substring(0, 1).toUpperCase() + action.substring(1).toLowerCase();
+            packageStr += action + "Handler";
+
+            try {
+
+                Class clazz = Class.forName(packageStr);
+                RequestHandler handler = (RequestHandler) clazz.newInstance();
+
+                //Antwort verarbeiten
+                Gson gson = ShcApplicationServer.getInstance().getGson();
+                String response = handler.handleRequest(params, gson);
+                if(response.equals("")) {
+
+                    logger.warning("Ungültige Anfrage");
+                    return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "SERVER INTERNAL ERROR: unknown request");
+                }
+                return newFixedLengthResponse(response);
+
+
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+
+                logger.log(Level.SEVERE, "Fehlerhafte Anfrage", e);
+            }
         }
-        return newFixedLengthResponse(response);
+        //Fehler Response
+        logger.warning("Unbekannte Anfrage");
+        return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/text", "Fehlerhafte Anfrage");
     }
 }
