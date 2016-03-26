@@ -51,9 +51,6 @@ public class AdminMenuController {
     @FXML // fx:id="buttonElements"
     private Button buttonElements; // Value injected by FXMLLoader
 
-    @FXML // fx:id="buttonSensorpoints"
-    private Button buttonSensorpoints; // Value injected by FXMLLoader
-
     @FXML // fx:id="buttonSwitchfunctions"
     private Button buttonSwitchfunctions; // Value injected by FXMLLoader
 
@@ -97,11 +94,6 @@ public class AdminMenuController {
 
             UiNotificationHelper.showErrorNotification(ShcDesktopClient.getInstance().getPrimaryStage(), "Fehlende Berechtigung", "Du bist nicht Berechtigt diese Aktion aus zu führen");
         }
-    }
-
-    @FXML
-    void openSensorPointsAdminstration(ActionEvent event) {
-
     }
 
     @FXML
@@ -189,7 +181,6 @@ public class AdminMenuController {
         assert buttonInfo != null : "fx:id=\"buttonInfo\" was not injected: check your FXML file 'Menu.fxml'.";
         assert buttonRooms != null : "fx:id=\"buttonRooms\" was not injected: check your FXML file 'Menu.fxml'.";
         assert buttonElements != null : "fx:id=\"buttonElements\" was not injected: check your FXML file 'Menu.fxml'.";
-        assert buttonSensorpoints != null : "fx:id=\"buttonSensorpoints\" was not injected: check your FXML file 'Menu.fxml'.";
         assert buttonSwitchfunctions != null : "fx:id=\"buttonSwitchfunctions\" was not injected: check your FXML file 'Menu.fxml'.";
         assert buttonServerState != null : "fx:id=\"buttonServerState\" was not injected: check your FXML file 'Menu.fxml'.";
         assert buttonMaximize != null : "fx:id=\"buttonMaximize\" was not injected: check your FXML file 'Menu.fxml'.";
@@ -217,10 +208,6 @@ public class AdminMenuController {
         if(!cm.checkPermission(Permissions.ELEMENT_ADMINISTRATION)) {
 
             buttonElements.setDisable(true);
-        }
-        if(true) { //!cm.checkPermission(Permissions.DEVICE_ADMINISTRATION)) {
-
-            buttonSensorpoints.setDisable(true);
         }
         if(true) { //!cm.checkPermission(Permissions.DEVICE_ADMINISTRATION)) {
 
