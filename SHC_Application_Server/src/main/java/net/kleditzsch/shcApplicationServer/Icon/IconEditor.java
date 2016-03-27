@@ -89,20 +89,14 @@ public class IconEditor {
                     Icon icon = new Icon();
                     icon.setName(file.getFileName().toString());
                     icon.setPath(file.toAbsolutePath());
-                    try (DirectoryStream<Path> stream1 = Files.newDirectoryStream(directory.resolve(file), "*.{png,jpg}")) {
+                    try (DirectoryStream<Path> stream1 = Files.newDirectoryStream(directory.resolve(file), "*.png")) {
+
                         for (Path iconFile : stream1) {
 
                             String fileName = iconFile.getFileName().toString().toLowerCase();
                             int size = 0;
-                            if(fileName.endsWith("png")) {
-
-                                size = Integer.parseInt(fileName.replace(".png", ""));
-                                icon.getAvailableSize().add(size);
-                            } else if(fileName.endsWith("jpg")) {
-
-                                size = Integer.parseInt(fileName.replace(".jpg", ""));
-                                icon.getAvailableSize().add(size);
-                            }
+                            size = Integer.parseInt(fileName.replace(".png", ""));
+                            icon.getAvailableSize().add(size);
                         }
                         iconList.add(icon);
                     } catch (IOException | DirectoryIteratorException e) {
@@ -153,19 +147,11 @@ public class IconEditor {
                     for(JarEntry iconFile : iconEntries) {
 
                         String iconFileName = iconFile.getName().toLowerCase();
-                        if(iconFileName.startsWith(fileName) && (iconFileName.endsWith(".png") || iconFileName.endsWith(".jpg"))) {
+                        if(iconFileName.startsWith(fileName) && iconFileName.endsWith(".png")) {
+
                             int size = 0;
-                            if(iconFileName.endsWith(".png")) {
-
-                                //PNG Datei
-                                size = Integer.parseInt(iconFileName.replace(fileName, "").replace(".png", ""));
-                                icon.getAvailableSize().add(size);
-                            } else if(iconFileName.endsWith(".jpg")) {
-
-                                //JPG Datei
-                                size = Integer.parseInt(iconFileName.replace(fileName, "").replace(".jpg", ""));
-                                icon.getAvailableSize().add(size);
-                            }
+                            size = Integer.parseInt(iconFileName.replace(fileName, "").replace(".png", ""));
+                            icon.getAvailableSize().add(size);
                         }
                     }
                     iconList.add(icon);

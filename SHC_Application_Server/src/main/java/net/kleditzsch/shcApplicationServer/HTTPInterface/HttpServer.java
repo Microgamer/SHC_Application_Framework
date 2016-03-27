@@ -3,10 +3,11 @@ package net.kleditzsch.shcApplicationServer.HTTPInterface;
 import com.google.gson.Gson;
 import fi.iki.elonen.NanoHTTPD;
 import net.kleditzsch.shcApplicationServer.Core.ShcApplicationServer;
-import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.*;
+import net.kleditzsch.shcApplicationServer.HTTPInterface.Handler.Icon.GetHandler;
 import net.kleditzsch.shcApplicationServer.Settings.Settings;
 import net.kleditzsch.shcCore.Util.LoggerUtil;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,13 +77,43 @@ public class HttpServer extends NanoHTTPD {
                 //Antwort verarbeiten
                 Gson gson = ShcApplicationServer.getInstance().getGson();
                 String response = handler.handleRequest(params, gson);
-                if(response.equals("")) {
 
-                    logger.warning("Ungültige Anfrage");
-                    return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "SERVER INTERNAL ERROR: unknown request");
+                //Dateidownload
+                if(handler instanceof GetHandler) {
+
+                    if(!response.equals("")) {
+
+                        try {
+                            FileInputStream fis;
+                            if (response.startsWith("/")) {
+
+                                //Datei im Dateisystem
+                                fis = new FileInputStream(response);
+                            } else {
+
+                                //im Jar Archiv
+                                fis = new FileInputStream(getClass().getClassLoader().getResource(response).toExternalForm());
+                            }
+
+                            if(response.endsWith(".png")) {
+
+                                return newChunkedResponse(Response.Status.OK, "image/png", fis);
+                            } else {
+
+                                return newChunkedResponse(Response.Status.OK, "image/jpeg", fis);
+                            }
+                        } catch(IOException e) {
+
+                            logger.log(Level.SEVERE, "Fehler beim einlesen der Icon Datei", e);
+                            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "text/text", "Fehlerhafte Anfrage");
+                        }
+                    } else {
+
+                        //Fehlerhafte Anfrage
+                        return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "text/text", "Fehlerhafte Anfrage");
+                    }
                 }
                 return newFixedLengthResponse(response);
-
 
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 
