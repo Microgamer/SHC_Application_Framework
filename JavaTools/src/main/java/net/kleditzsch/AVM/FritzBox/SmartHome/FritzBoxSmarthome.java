@@ -25,6 +25,9 @@ public class FritzBoxSmarthome {
 
     /**
      * @param password Fritz!Box Passwort
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws AuthException
      */
     public FritzBoxSmarthome(String password) throws IOException, NoSuchAlgorithmException, AuthException {
 
@@ -34,6 +37,9 @@ public class FritzBoxSmarthome {
     /**
      * @param username Fritz!Box Benutzername
      * @param password Fritz!Box Passwort
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws AuthException
      */
     public FritzBoxSmarthome(String username, String password) throws IOException, NoSuchAlgorithmException, AuthException {
 
@@ -44,6 +50,9 @@ public class FritzBoxSmarthome {
      * @param fritzBoxAddress Fritz!Box Adresse
      * @param username Fritz!Box Benutzername
      * @param password Fritz!Box Passwort
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws AuthException
      */
     public FritzBoxSmarthome(String fritzBoxAddress, String username, String password) throws IOException, NoSuchAlgorithmException, AuthException {
 
@@ -55,6 +64,7 @@ public class FritzBoxSmarthome {
      *
      * @return Liste der SmartHome Geräte
      * @throws IOException
+     * @throws NoSuchAlgorithmException
      */
     public List<String> getDeviceList() throws IOException, NoSuchAlgorithmException {
 
@@ -70,6 +80,14 @@ public class FritzBoxSmarthome {
         return deviceList;
     }
 
+    /**
+     * gibt eine Liste der bekannte SmartHome Geräte zurück
+     *
+     * @return Liste der SmartHome Geräte
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws JDOMException
+     */
     public List<SmarthomeDevice> listDevices() throws IOException, NoSuchAlgorithmException, JDOMException {
 
         List<SmarthomeDevice> smartHomeDevices = new ArrayList<>();

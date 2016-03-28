@@ -46,6 +46,8 @@ public class FritzBoxHandler {
      *
      * @param fritzBoxAddress Fritz!Box Adresse
      * @param password Fritz!Box Passwort
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
      */
     public void login(String fritzBoxAddress, String password) throws IOException, NoSuchAlgorithmException {
 
@@ -58,6 +60,8 @@ public class FritzBoxHandler {
      * @param fritzBoxAddress Fritz!Box Adresse
      * @param username Fritz!Box Benutzername
      * @param password Fritz!Box Passwort
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
      */
     public void login(String fritzBoxAddress, String username, String password) throws IOException, NoSuchAlgorithmException, AuthException {
 
@@ -91,6 +95,7 @@ public class FritzBoxHandler {
      * @param urlFragment URL Fragment
      * @return Response
      * @throws IOException
+     * @throws NoSuchAlgorithmException
      */
     public String sendHttpRequest(String urlFragment) throws IOException, NoSuchAlgorithmException {
 
@@ -104,6 +109,8 @@ public class FritzBoxHandler {
      * prüft vorher ob diese Abgelaufen ist und erneuert sie falls nötig
      *
      * @return Session ID
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
      */
     protected String getSessionId() throws IOException, NoSuchAlgorithmException {
 
@@ -118,6 +125,7 @@ public class FritzBoxHandler {
      * fragt die aktuelle Challange ab
      *
      * @return Challenge
+     * @throws IOException
      */
     protected String getChallenge() throws IOException {
 
@@ -137,6 +145,8 @@ public class FritzBoxHandler {
      * @param username Fritz!Box Benutzername
      * @param password Fritz!Box Passwort
      * @return Session ID
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
      */
     protected String sendLogin(String challenge, String username, String password) throws IOException, NoSuchAlgorithmException {
 

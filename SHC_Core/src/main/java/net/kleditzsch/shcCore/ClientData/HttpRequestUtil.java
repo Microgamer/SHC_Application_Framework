@@ -86,6 +86,7 @@ public class HttpRequestUtil {
      *
      * @param sid Sessnion ID
      * @return UserAdminstrationResponse
+     * @throws IOException
      */
     public String getUsersAndGroups(String sid) throws IOException {
 
